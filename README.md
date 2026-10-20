@@ -1,8 +1,8 @@
-# 헌법과 기본권 (2026-2) · HTML 교재
+# 법학 교과서 포털 · HTML 교재
 
-수업계획서의 16주 구성에 맞춘 HTML 교재입니다.
-
-- `index.html` — 강의 소개와 주차별 목차
+- `index.html` — 교과서 포털(헌법 / 행정법 / 기타 → 세부과목 → 15주차)
+  - 과목·주차 제목·교재 링크는 파일 아래쪽 `CATS`, `TITLES`, `LINKS`에서 고칩니다.
+- `heonbeop-gibongwon.html` — 헌법과 기본권(2026-2) 강의 소개와 주차별 목차
 - `ch/01-2-essence.html` — 1주차 ② 기본권의 본질
 - `assets/textbook.css`, `assets/textbook.js` — 공통 디자인과 도구 막대(편집·인쇄)
 

@@ -1,10 +1,10 @@
 /* Network-first keeps lessons current; saved copies are used when offline. */
-const CACHE = 'class-textbook-v1';
+const CACHE = 'class-textbook-v2';
 const ROOT = new URL('./', self.location.href);
 const SHELL = ['./', 'index.html', 'assets/textbook.css', 'assets/textbook.js',
   'assets/pwa.css', 'assets/pwa.js', 'manifest.webmanifest',
   'assets/icons/icon-192.png', 'assets/icons/icon-512.png',
-  'assets/icons/icon-180.png', 'assets/icons/icon-32.png', 'ch/01-2-essence.html'];
+  'assets/icons/icon-180.png', 'assets/icons/icon-32.png', 'ch/01-2-essence.html', 'heonbeop-gibongwon.html'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL.map(path => new URL(path, ROOT).href))).then(() => self.skipWaiting()));
 });

@@ -4,6 +4,7 @@
   - 과목·주차 제목·교재 링크는 파일 아래쪽 `CATS`, `TITLES`, `LINKS`에서 고칩니다.
 - `heonbeop-gibongwon.html` — 헌법과 기본권(2026-2) 강의 소개와 주차별 목차
 - `ch/01-2-essence.html` — 1주차 ② 기본권의 본질
+- `ch/01-1-concept.html` ~ `ch/06-1-equality.html` — 1~6주차 단원(강의 원고를 교재 형식으로 재구성)
 - `assets/textbook.css`, `assets/textbook.js` — 공통 디자인과 도구 막대(편집·인쇄)
 
 ## 보는 법

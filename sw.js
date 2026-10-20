@@ -1,5 +1,5 @@
 /* Network-first keeps lessons current; saved copies are used when offline. */
-const CACHE = 'class-textbook-v4';
+const CACHE = 'class-textbook-v5';
 const ROOT = new URL('./', self.location.href);
 const SHELL = ['./', 'index.html', 'assets/textbook.css', 'assets/textbook.js',
   'assets/pwa.css', 'assets/pwa.js', 'manifest.webmanifest',

@@ -1,24 +1,25 @@
 """슬라이드 보기 생성 도구.
 
-decks/*.py 의 DECK 정의를 읽어 slides/<이름>.html 을 만든다.
+decks_a.py · decks_b.py 의 DECK 정의를 읽어 slides/<이름>.html 을 만든다.
 사용: python3 tools/build_slides.py
+
+디자인: 「기본권의 개념과 연혁」 강의 슬라이드 형식(16:9, Noto Sans KR)
+  - 미색 바탕 + 짙은 남색 슬라이드(표지·질문·사례·마무리)
+  - 테라코타 강조, 01·02·03 번호 목록, 하단 출처 줄과 두 자리 쪽번호
 """
+import re
 
 COURSE = "헌법과 기본권"
 
 
-def esc(s):
-    return s  # 본문은 신뢰된 HTML 조각으로 작성한다
-
-
 # ---------- 본문 구성 요소 ----------
 def pill(label):
-    return f'<span class="pill">{label}</span>'
+    return f'<div class="lbl">{label}</div>'
 
 
 def chk(items, box=False):
-    cls = "chk box" if box else "chk"
-    return f'<ul class="{cls}">' + "".join(f"<li>{x}</li>" for x in items) + "</ul>"
+    cls = "nums box" if box else "nums"
+    return f'<ol class="{cls}">' + "".join(f"<li><span>{x}</span></li>" for x in items) + "</ol>"
 
 
 def group(label, items, box=False):
@@ -36,20 +37,20 @@ def table(head, rows, sm=False, rowhead=True):
 
 
 def case(cite, rows):
-    cells = "".join(f'<div class="k">{k}</div><div>{v}</div>' for k, v in rows)
-    return f'<div class="cite">{cite}</div><div class="case">{cells}</div>'
+    body = "".join(f"<tr><th>{k}</th><td>{v}</td></tr>" for k, v in rows)
+    return f'<div class="cite">{cite}</div><table class="t case"><tbody>{body}</tbody></table>'
 
 
 def law(title, text):
-    return f'<div class="law"><span class="lt">{title}</span><div>{text}</div></div>'
+    return f'<div class="law"><div class="lt">{title}</div><div class="lx">{text}</div></div>'
 
 
 def ask(tag, text):
-    return f'<div class="ask"><span class="tag">{tag}</span><div>{text}</div></div>'
+    return f'<div class="ask"><div class="tag">{tag}</div><div class="aq">{text}</div></div>'
 
 
 def flow(items):
-    return '<div class="flow">' + "".join(f"<div><b>{a}</b>{b}</div>" for a, b in items) + "</div>"
+    return '<ol class="flow">' + "".join(f"<li><b>{a}</b><span>{b}</span></li>" for a, b in items) + "</ol>"
 
 
 def cols(a, b):
@@ -57,8 +58,7 @@ def cols(a, b):
 
 
 def card(title, inner, panel=False):
-    cls = "panel" if panel else "card"
-    return f'<div class="{cls}"><h4>{title}</h4>{inner}</div>'
+    return f'<div class="card"><h4>{title}</h4><div>{inner}</div></div>'
 
 
 def p(text, cls=""):
@@ -71,54 +71,48 @@ def note(text):
 
 
 def panel(text):
-    return f'<div class="panel">{text}</div>'
+    return f'<div class="take">{text}</div>'
 
 
 # ---------- 슬라이드 ----------
+FOOT = '<footer class="foot"><span>@@FOOT@@</span><span class="pg"></span></footer>'
+
+
 def s_cover(kicker, title, sub, two=False):
-    cls = "slide cover two" if two else "slide cover"
     return (
-        f'<section class="{cls}">'
-        '<div class="band b1"></div><div class="band b2"></div><div class="band b3"></div>'
-        '<div class="band b5"></div><div class="band b4"></div>'
-        f'<div class="ck">{kicker}</div><h1>{title}</h1><div class="rule"></div><div class="sub">{sub}</div>'
-        f'<div class="who">{COURSE} · 2026-2학기</div>'
-        '<img class="wide" src="../assets/slide-logo-wide.png" alt="Forward ANU Together A&amp;U 국립안동대학교">'
-        "</section>"
+        '<section class="slide dark cover">'
+        f'<div class="ck">{kicker}</div><h1>{title}</h1><div class="sub">{sub}</div>'
+        f'{FOOT}</section>'
     )
 
 
 def s_index(items):
-    n = len(items)
-    top0, span = 92, 560
-    step = span / max(n - 1, 1)
-    out = '<section class="slide index"><div class="slash"></div><div class="ttl">INDEX</div><div class="tl"></div>'
-    for k, (tag, name) in enumerate(items):
-        side = "r" if k % 2 == 0 else "l"
-        top = round(top0 + k * step - 6)
-        out += (
-            f'<div class="it {side}" style="top:{top}px"><span class="ring"></span>'
-            f'<span class="no">{k:02d}</span><div class="tag">{tag}</div><div class="nm">{name}</div></div>'
-        )
-    return out + '<div class="pg"></div></section>'
+    lis = "".join(
+        f'<li><span class="no">{k:02d}</span><span class="tg">{tag}</span><span class="nm">{name}</span></li>'
+        for k, (tag, name) in enumerate(items)
+    )
+    return (
+        '<section class="slide index"><h2>오늘의 순서</h2>'
+        f'<ol class="toc" style="grid-template-rows:repeat({(len(items)+1)//2},auto)">{lis}</ol>{FOOT}</section>'
+    )
 
 
 def s_content(kicker, title, body, small=""):
-    sm = f"<small>{small}</small>" if small else ""
+    sm = f" <small>{small}</small>" if small else ""
+    # 첫 요소가 질문(ask)이면 짙은 슬라이드로
+    dark = body.lstrip().startswith('<div class="ask"')
+    cls = "slide dark q" if dark else "slide"
+    k = re.sub(r"<small>.*?</small>", "", kicker).strip()
     return (
-        '<section class="slide"><div class="slash"></div>'
-        '<img class="logo" src="../assets/slide-logo.png" alt="">'
-        f'<div class="kicker">{kicker}</div><div class="dot"></div><h2>{title}{sm}</h2>'
-        f'<div class="body">{body}</div>'
-        '<div class="corner"></div><div class="pg"></div></section>'
+        f'<section class="{cls}"><div class="kk">{k}</div><h2>{title}{sm}</h2>'
+        f'<div class="body">{body}</div>{FOOT}</section>'
     )
 
 
 def s_end(msg):
     return (
-        '<section class="slide end"><div class="slash"></div>'
-        f'<div class="box"><img src="../assets/slide-logo.png" alt="Forward ANU Together A&amp;U"><p>{msg}</p></div>'
-        '<div class="corner"></div><div class="pg"></div></section>'
+        '<section class="slide dark end"><h2>단원을 마치며</h2>'
+        f'<div class="nx">{msg}</div>{FOOT}</section>'
     )
 
 
@@ -128,11 +122,13 @@ PAGE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{title} · 슬라이드 · {course}</title>
-<meta name="theme-color" content="#1f6aa5">
+<meta name="theme-color" content="#202531">
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/icon-32.png">
 <link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/icon-180.png">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/moonspam/NanumSquare@2.0/nanumsquare.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap">
 <link rel="stylesheet" href="../assets/slides.css">
 <script src="../assets/pwa.js" defer></script>
 </head>
@@ -158,6 +154,6 @@ PAGE = """<!doctype html>
 
 
 def render(deck):
-    return PAGE.format(
-        title=deck["title"], course=COURSE, chapter=deck["chapter"], slides="\n".join(deck["slides"])
-    )
+    foot = f'{COURSE}&nbsp;&nbsp;/&nbsp;&nbsp;{deck["title"]}&nbsp;&nbsp;·&nbsp;&nbsp;{deck.get("week", "")}'
+    slides = "\n".join(s.replace("@@FOOT@@", foot) for s in deck["slides"])
+    return PAGE.format(title=re.sub(r"<[^>]+>", "", deck["title"]), course=COURSE, chapter=deck["chapter"], slides=slides)

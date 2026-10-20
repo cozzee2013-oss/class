@@ -9,12 +9,12 @@
 
   slides.forEach(function (s, n) {
     var pg = s.querySelector('.pg');
-    if (pg && !pg.textContent) pg.textContent = String(n + 1);
+    if (pg && !pg.textContent) pg.textContent = (n + 1 < 10 ? '0' : '') + (n + 1);
   });
 
   function fit() {
     var w = viewer.clientWidth, h = viewer.clientHeight;
-    var k = Math.min((w - 16) / 1024, (h - 16) / 768);
+    var k = Math.min((w - 16) / 1280, (h - 16) / 720);
     deck.style.transform = 'translate(-50%, -50%) scale(' + Math.max(k, 0.1) + ')';
   }
   function show(n) {

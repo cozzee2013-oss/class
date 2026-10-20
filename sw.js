@@ -1,12 +1,14 @@
 /* Network-first keeps lessons current; saved copies are used when offline. */
-const CACHE = 'class-textbook-v3';
+const CACHE = 'class-textbook-v4';
 const ROOT = new URL('./', self.location.href);
 const SHELL = ['./', 'index.html', 'assets/textbook.css', 'assets/textbook.js',
   'assets/pwa.css', 'assets/pwa.js', 'manifest.webmanifest',
   'assets/icons/icon-192.png', 'assets/icons/icon-512.png',
   'assets/icons/icon-180.png', 'assets/icons/icon-32.png', 'ch/01-2-essence.html', 'heonbeop-gibongwon.html',
   'ch/01-1-concept.html', 'ch/02-1-subject.html', 'ch/02-2-effect.html', 'ch/03-1-limit.html',
-  'ch/04-1-conflict.html', 'ch/05-1-dignity.html', 'ch/05-2-personality.html', 'ch/06-1-equality.html'];
+  'ch/04-1-conflict.html', 'ch/05-1-dignity.html', 'ch/05-2-personality.html', 'ch/06-1-equality.html',
+  'assets/slides.css', 'assets/slides.js', 'assets/slide-logo.png', 'assets/slide-logo-wide.png',
+  'slides/01-1-concept.html', 'slides/01-2-essence.html', 'slides/02-1-subject.html', 'slides/02-2-effect.html', 'slides/03-1-limit.html', 'slides/04-1-conflict.html', 'slides/05-1-dignity.html', 'slides/05-2-personality.html', 'slides/06-1-equality.html'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL.map(path => new URL(path, ROOT).href))).then(() => self.skipWaiting()));
 });

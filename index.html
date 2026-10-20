@@ -75,7 +75,7 @@ h2{font-family:var(--display);font-size:1.25rem;margin:0 0 12px;text-wrap:balanc
 }
 @media (prefers-reduced-motion:no-preference){.card{transition:border-color .15s}}
 </style>
-<style>.open{display:inline-block;margin-bottom:24px;font-weight:600;color:var(--accent)}.wk-title a{color:var(--accent)}.weeks li.exam .wk-title{color:var(--seal)}</style>
+<style>.open{display:inline-block;margin-bottom:24px;font-weight:600;color:var(--accent)}.wk-title a{color:var(--accent)}.wk-title a.sl{font-size:.78rem;margin-left:6px;padding:1px 8px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--muted)}.weeks li.exam .wk-title{color:var(--seal)}</style>
 </head>
 <body>
 
@@ -140,7 +140,7 @@ function courseView(cat,k){
   let rows="";
   for(let w=1;w<=WEEKS;w++){
     const title=t[w], link=(LINKS[k.id]||{})[w], exam=/고사$/.test(title||"");
-    const label=link?`<a href="${link}">${title}</a>`:(title||"주제 미정");
+    const label=link?`<a href="${link}">${title}</a> <a class="sl" href="${link.replace("ch/","slides/")}">슬라이드</a>`:(title||"주제 미정");
     const st=exam?"시험":link?"교재 있음":title?"준비 중":"주제 미정";
     rows+=`<li${exam?' class="exam"':''}><span class="wk">${w}주차</span><span class="wk-title${title?" set":""}">${label}</span><span class="status">${st}</span></li>`;
   }

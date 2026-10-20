@@ -262,3 +262,8 @@ body.editing [data-editable] :focus { outline: 2px solid var(--accent); outline-
   .page-break { break-before: page; }
   .mission { break-after: avoid; }
 }
+
+/* 슬라이드 보기 링크 */
+.titlebar .meta a.slides-link { color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.week .ch a.sl { font-size: .85em; margin-left: 4px; padding: 1px 7px; border: 1px solid currentColor; border-radius: 999px; text-decoration: none; }
+@media print { .titlebar .meta a.slides-link { display: none; } }

@@ -75,7 +75,8 @@
     '<button type="button" data-act="more" title="편집본 관리">⋯</button>' +
     '<button type="button" data-act="download" hidden title="편집 내용을 반영한 HTML 파일 받기">HTML 내려받기</button>' +
     '<button type="button" data-act="reset" hidden title="편집 전 원본으로 되돌리기">원본으로</button>' +
-    '<button type="button" data-act="pptx" title="이 교재로 강의 슬라이드(PowerPoint) 만들기">PPT</button>' +
+    '<button type="button" data-act="present" title="이 교재로 만든 슬라이드로 바로 발표하기">PPT</button>' +
+    '<button type="button" data-act="pptx" title="같은 슬라이드를 PowerPoint 파일(.pptx)로 저장">PPT 저장</button>' +
     '<button type="button" data-act="print" class="primary" title="인쇄 또는 PDF로 저장">인쇄 / PDF</button>';
   document.body.appendChild(bar);
 
@@ -98,6 +99,7 @@
     btn("cancel").hidden = !on;
     btn("print").hidden = on;
     btn("pptx").hidden = on;
+    btn("present").hidden = on;
     btn("more").hidden = on;
     // 편집 중에는 학습지 칸 잠금(내용 편집과 섞이지 않게)
     fields().forEach(function (el) { el.disabled = on; });
@@ -171,6 +173,9 @@
       if (store(K_EDIT) == null) { say("저장된 편집본이 없어요"); return; }
       store(K_EDIT, null);
       location.reload();
+    } else if (act === "present") {
+      load("pptx-export.js").then(function () { window.TBPptx.present(0); })
+        .catch(function (err) { console.error(err); say("슬라이드를 열지 못했어요. 다시 눌러 주세요"); });
     } else if (act === "pptx") {
       makePptx(b);
     } else if (act === "print") {

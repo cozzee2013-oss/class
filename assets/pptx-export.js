@@ -570,8 +570,9 @@
   }
   function abs(u) { try { return new URL(u, location.href).href; } catch (e) { return u; } }
 
-  function render(pages, meta, images) {
-    var pptx = new PptxGenJS();
+  // deck: PptxGenJS(파일 저장) 또는 HtmlDeck(브라우저 발표). 두 경우 모두 같은 그리기 명령을 받는다.
+  function render(pages, meta, images, deck) {
+    var pptx = deck || new PptxGenJS();
     pptx.layout = "LAYOUT_WIDE";
     pptx.title = meta.title; pptx.subject = meta.kicker; pptx.author = "교과서 포털";
     pptx.theme = { headFontFace: F.head, bodyFontFace: F.body };
@@ -647,5 +648,166 @@
     });
   }
 
-  window.TBPptx = { exportPptx: exportPptx, _build: build, _paginate: paginate, _eum: eum };
+  // ── HTML 발표: PptxGenJS와 같은 그리기 명령을 DOM으로 옮긴다(1in = 100px 무대) ──────────
+  var PX = 100;
+  function px(v) { return (v * PX).toFixed(2) + "px"; }
+  function ptpx(v) { return (v * PX / 72).toFixed(3) + "px"; }
+  function fam(face) { return face === F.head ? "'Gelasio','Noto Sans KR',serif" : "'Lato','Noto Sans KR',sans-serif"; }
+  function HtmlDeck() { this.slides = []; }
+  HtmlDeck.prototype.addSlide = function () { var sl = new HtmlSlide(); this.slides.push(sl); return sl; };
+  function HtmlSlide() {
+    var el = document.createElement("div"); el.className = "tbp-slide"; this.el = el; this.notes = "";
+    Object.defineProperty(this, "background", { set: function (v) { if (v && v.data) el.style.backgroundImage = "url(" + v.data + ")"; else if (v && v.color) el.style.background = "#" + v.color; } });
+  }
+  HtmlSlide.prototype.box = function (o, tag) {
+    var d = document.createElement(tag || "div");
+    d.style.cssText = "position:absolute;left:" + px(o.x) + ";top:" + px(o.y) + ";width:" + px(o.w) + ";height:" + px(o.h || 0) + ";";
+    this.el.appendChild(d); return d;
+  };
+  // 브라우저는 줄 상자 안에서 글자를 PowerPoint보다 위쪽에 그린다. 레퍼런스와 같은 높이가 되도록 보정(실측 회귀식).
+  function htmlShift(pt, lsPt) { return (-0.032 * pt + 0.3447 * (lsPt || pt * 1.2)) / 72; }
+  HtmlSlide.prototype.addText = function (text, o) {
+    var d = this.box(Object.assign({}, o, { y: o.y + htmlShift(o.fontSize || 12, o.lineSpacing) }));
+    d.className = "tbp-t";
+    d.style.fontFamily = fam(o.fontFace); d.style.fontSize = ptpx(o.fontSize || 12);
+    d.style.lineHeight = o.lineSpacing ? ptpx(o.lineSpacing) : "1.2"; d.style.color = "#" + (o.color || "000");
+    d.style.textAlign = o.align || "left";
+    if (o.bold) d.style.fontWeight = "700";
+    var runs = typeof text === "string" ? [{ text: text, options: {} }] : text;
+    runs.forEach(function (r) {
+      var op = r.options || {}, sp;
+      if (op.hyperlink || o.hyperlink) { sp = document.createElement("a"); sp.href = (op.hyperlink || o.hyperlink).url; sp.target = "_blank"; sp.rel = "noopener"; }
+      else sp = document.createElement("span");
+      sp.textContent = r.text;
+      if (op.bold) sp.style.fontWeight = "700";
+      if (op.underline || o.underline) sp.style.textDecoration = "underline";
+      d.appendChild(sp);
+      if (op.breakLine) d.appendChild(document.createElement("br"));
+    });
+  };
+  HtmlSlide.prototype.addShape = function (type, o) {
+    if (type === "line") {
+      var l = this.box({ x: o.x, y: o.y, w: o.w || 0, h: o.h || 0 }), c = "#" + ((o.line && o.line.color) || "000"), lw = ptpx((o.line && o.line.width) || 1);
+      if (o.w) { l.style.borderTop = lw + " solid " + c; l.style.height = "0"; } else { l.style.borderLeft = lw + " solid " + c; l.style.width = "0"; }
+      return;
+    }
+    var d = this.box(o);
+    d.style.boxSizing = "border-box";
+    if (o.fill && o.fill.color && o.fill.type !== "none") d.style.background = "#" + o.fill.color;
+    if (o.line && o.line.width) d.style.border = ptpx(o.line.width) + " solid #" + o.line.color;
+    if (type === "roundRect") d.style.borderRadius = px(o.rectRadius || 0.05);
+    if (type === "ellipse") d.style.borderRadius = "50%";
+  };
+  HtmlSlide.prototype.addImage = function (o) {
+    var im = this.box(o, "img"); im.src = o.data || o.path; im.alt = ""; im.style.objectFit = "cover";
+  };
+  HtmlSlide.prototype.addTable = function (data, o) {
+    var t = this.box({ x: o.x, y: o.y, w: o.w, h: 0 }, "table");
+    t.className = "tbp-tbl"; t.style.height = "auto";
+    var m = o.margin || [0, 0, 0, 0], bc = "#" + ((o.border && o.border[0] && o.border[0].color) || "B3B3B3");
+    t.style.fontFamily = fam(o.fontFace); t.style.fontSize = ptpx(o.fontSize); t.style.lineHeight = ptpx(o.lineSpacing || o.fontSize * 1.2); t.style.color = "#" + (o.color || "000");
+    var cg = document.createElement("colgroup"); (o.colW || []).forEach(function (w) { var c = document.createElement("col"); c.style.width = px(w); cg.appendChild(c); }); t.appendChild(cg);
+    data.forEach(function (row, ri) {
+      var tr = document.createElement("tr"); tr.style.height = px((o.rowH || [])[ri] || 0.4);
+      row.forEach(function (cell) {
+        var td = document.createElement("td");
+        td.style.cssText = "border:" + ptpx(0.75) + " solid " + bc + ";padding:" + ptpx(m[0]) + " " + ptpx(m[1]) + " " + ptpx(m[2]) + " " + ptpx(m[3]) + ";vertical-align:top;white-space:pre;background:#fff;";
+        if (cell.options && cell.options.bold) td.style.fontWeight = "700";
+        td.textContent = cell.text; tr.appendChild(td);
+      });
+      t.appendChild(tr);
+    });
+  };
+  HtmlSlide.prototype.addNotes = function (t) { this.notes = t; };
+
+  var CSS = [
+    ".tbp-view{position:fixed;inset:0;z-index:9999;background:#1d1d1b;display:flex;flex-direction:column;color:#eee;font-family:'Lato','Noto Sans KR',sans-serif}",
+    ".tbp-stage{flex:1;position:relative;overflow:hidden;touch-action:pan-y}",
+    ".tbp-slide{position:absolute;left:50%;top:50%;width:1333.3px;height:750px;transform-origin:0 0;background:#fcfcfb center/cover no-repeat;box-shadow:0 10px 40px rgba(0,0,0,.4);overflow:hidden;color:#272525}",
+    ".tbp-slide[hidden]{display:none}",
+    ".tbp-t{white-space:pre;overflow:visible;margin:0;padding:0}",
+    ".tbp-t a{color:inherit}",
+    ".tbp-tbl{border-collapse:collapse;table-layout:fixed}",
+    ".tbp-bar{display:flex;align-items:center;gap:10px;padding:8px max(14px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));background:#141413;font-size:13px}",
+    ".tbp-bar button{font:inherit;background:#2c2c29;color:#eee;border:1px solid #444;border-radius:6px;padding:6px 12px;cursor:pointer}",
+    ".tbp-bar button:hover{background:#3a3a36}",
+    ".tbp-bar button:focus-visible{outline:2px solid #e8c37a;outline-offset:2px}",
+    ".tbp-count{min-width:5em;text-align:center;font-variant-numeric:tabular-nums}",
+    ".tbp-title{flex:1;opacity:.7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}",
+    ".tbp-notes{max-height:28vh;overflow:auto;background:#262624;padding:12px 18px;font-size:15px;line-height:1.7;white-space:pre-wrap;border-top:1px solid #333}",
+    ".tbp-notes[hidden]{display:none}",
+    ".tbp-hit{position:absolute;top:0;bottom:0;width:30%;cursor:pointer}",
+    "@media print{.tbp-view{display:none}}"
+  ].join("\n");
+  function ensureFonts() {
+    if (document.getElementById("tbp-fonts")) return;
+    var l = document.createElement("link"); l.id = "tbp-fonts"; l.rel = "stylesheet";
+    l.href = "https://fonts.googleapis.com/css2?family=Gelasio:wght@400;700&family=Lato:wght@400;700&family=Noto+Sans+KR:wght@400;700&display=swap";
+    document.head.appendChild(l);
+    var st = document.createElement("style"); st.id = "tbp-css"; st.textContent = CSS; document.head.appendChild(st);
+  }
+
+  function present(startAt) {
+    ensureFonts();
+    var model = build(), pages = paginate(model);
+    var images = { bg: BASE + "pptx/bg.png" };
+    pages.forEach(function (p) { if (p.type === "cover" && p.meta.cover) images[p.meta.cover] = abs(p.meta.cover); if (p.image) images[p.image] = abs(p.image); });
+    var deck = render(pages, model.meta, images, new HtmlDeck());
+
+    var view = document.createElement("div"); view.className = "tbp-view"; view.setAttribute("role", "dialog"); view.setAttribute("aria-label", model.meta.title + " 슬라이드");
+    view.innerHTML = '<div class="tbp-stage"></div><div class="tbp-notes" hidden></div>' +
+      '<div class="tbp-bar"><button type="button" data-k="close" title="닫기 (Esc)">✕ 닫기</button><span class="tbp-title"></span>' +
+      '<button type="button" data-k="prev" title="이전 (←)">◀</button><span class="tbp-count"></span><button type="button" data-k="next" title="다음 (→, Space)">▶</button>' +
+      '<button type="button" data-k="notes" title="발표자 노트 (N)">노트</button><button type="button" data-k="full" title="전체 화면 (F)">전체 화면</button></div>';
+    var stage = view.querySelector(".tbp-stage"), notesEl = view.querySelector(".tbp-notes");
+    view.querySelector(".tbp-title").textContent = model.meta.title;
+    deck.slides.forEach(function (sl) { sl.el.hidden = true; stage.appendChild(sl.el); });
+    var hl = document.createElement("div"); hl.className = "tbp-hit"; hl.style.left = "0"; hl.dataset.k = "prev";
+    var hr = document.createElement("div"); hr.className = "tbp-hit"; hr.style.right = "0"; hr.dataset.k = "next";
+    stage.appendChild(hl); stage.appendChild(hr);
+    document.body.appendChild(view);
+    var prevOverflow = document.documentElement.style.overflow; document.documentElement.style.overflow = "hidden";
+
+    var i = Math.max(0, Math.min(deck.slides.length - 1, startAt || 0));
+    function fit() {
+      var r = stage.getBoundingClientRect(), k = Math.min((r.width - 24) / 1333.3, (r.height - 24) / 750);
+      deck.slides.forEach(function (sl) { sl.el.style.transform = "translate(" + (-1333.3 * k / 2) + "px," + (-750 * k / 2) + "px) scale(" + k + ")"; });
+    }
+    function show(n) {
+      i = Math.max(0, Math.min(deck.slides.length - 1, n));
+      deck.slides.forEach(function (sl, j) { sl.el.hidden = j !== i; });
+      view.querySelector(".tbp-count").textContent = (i + 1) + " / " + deck.slides.length;
+      notesEl.textContent = deck.slides[i].notes || "이 슬라이드에는 노트가 없습니다.";
+    }
+    function close() {
+      document.removeEventListener("keydown", key); window.removeEventListener("resize", fit);
+      if (document.fullscreenElement) document.exitFullscreen().catch(function () {});
+      view.remove(); document.documentElement.style.overflow = prevOverflow;
+    }
+    function act(k) {
+      if (k === "next") show(i + 1); else if (k === "prev") show(i - 1); else if (k === "close") close();
+      else if (k === "notes") { notesEl.hidden = !notesEl.hidden; fit(); }
+      else if (k === "full") { if (document.fullscreenElement) document.exitFullscreen().catch(function () {}); else if (view.requestFullscreen) view.requestFullscreen().catch(function () {}); }
+    }
+    function key(e) {
+      if (e.target && /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+      var k = e.key;
+      if (k === "ArrowRight" || k === "PageDown" || k === " " || k === "Enter") { e.preventDefault(); act("next"); }
+      else if (k === "ArrowLeft" || k === "PageUp" || k === "Backspace") { e.preventDefault(); act("prev"); }
+      else if (k === "Home") show(0); else if (k === "End") show(deck.slides.length - 1);
+      else if (k === "Escape" && !document.fullscreenElement) close();
+      else if (k === "f" || k === "F") act("full"); else if (k === "n" || k === "N") act("notes");
+    }
+    view.addEventListener("click", function (e) { var t = e.target.closest("[data-k]"); if (t) act(t.dataset.k); });
+    var tx = null;
+    stage.addEventListener("touchstart", function (e) { tx = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener("touchend", function (e) { if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 40) act(dx < 0 ? "next" : "prev"); tx = null; });
+    document.addEventListener("keydown", key); window.addEventListener("resize", fit);
+    document.addEventListener("fullscreenchange", fit);
+    fit(); show(i);
+    view.querySelector('[data-k="next"]').focus();
+    return { count: deck.slides.length };
+  }
+
+  window.TBPptx = { exportPptx: exportPptx, present: present, _build: build, _paginate: paginate, _eum: eum };
 })();

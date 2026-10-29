@@ -9,6 +9,14 @@
 - `slides/*.html` — 단원별 슬라이드 보기(16:9, 「기본권의 개념과 연혁」 강의 슬라이드 형식). 내용은 `tools/decks_a.py`·`tools/decks_b.py`에서 고치고 `python3 tools/build_slides.py`로 다시 만듭니다.
 - `assets/textbook.css`, `assets/textbook.js` — 공통 디자인과 도구 막대(편집·인쇄)
 
+## PPT 버튼 (교재 → 강의 슬라이드)
+- 교재 화면 오른쪽 아래 **PPT** 버튼을 누르면, 그 교재 본문으로 16:9 PowerPoint(.pptx)를 만들어 내려받습니다.
+- 디자인은 「허위정보·가짜뉴스와 미디어 리터러시」 강의 슬라이드 형식(종이 질감 바탕, 세리프 제목, 연회색 상자·얇은 테두리 카드·표, 일러스트 분할 화면)을 따릅니다.
+- 본문의 서술체(~다/~습니다)는 개조식(~임/~함)으로 바뀌고, 해설은 발표자 노트로 들어갑니다. 교수자판(`#teacher`)에서 누르면 빈칸에 정답이 채워집니다.
+- 일러스트: 교재 HTML의 `.titlebar`에 `data-pptx-cover="이미지"`, 절 제목(band·h3·문단)에 `data-pptx-image="이미지"`를 붙이면 그 자리에 표지·분할 화면이 생깁니다(세로 2:3 이미지, `assets/pptx/`).
+- 변환 규칙은 `assets/pptx-export.js`, 라이브러리는 `assets/vendor/pptxgen.bundle.js`(PptxGenJS 4.0.1, MIT)입니다.
+- 글꼴: 제목 Gelasio, 본문 Lato, 한글 Noto Sans KR(모두 Google Fonts 무료). 설치되어 있지 않으면 PowerPoint가 비슷한 글꼴로 바꿔 보여 줍니다.
+
 ## 보는 법
 GitHub Pages(Settings → Pages → Branch: `main` / root)를 켜면
 `https://cozzee2013-oss.github.io/class/` 에서 볼 수 있습니다.

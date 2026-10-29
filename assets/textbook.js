@@ -5,6 +5,7 @@
    - 학습지 칸(입력·체크)은 이 브라우저에 자동 저장 */
 (function () {
   var PATH = location.pathname.replace(/index\.html$/, "");
+  var BASE = ((document.currentScript && document.currentScript.src) || "").replace(/[^/]*$/, "");
   var K_EDIT = "tb-edit:" + PATH;
   var K_ANS = "tb-ans:" + PATH;
 
@@ -74,6 +75,7 @@
     '<button type="button" data-act="more" title="편집본 관리">⋯</button>' +
     '<button type="button" data-act="download" hidden title="편집 내용을 반영한 HTML 파일 받기">HTML 내려받기</button>' +
     '<button type="button" data-act="reset" hidden title="편집 전 원본으로 되돌리기">원본으로</button>' +
+    '<button type="button" data-act="pptx" title="이 교재로 강의 슬라이드(PowerPoint) 만들기">PPT</button>' +
     '<button type="button" data-act="print" class="primary" title="인쇄 또는 PDF로 저장">인쇄 / PDF</button>';
   document.body.appendChild(bar);
 
@@ -95,6 +97,7 @@
     btn("save").hidden = !on;
     btn("cancel").hidden = !on;
     btn("print").hidden = on;
+    btn("pptx").hidden = on;
     btn("more").hidden = on;
     // 편집 중에는 학습지 칸 잠금(내용 편집과 섞이지 않게)
     fields().forEach(function (el) { el.disabled = on; });
@@ -126,6 +129,25 @@
     say("‘" + name + "’ 파일을 GitHub의 같은 위치에 올리면 교재가 바뀌어요");
   }
 
+  // 교재 → 강의 슬라이드(PPTX): 필요할 때만 변환기를 불러온다
+  function load(src) {
+    return new Promise(function (res, rej) {
+      if (document.querySelector('script[data-src="' + src + '"]')) return res();
+      var s = document.createElement("script");
+      s.src = BASE + src; s.dataset.src = src; s.onload = res; s.onerror = function () { rej(new Error(src)); };
+      document.head.appendChild(s);
+    });
+  }
+  function makePptx(b) {
+    if (b.disabled) return;
+    b.disabled = true; var label = b.textContent; b.textContent = "만드는 중…";
+    load("vendor/pptxgen.bundle.js").then(function () { return load("pptx-export.js"); })
+      .then(function () { return window.TBPptx.exportPptx(); })
+      .then(function (r) { say("‘" + r.name + "’ (" + r.count + "장)을 내려받았어요"); })
+      .catch(function (err) { console.error(err); say("PPT를 만들지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요"); })
+      .then(function () { b.disabled = false; b.textContent = label; });
+  }
+
   bar.addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return;
     var act = b.dataset.act;
@@ -149,6 +171,8 @@
       if (store(K_EDIT) == null) { say("저장된 편집본이 없어요"); return; }
       store(K_EDIT, null);
       location.reload();
+    } else if (act === "pptx") {
+      makePptx(b);
     } else if (act === "print") {
       window.print();
     }

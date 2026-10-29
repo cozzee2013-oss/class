@@ -5,6 +5,7 @@
 - `heonbeop-gibongwon.html` — 헌법과 기본권(2026-2) 강의 소개와 주차별 목차
 - `ch/01-2-essence.html` — 1주차 ② 기본권의 본질
 - `ch/01-1-concept.html` ~ `ch/06-1-equality.html` — 1~6주차 단원(강의 원고를 교재 형식으로 재구성)
+- `election/10-disinformation.html` — 선거법과 민주적 선거관리 10주차 「허위정보·가짜뉴스와 미디어 리터러시」 (주소 끝에 `#teacher`를 붙이면 교수자판: 빈칸 정답·해설·원문 대조 표시)
 - `slides/*.html` — 단원별 슬라이드 보기(16:9, 「기본권의 개념과 연혁」 강의 슬라이드 형식). 내용은 `tools/decks_a.py`·`tools/decks_b.py`에서 고치고 `python3 tools/build_slides.py`로 다시 만듭니다.
 - `assets/textbook.css`, `assets/textbook.js` — 공통 디자인과 도구 막대(편집·인쇄)
 

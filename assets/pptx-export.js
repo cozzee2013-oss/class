@@ -379,7 +379,15 @@
     var kids = Array.prototype.slice.call(main.children);
     for (var i = 0; i < kids.length; i++) {
       var el = kids[i];
-      if (cls(el, "teacher-only") || el.tagName === "SCRIPT") continue;
+      if (cls(el, "teacher-only")) { // 교수자 노트는 교수자판에서만 발표자 노트로
+        if (TEACHER && cls(el, "tnote")) {
+          var nt = [txt(el.querySelector("h5"))];
+          Array.prototype.forEach.call(el.querySelectorAll("dt"), function (dt) { nt.push("■ " + txt(dt) + ": " + txt(dt.nextElementSibling)); });
+          notes(nt.join("\n"));
+        }
+        continue;
+      }
+      if (el.tagName === "SCRIPT") continue;
       var img = el.getAttribute("data-pptx-image"), side = el.getAttribute("data-pptx-side");
 
       if (cls(el, "band")) {

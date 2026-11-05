@@ -682,7 +682,240 @@
     return { name: name, auto: auto };
   }
 
+  // ── 발표용 덱(가독성 우선) ───────────────────────────────────────────────────
+  // 교재에 <script type="application/json" id="pptx-deck">가 있으면 교재 본문 대신 이 덱으로 슬라이드를 만든다.
+  // 원칙: 슬라이드 1장 = 메시지 1개, 본문 24pt 이상(최소 20pt), 글머리 4~5개 이하·한두 줄,
+  //       관련 사진과 영상·기사 링크를 그 슬라이드에 직접 둔다, 긴 설명은 발표자 노트로.
+  var D = { title: 36, titleL: 0.6, body: 24, bodyL: 0.43, minBody: 20, small: 15, smallL: 0.26, src: 12, srcL: 0.22,
+            accent: "1F6B42", accentSoft: "E6F0E9", alert: "B4432A", alertSoft: "FBECE7", top: 0.5, bottom: 0.45 };
+  function readDeck() {
+    var el = document.getElementById("pptx-deck"); if (!el) return null;
+    try { var d = JSON.parse(el.textContent); return d && d.slides && d.slides.length ? d : null; } catch (e) { console.error("pptx-deck JSON", e); return null; }
+  }
+  function deckWant(spec) {
+    var want = { bg: BASE + "pptx/bg.png" };
+    if (spec.cover && spec.cover.image) want[spec.cover.image] = abs(spec.cover.image);
+    spec.slides.forEach(function (sl) { (sl.images || []).forEach(function (im) { want[im.src] = abs(im.src); }); if (sl.side) want[sl.side] = abs(sl.side); });
+    return want;
+  }
+  function dTitle(s, t, x, w, oy) {
+    x = x == null ? ML : x; w = w || CW; oy = oy || 0;
+    s.addShape("rect", { x: x, y: D.top + oy, w: 0.55, h: 0.07, fill: { color: D.accent }, line: { color: D.accent, width: 0 } });
+    var h = txtBox(s, t, x, D.top + oy + 0.25, w, D.title, D.titleL, { fontFace: F.head, color: C.title });
+    return D.top + oy + 0.25 + h + 0.38;
+  }
+  // 그리기 명령을 넘기면서 가장 아래 끝(y)을 기록한다. s가 null이면 재기만 한다.
+  function track(s) {
+    var p = { maxY: 0 };
+    function upd(o, h) { if (o && o.y != null) p.maxY = Math.max(p.maxY, o.y + h); }
+    p.addText = function (t, o) { upd(o, (o.h || 0) - 0.1 + off(o.fontSize || 12, (o.lineSpacing || 14) / 72)); if (s) s.addText(t, o); };
+    p.addShape = function (k, o) { upd(o, o.h || 0); if (s) s.addShape(k, o); };
+    p.addImage = function (o) { upd(o, o.h || 0); if (s) s.addImage(o); };
+    p.addTable = function (d, o) { upd(o, (o.rowH || []).reduce(function (a, b) { return a + b; }, 0)); if (s) s.addTable(d, o); };
+    p.addNotes = function (n) { if (s) s.addNotes(n); };
+    return p;
+  }
+  function dSource(s, src, x, w) {
+    if (!src) return 0;
+    txtBox(s, "출처: " + src, x == null ? ML : x, H - D.bottom - D.srcL, w || CW, D.src, D.srcL, { color: C.muted });
+    return D.srcL + 0.12;
+  }
+  function linksH(n) { return n ? 0.82 + 0.2 : 0; }
+  function dLinks(s, links, x, y, w) {
+    if (!links || !links.length) return;
+    var n = Math.min(links.length, 3), g = 0.2, cw = (w - g * (n - 1)) / n;
+    links.slice(0, n).forEach(function (l, i) {
+      var xx = x + i * (cw + g), video = /youtube\.com|youtu\.be/.test(l.url);
+      s.addShape("roundRect", { x: xx, y: y, w: cw, h: 0.82, rectRadius: 0.08, fill: { color: C.card }, line: { color: C.line, width: 1.2 } });
+      s.addShape("roundRect", { x: xx + 0.16, y: y + 0.2, w: 0.62, h: 0.42, rectRadius: 0.06, fill: { color: video ? D.alert : D.accent }, line: { color: video ? D.alert : D.accent, width: 0 } });
+      txtBox(s, video ? "영상" : "기사", xx + 0.16, y + 0.29, 0.62, 13, 0.24, { color: "FFFFFF", bold: true, align: "center" });
+      var tw = cw - 1.05, t = l.title;
+      while (nLines(t, tw * 0.9, 16, "bold") > 1 && t.length > 6) t = t.slice(0, -2);   // 0.9: 앱마다 글자 폭이 달라 한 줄 여유
+      if (t !== l.title) t = t.replace(/\s*\S?$/, "") + "…";
+      txtBox(s, [{ text: t, options: { hyperlink: { url: l.url }, bold: true } }], xx + 0.92, y + 0.14, tw, 16, 0.3, { color: C.link, underline: { style: "sng", color: C.link } });
+      if (l.meta) txtBox(s, l.meta, xx + 0.92, y + 0.47, tw, 12.5, 0.24, { color: C.muted });
+    });
+  }
+  function fitImg(s, img, data, x, y, w, h, capPt) {
+    var cap = img.caption ? capPt * 1.5 / 72 + 0.12 : 0, bh = h - cap, r = img.ratio || 1.5, iw = w, ih = w / r;
+    if (ih > bh) { ih = bh; iw = bh * r; }
+    var ix = x + (w - iw) / 2;
+    if (data) s.addImage({ data: data, x: ix, y: y, w: iw, h: ih });
+    else s.addShape("rect", { x: ix, y: y, w: iw, h: ih, fill: { color: C.box }, line: { color: C.line, width: 1 } });
+    if (img.badge) { s.addShape("rect", { x: ix + 0.12, y: y + 0.12, w: 1.05, h: 0.34, fill: { color: D.alert }, line: { color: D.alert, width: 0 } }); txtBox(s, img.badge, ix + 0.12, y + 0.18, 1.05, 13, 0.24, { color: "FFFFFF", bold: true, align: "center" }); }
+    if (img.caption) txtBox(s, img.caption, x, y + ih + 0.1, w, capPt, capPt * 1.5 / 72, { color: C.muted, align: "center" });
+    return ih + cap;
+  }
+  // 글머리: 크기를 24 → 22 → 20pt로 줄여 가며 칸에 맞춘다(그 아래로는 줄이지 않는다)
+  function bulletsFit(items, w, avail) {
+    for (var pt = D.body; pt >= D.minBody; pt -= 2) {
+      var li = pt * 1.75 / 72, h = bulletsH(items, w, pt, li);
+      if (h <= avail || pt === D.minBody) return { pt: pt, li: li, h: h };
+    }
+  }
+  function bulletsH(items, w, pt, li) {
+    return items.reduce(function (a, it) {
+      var t = typeof it === "string" ? it : it.t, sub = typeof it === "string" ? "" : it.s || "";
+      return a + hgt(t, w - 0.45, pt, li, "body") + (sub ? hgt(sub, w - 0.45, pt - 5, (pt - 5) * 1.6 / 72) + 0.04 : 0) + pt * 0.55 / 72;
+    }, 0);
+  }
+  function dBullets(s, items, x, y, w, avail) {
+    var f = bulletsFit(items, w, avail), yy = y;
+    items.forEach(function (it) {
+      var t = typeof it === "string" ? it : it.t, sub = typeof it === "string" ? "" : it.s || "";
+      var runs = t.split(/(\*\*[^*]+\*\*)/).filter(Boolean).map(function (p) { return /^\*\*/.test(p) ? { text: p.slice(2, -2), options: { bold: true, color: D.accent } } : { text: p, options: {} }; });
+      s.addShape("rect", { x: x + 0.04, y: yy + f.li / 2 - 0.06, w: 0.13, h: 0.13, fill: { color: D.accent }, line: { color: D.accent, width: 0 } });
+      yy += txtBox(s, runs, x + 0.45, yy, w - 0.45, f.pt, f.li, { color: C.text });
+      if (sub) yy += 0.04 + txtBox(s, sub, x + 0.45, yy + 0.04, w - 0.45, f.pt - 5, (f.pt - 5) * 1.6 / 72, { color: C.muted });
+      yy += f.pt * 0.55 / 72;
+    });
+    return f.h;
+  }
+  function dTable(s, t, x, y, w, avail) {
+    var n = t.head.length, fr = t.cols || t.head.map(function () { return 1; }), sum = fr.reduce(function (a, b) { return a + b; }, 0);
+    var ws = fr.map(function (v) { return v / sum * w; }), padX = 0.16, padY = 0.1, pt = t.size || 22, rows, li, hs;
+    for (; pt >= 16; pt -= 2) {
+      li = pt * 1.5 / 72;
+      hs = [t.head].concat(t.rows).map(function (r, ri) { return Math.max.apply(null, r.map(function (c, i) { return hgt(c || " ", ws[i] - padX * 2, pt, li, ri ? "body" : "bold"); })) + padY * 2; });
+      if (hs.reduce(function (a, b) { return a + b; }, 0) <= avail) break;
+    }
+    var b = { type: "solid", pt: 0.75, color: C.rule };
+    var cell = function (c, i, face) { return wrapLines(c || "", ws[i] - padX * 2, pt, face).join("\n"); };
+    rows = [t.head.map(function (h, i) { return { text: cell(h, i, "bold"), options: { bold: true, fill: { color: D.accentSoft }, color: D.accent } }; })]
+      .concat(t.rows.map(function (r) { return r.map(function (c, i) { return { text: cell(c, i, i === 0 && t.firstBold !== false ? "bold" : "body"), options: i === 0 && t.firstBold !== false ? { bold: true } : {} }; }); }));
+    s.addTable(rows, { x: x, y: y, w: w, colW: ws, fontFace: F.body, fontSize: pt, color: C.text, border: [b, b, b, b], fill: { color: C.card }, margin: [padY * 72, padX * 72, padY * 72, padX * 72], valign: "middle", lineSpacing: li * 72, rowH: hs, autoPage: false });
+    return hs.reduce(function (a, b2) { return a + b2; }, 0);
+  }
+
+  function renderDeck(spec, images, deck) {
+    var pptx = deck || new PptxGenJS();
+    pptx.layout = "LAYOUT_WIDE"; pptx.title = spec.title || ""; pptx.author = "교과서 포털";
+    pptx.theme = { headFontFace: F.head, bodyFontFace: F.body };
+    var bg = images.bg ? { data: images.bg } : { color: "FCFCFB" };
+    function img(src) { return images[src] || null; }
+    spec.slides.forEach(function (sl) {
+      var s = pptx.addSlide(); s.background = bg;
+      var t = sl.type || "bullets", bottom = H - D.bottom, x = ML, w = CW;
+      if (t === "cover") {
+        var c = spec.cover || {}, im = c.image ? img(c.image) : null, tw = im ? 6.6 : 11;
+        var th = hgt(c.title, tw, 48, 0.82, "head"), qh = c.question ? hgt(c.question, tw, 26, 0.48, "head") : 0;
+        var y = (H - (th + 0.35 + qh + 0.6 + 0.4)) / 2;
+        s.addShape("rect", { x: ML, y: y - 0.35, w: 0.7, h: 0.08, fill: { color: D.accent }, line: { color: D.accent, width: 0 } });
+        y += txtBox(s, c.title, ML, y, tw, 48, 0.82, { fontFace: F.head, color: C.title }) + 0.35;
+        if (c.question) y += txtBox(s, c.question, ML, y, tw, 26, 0.48, { fontFace: F.head, color: C.title }) + 0.5;
+        if (c.meta) txtBox(s, c.meta, ML, y, tw, 16, 0.3, { color: C.muted });
+        if (im) s.addImage({ data: im, x: W - 5.0, y: 0, w: 5.0, h: H });
+      } else if (t === "section") {
+        var sim = sl.side ? img(sl.side) : null, sw = sim ? 6.9 : 11;
+        if (sim) s.addImage({ data: sim, x: 0, y: 0, w: 5.0, h: H });
+        var sx = sim ? 5.75 : ML, sh = hgt(sl.title, sw, 40, 0.7, "head") + (sl.lead ? 0.4 + hgt(sl.lead, sw, 22, 0.4) : 0);
+        var sy = (H - sh) / 2;
+        if (sl.num) { txtBox(s, sl.num, sx, sy - 1.05, 2, 54, 0.9, { fontFace: F.head, color: D.accent }); }
+        sy += txtBox(s, sl.title, sx, sy, sw, 40, 0.7, { fontFace: F.head, color: C.title });
+        if (sl.lead) txtBox(s, sl.lead, sx, sy + 0.4, sw, 22, 0.4, { color: C.muted });
+      } else if (t === "question") {
+        var qw = 10.6, qx = (W - qw) / 2, items = sl.items || [], qh2 = hgt(sl.title, qw, 38, 0.66, "head") + (items.length ? 0.55 + bulletsH(items, qw, 24, 0.42) : 0) + (sl.lead ? 0.5 : 0);
+        var qy = Math.max(0.8, (H - qh2 - (sl.links ? linksH(1) : 0)) / 2);
+        if (sl.lead) { txtBox(s, sl.lead, qx, qy, qw, 18, 0.32, { color: D.accent, bold: true }); qy += 0.5; }
+        qy += txtBox(s, sl.title, qx, qy, qw, 38, 0.66, { fontFace: F.head, color: C.title }) + 0.55;
+        if (items.length) dBullets(s, items, qx, qy, qw, 6);
+      } else {
+        // 1) 빈 슬라이드에 한 번 그려 내용 높이를 재고 2) 제목+내용+링크 덩어리를 세로 가운데에 놓는다
+        var draw = function (s, oy) {
+          var y0 = dTitle(s, sl.title, null, null, oy), srcH = sl.source ? D.srcL + 0.12 : 0, lh = linksH(sl.links ? sl.links.length : 0);
+          var avail = bottom - (y0 - oy) - srcH - lh;
+          var ims = sl.images || [];
+          if (t === "bullets") {
+            if (ims.length) {
+              var iw2 = sl.imageW || 5.2, bw = w - iw2 - 0.5;
+              dBullets(s, sl.items || [], x, y0, bw, avail);
+              var per = (avail - 0.2 * (ims.length - 1)) / ims.length, iy = y0;
+              ims.forEach(function (im2) { iy += fitImg(s, im2, img(im2.src), x + bw + 0.5, iy, iw2, per, 14) + 0.2; });
+            } else dBullets(s, sl.items || [], x, y0, w, avail);
+          } else if (t === "images") {
+            var n = ims.length, g = 0.35, cw2 = (w - g * (n - 1)) / n, lead = sl.lead ? hgt(sl.lead, w, 22, 0.4) + 0.25 : 0;
+            if (sl.lead) txtBox(s, sl.lead, x, y0, w, 22, 0.4, { color: C.text });
+            ims.forEach(function (im3, i) { fitImg(s, im3, img(im3.src), x + i * (cw2 + g), y0 + lead, cw2, avail - lead, 16); });
+          } else if (t === "table") {
+            var th2 = dTable(s, sl.table, x, y0, w, avail - (sl.after ? 0.75 : 0));
+            if (sl.after) { s.addShape("roundRect", { x: x, y: y0 + th2 + 0.25, w: w, h: 0.62, rectRadius: 0.06, fill: { color: D.accentSoft }, line: { color: D.accentSoft, width: 0 } }); txtBox(s, sl.after, x + 0.25, y0 + th2 + 0.25 + 0.14, w - 0.5, 20, 0.36, { color: D.accent, bold: true }); }
+          } else if (t === "stats") {
+            var st = sl.stats, m = st.length, g2 = 0.3, cw3 = (w - g2 * (m - 1)) / m, bh = 2.3;
+            st.forEach(function (it, i) {
+              var xx = x + i * (cw3 + g2);
+              s.addShape("roundRect", { x: xx, y: y0, w: cw3, h: bh, rectRadius: 0.08, fill: { color: i === (sl.hi == null ? m - 1 : sl.hi) ? D.accentSoft : C.card }, line: { color: C.line, width: 1.2 } });
+              txtBox(s, it.n, xx, y0 + 0.35, cw3, 50, 0.85, { fontFace: F.head, color: D.accent, align: "center" });
+              txtBox(s, it.l, xx + 0.15, y0 + 1.35, cw3 - 0.3, 18, 0.34, { color: C.text, align: "center" });
+              if (it.s) txtBox(s, it.s, xx + 0.15, y0 + 1.72, cw3 - 0.3, 14, 0.26, { color: C.muted, align: "center" });
+            });
+            if (sl.items) dBullets(s, sl.items, x, y0 + bh + 0.45, w, avail - bh - 0.45);
+          } else if (t === "compare") {
+            var cols = sl.cols, g3 = 0.4, cw4 = (w - g3 * (cols.length - 1)) / cols.length;
+          var chh = Math.min(avail, Math.max.apply(null, cols.map(function (col) { return bulletsFit(col.items, cw4 - 0.6, avail - 1.25).h; })) + 1.35);
+            cols.forEach(function (col, i) {
+              var xx = x + i * (cw4 + g3);
+              s.addShape("roundRect", { x: xx, y: y0, w: cw4, h: chh, rectRadius: 0.08, fill: { color: C.card }, line: { color: C.line, width: 1.2 } });
+              s.addShape("rect", { x: xx + 0.01, y: y0 + 0.01, w: cw4 - 0.02, h: 0.78, fill: { color: col.alert ? D.alertSoft : D.accentSoft }, line: { width: 0, color: C.card } });
+              txtBox(s, col.head, xx + 0.3, y0 + 0.2, cw4 - 0.6, 24, 0.42, { bold: true, color: col.alert ? D.alert : D.accent });
+              dBullets(s, col.items, xx + 0.3, y0 + 1.05, cw4 - 0.6, chh - 1.25);
+            });
+          } else if (t === "law") {
+            var lt = sl.text, lw = w - 0.45, lpt = 24, ll;
+            for (; lpt > 20; lpt -= 2) { ll = lpt * 1.6 / 72; if (hgt(lt, lw, lpt, ll) <= avail - (sl.items ? 1.5 : 0)) break; }
+            ll = lpt * 1.6 / 72;
+            var lh2 = hgt(lt, lw, lpt, ll);
+            s.addShape("rect", { x: x, y: y0, w: 0.08, h: lh2, fill: { color: D.accent }, line: { color: D.accent, width: 0 } });
+            txtBox(s, lt, x + 0.45, y0, lw, lpt, ll, { color: C.text });
+            if (sl.items) dBullets(s, sl.items, x, y0 + lh2 + 0.45, w, avail - lh2 - 0.45);
+          } else if (t === "steps") {
+            var stp = sl.steps, k = stp.length, g4 = 0.22, cw5 = (w - g4 * (k - 1)) / k;
+          var shh = Math.min(avail, 2.05 + Math.max.apply(null, stp.map(function (it) { return hgt(it.b, cw5 - 0.4, 18, 0.34); })) + 0.3);
+            stp.forEach(function (it, i) {
+              var xx = x + i * (cw5 + g4);
+              s.addShape("roundRect", { x: xx, y: y0, w: cw5, h: shh, rectRadius: 0.08, fill: { color: it.hi ? D.accentSoft : C.card }, line: { color: it.hi ? D.accent : C.line, width: it.hi ? 2 : 1.2 } });
+              s.addShape("ellipse", { x: xx + cw5 / 2 - 0.36, y: y0 + 0.3, w: 0.72, h: 0.72, fill: { color: D.accent }, line: { color: D.accent, width: 0 } });
+              txtBox(s, String(i + 1), xx + cw5 / 2 - 0.36, y0 + 0.43, 0.72, 24, 0.44, { color: "FFFFFF", bold: true, align: "center" });
+              txtBox(s, it.h, xx + 0.15, y0 + 1.25, cw5 - 0.3, 22, 0.4, { bold: true, align: "center", color: C.title });
+              txtBox(s, it.b, xx + 0.2, y0 + 1.85, cw5 - 0.4, 18, 0.34, { color: C.text, align: "center" });
+            });
+            if (sl.items) dBullets(s, sl.items, x, y0 + shh + 0.35, w, avail - shh - 0.35);
+          } else if (t === "chat") {
+            var pw = 5.4, px0 = x + 0.2, py = y0, ph = Math.min(avail, 4.4);
+            s.addShape("roundRect", { x: px0, y: py, w: pw, h: ph, rectRadius: 0.3, fill: { color: "F3F5F4" }, line: { color: C.line, width: 1.5 } });
+            txtBox(s, "AI 챗봇 · 가상 화면", px0, py + 0.2, pw, 13, 0.24, { color: C.muted, align: "center" });
+            var qy2 = py + 0.65, qbw = pw - 0.7, qtx = sl.q, qhh = hgt(qtx, qbw - 0.4, 19, 0.36) + 0.3;
+            s.addShape("roundRect", { x: px0 + pw - 0.3 - qbw, y: qy2, w: qbw, h: qhh, rectRadius: 0.15, fill: { color: D.accent }, line: { color: D.accent, width: 0 } });
+            txtBox(s, qtx, px0 + pw - 0.3 - qbw + 0.2, qy2 + 0.15, qbw - 0.4, 19, 0.36, { color: "FFFFFF" });
+            var ay = qy2 + qhh + 0.3, abw = pw - 0.9, ar = sl.a.split(/(\[\[[^\]]+\]\])/).filter(Boolean).map(function (p) { return /^\[\[/.test(p) ? { text: p.slice(2, -2), options: sl.mark ? { bold: true, color: D.alert, underline: { style: "sng", color: D.alert } } : {} } : { text: p, options: {} }; });
+            var ahh = hgt(sl.a.replace(/\[\[|\]\]/g, ""), abw - 0.4, 19, 0.36) + 0.3;
+            s.addShape("roundRect", { x: px0 + 0.3, y: ay, w: abw, h: ahh, rectRadius: 0.15, fill: { color: C.card }, line: { color: C.line, width: 1 } });
+            txtBox(s, ar, px0 + 0.5, ay + 0.15, abw - 0.4, 19, 0.36, { color: C.text });
+            if (sl.items) dBullets(s, sl.items, px0 + pw + 0.6, y0, w - pw - 0.8, avail);
+          }
+        };
+        var probe = track(null); draw(probe, 0);
+        var lh0 = sl.links ? 0.35 + 0.82 : 0, srcH0 = sl.source ? D.srcL + 0.2 : 0;
+        var used = probe.maxY - D.top + lh0, room = H - D.bottom - srcH0 - D.top;
+        var oy = Math.max(0, Math.min(1.8, (room - used) / 2));
+        var real = track(s); draw(real, oy);
+        if (sl.links) dLinks(s, sl.links, x, real.maxY + 0.35, w);
+        dSource(s, sl.source);
+      }
+      if (sl.notes) s.addNotes(sl.notes);
+    });
+    return pptx;
+  }
+  function deckName() { return (location.pathname.split("/").pop() || "slides").replace(/\.html?$/i, "").replace(/[^A-Za-z0-9._-]/g, "") + ".pptx"; }
+
   function exportPptx() {
+    var spec = readDeck();
+    if (spec) {
+      var want0 = deckWant(spec), keys0 = Object.keys(want0);
+      return Promise.all(keys0.map(function (k) { return fetchData(want0[k]); })).then(function (vals) {
+        var images = {}; keys0.forEach(function (k, i) { images[k] = vals[i]; });
+        return fixFonts(renderDeck(spec, images), deckName()).then(function (r) { r.count = spec.slides.length; return r; });
+      });
+    }
     var model = build(), pages = paginate(model);
     var want = { bg: BASE + "pptx/bg.png" };
     pages.forEach(function (p) { if (p.type === "cover" && p.meta.cover) want[p.meta.cover] = abs(p.meta.cover); if (p.image) want[p.image] = abs(p.image); });
@@ -727,6 +960,7 @@
       else sp = document.createElement("span");
       sp.textContent = r.text;
       if (op.bold) sp.style.fontWeight = "700";
+      if (op.color) sp.style.color = "#" + op.color;
       if (op.underline || o.underline) sp.style.textDecoration = "underline";
       d.appendChild(sp);
       if (op.breakLine) d.appendChild(document.createElement("br"));
@@ -758,8 +992,11 @@
       var tr = document.createElement("tr"); tr.style.height = px((o.rowH || [])[ri] || 0.4);
       row.forEach(function (cell) {
         var td = document.createElement("td");
-        td.style.cssText = "border:" + ptpx(0.75) + " solid " + bc + ";padding:" + ptpx(m[0]) + " " + ptpx(m[1]) + " " + ptpx(m[2]) + " " + ptpx(m[3]) + ";vertical-align:top;white-space:pre;background:#fff;";
-        if (cell.options && cell.options.bold) td.style.fontWeight = "700";
+        td.style.cssText = "border:" + ptpx(0.75) + " solid " + bc + ";padding:" + ptpx(m[0]) + " " + ptpx(m[1]) + " " + ptpx(m[2]) + " " + ptpx(m[3]) + ";vertical-align:" + (o.valign === "middle" ? "middle" : "top") + ";white-space:pre;background:#fff;";
+        var co = cell.options || {};
+        if (co.bold) td.style.fontWeight = "700";
+        if (co.fill && co.fill.color) td.style.background = "#" + co.fill.color;
+        if (co.color) td.style.color = "#" + co.color;
         td.textContent = cell.text; tr.appendChild(td);
       });
       t.appendChild(tr);
@@ -796,10 +1033,18 @@
 
   function present(startAt) {
     ensureFonts();
-    var model = build(), pages = paginate(model);
-    var images = { bg: BASE + "pptx/bg.png" };
-    pages.forEach(function (p) { if (p.type === "cover" && p.meta.cover) images[p.meta.cover] = abs(p.meta.cover); if (p.image) images[p.image] = abs(p.image); });
-    var deck = render(pages, model.meta, images, new HtmlDeck());
+    var spec = readDeck(), model, deck;
+    if (spec) {
+      var want = deckWant(spec), images0 = {};
+      Object.keys(want).forEach(function (k) { images0[k] = want[k]; });
+      model = { meta: { title: spec.title || document.title } };
+      deck = renderDeck(spec, images0, new HtmlDeck());
+    } else {
+      model = build(); var pages = paginate(model);
+      var images = { bg: BASE + "pptx/bg.png" };
+      pages.forEach(function (p) { if (p.type === "cover" && p.meta.cover) images[p.meta.cover] = abs(p.meta.cover); if (p.image) images[p.image] = abs(p.image); });
+      deck = render(pages, model.meta, images, new HtmlDeck());
+    }
 
     var view = document.createElement("div"); view.className = "tbp-view"; view.setAttribute("role", "dialog"); view.setAttribute("aria-label", model.meta.title + " 슬라이드");
     view.innerHTML = '<div class="tbp-stage"></div><div class="tbp-notes" hidden></div>' +

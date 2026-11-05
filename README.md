@@ -38,3 +38,9 @@ GitHub Pages(Settings → Pages → Branch: `main` / root)를 켜면
 - `manifest.webmanifest`와 `assets/icons/`가 앱 이름·아이콘·독립 화면 실행을 설정합니다.
 - 서비스 워커는 사이트 경로 안의 교재만 저장하며, 온라인에서는 최신 원본을 먼저 가져옵니다.
 - 새 오프라인 기본 교재를 추가할 때는 `sw.js`의 `SHELL`과 캐시 버전도 갱신합니다.
+
+## 발표용 슬라이드 덱 (`pptx-deck`)
+
+교재 HTML에 `<script type="application/json" id="pptx-deck">`가 있으면 PPT·PPT 저장 버튼은 교재 본문 대신 이 덱으로 슬라이드를 만든다(없으면 예전처럼 본문을 자동 변환). 원칙: 한 장에 메시지 하나, 본문 24pt(최소 20pt)·글머리 4~5개 이하, 관련 사진과 영상·기사 링크를 그 슬라이드에 직접, 긴 설명은 발표자 노트(`notes`)로.
+
+슬라이드 종류(`type`): `cover` · `section`(num, title, lead, side 그림) · `question`(lead, title, items) · `bullets`(items, images, imageW) · `images`(images: src·ratio·caption) · `table`(table: head·rows·cols, after) · `stats`(stats: n·l·s, hi, items) · `compare`(cols: head·items·alert) · `law`(text, items) · `steps`(steps: h·b·hi, items) · `chat`(q, a, items). 공통: `title`, `links`(title·meta·url, 최대 3개), `source`, `notes`. 글머리의 `**굵게**`는 강조색, 항목을 `{"t": 본문, "s": 보조 설명}`으로 쓰면 아래에 작은 회색 줄이 붙는다.

@@ -593,10 +593,11 @@
       if (p.type === "cover") {
         var im = images[p.meta.cover], tw = im ? 5.3 : 9.0;
         var tl = hgt(p.meta.title, tw, S.cover, L.cover, "head");
-        var total = tl + 0.28 + (p.meta.question ? 0.78 : 0) + (p.meta.kicker ? 0.47 : 0) + (p.meta.date ? 0.28 : 0);
+        var ql = p.meta.question ? hgt(p.meta.question, tw + 1.6, S.coverSub, 0.45, "head") : 0;   // 부제가 두 줄이면 그만큼 아래로
+        var total = tl + 0.28 + (p.meta.question ? ql + 0.33 : 0) + (p.meta.kicker ? 0.47 : 0) + (p.meta.date ? 0.28 : 0);
         var y = Math.max(MINTOP, (H - total) / 2);
         txtBox(s, p.meta.title, ML, y, tw, S.cover, L.cover, { fontFace: F.head, color: C.title }); y += tl + 0.28;
-        if (p.meta.question) { txtBox(s, p.meta.question, ML, y, tw + 1.6, S.coverSub, 0.45, { fontFace: F.head, color: C.title }); y += 0.78; }
+        if (p.meta.question) { txtBox(s, p.meta.question, ML, y, tw + 1.6, S.coverSub, 0.45, { fontFace: F.head, color: C.title }); y += ql + 0.33; }
         if (p.meta.kicker) { txtBox(s, p.meta.kicker, ML, y, tw + 1.6, S.body, L.body); y += 0.47; }
         if (p.meta.date) txtBox(s, p.meta.date, ML, y, tw + 1.6, S.body, L.body);
         if (im) s.addImage({ data: im, x: W - SPLIT.imgW, y: 0, w: SPLIT.imgW, h: H });

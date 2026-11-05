@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI 시대의 선거와 민주주의 · 선거법과 민주적 선거관리</title>
+<link rel="stylesheet" href="../assets/textbook.css">
+<meta name="theme-color" content="#1f6b42">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="선거법과 민주적 선거관리">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/icon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../assets/icons/icon-180.png">
+<link rel="stylesheet" href="../assets/pwa.css">
+<script src="../assets/pwa.js" defer></script>
+<style>
+/* 이 단원 전용: 빈칸, 교수자판(#teacher), 원문 대조 표시, 영상·기사 목록 (10주차와 같은 구성) */
+.blank { font: inherit; font-size: 14.5px; color: var(--ink); background: #fff8dc; border: 0; border-bottom: 1.5px solid var(--ink-soft); padding: 0 6px; min-width: 7em; max-width: 100%; }
+.blank.right { background: var(--green-tint); border-bottom-color: var(--green); }
+.blank.wrong { background: #fbebe6; border-bottom-color: var(--accent); }
+.key { display: none; font-weight: 700; background: #fff8dc; padding: 0 4px; }
+.blank-check { font: inherit; font-size: 13px; font-weight: 700; border: 1px solid var(--line); background: #fff; border-radius: 99px; padding: 4px 12px; cursor: pointer; margin: 0 0 12px; }
+.verify { display: none; font-size: 11.5px; font-weight: 700; color: var(--accent); border: 1px dashed var(--accent); border-radius: 3px; padding: 0 5px; margin-left: 4px; white-space: nowrap; }
+.teacher-only { display: none; }
+body.teacher .blank, body.teacher .blank-check { display: none; }
+body.teacher .key { display: inline; }
+body.teacher .verify { display: inline-block; }
+body.teacher .teacher-only { display: block; }
+.tnote { border-left: 4px solid var(--accent); background: #fbf3ef; border-radius: 0 10px 10px 0; padding: 10px 16px 12px; margin: 14px 0; font-size: 14px; line-height: 1.65; break-inside: avoid; }
+.tnote h5 { margin: 0 0 6px; font-size: 12.5px; letter-spacing: .03em; color: var(--accent); }
+.tnote dl { display: grid; grid-template-columns: 5.2em minmax(0, 1fr); gap: 4px 12px; margin: 0; }
+.tnote dt { font-weight: 700; color: var(--ink-soft); }
+.tnote dd { margin: 0; }
+.tnote ul { margin: 0; padding-left: 1.1em; }
+.tplan th, .tplan .nw { white-space: nowrap; }
+@media (max-width: 560px) { .tnote dl { grid-template-columns: minmax(0, 1fr); } .tnote dt { margin-top: 6px; } }
+.stamp { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: .08em; color: var(--accent); border: 1.5px solid var(--accent); border-radius: 3px; padding: 0 6px; margin-right: 4px; }
+.stamp.ok { color: var(--green-dark); border-color: var(--green-dark); }
+.msgs { display: grid; gap: 10px; margin: 12px 0; }
+.msgs .case { margin: 0; }
+.media { list-style: none; padding: 0; margin: 10px 0 16px; display: grid; gap: 8px; }
+.media li { border: 1px solid var(--line); border-radius: var(--radius); padding: 10px 16px; break-inside: avoid; }
+.media .k { display: inline-block; font-size: 11.5px; font-weight: 800; padding: 1px 8px; border-radius: 99px; margin-right: 6px; background: var(--line-soft); color: var(--ink-soft); }
+.media .k.v { background: #fbebe6; color: var(--accent); }
+.media .k.n { background: var(--green-tint); color: var(--green-dark); }
+.media a { font-weight: 700; }
+.media small { display: block; color: var(--ink-soft); font-size: 13px; }
+.see { font-size: 13.5px; color: var(--ink-soft); margin: -4px 0 14px; }
+details.sol { border: 1px solid var(--line); border-radius: 8px; margin: 8px 0 4px; padding: 0 14px; }
+details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark); padding: 8px 0; font-size: 14px; }
+@media print { .blank-check, .see a::after { display: none; } details.sol { border: 0; padding: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="titlebar" data-pptx-cover="../assets/pptx/ch10-next.jpg">
+    <div>
+      <div class="kicker">선거법과 민주적 선거관리 · 11주차</div>
+      <h1>AI 시대의 선거와 민주주의</h1>
+    </div>
+    <div class="meta"><b>AI는 선거를 어떻게 바꾸고, 법은 어디까지 막을 수 있는가?</b><br>강의자료 · 2026-2학기<br>기준일 2026. 11. 5.</div>
+  </header>
+
+  <div class="namerow">
+    <label>학번·이름 <input type="text" id="who" placeholder="학번과 이름을 적어요"></label>
+    <label>날짜 <input type="text" id="when" placeholder="수업 날짜를 적어요"></label>
+  </div>
+
+  <main data-editable>
+
+  <div class="card teacher-only" style="border-color:var(--accent)">
+    <h4 style="margin-top:0;color:var(--accent)">교수자판 · 수업 운영 개요</h4>
+    <p class="note">주소 끝에 <b>#teacher</b>를 붙이면 이 화면이 열린다. 빈칸 정답과 해설이 모두 펼쳐지고, 절마다 붉은 띠의 ‘교수자 노트’(진행·발문·예상 반응·짚을 점·판서)가 나온다. 이 화면에서 PPT 버튼을 누르면 교수자 노트가 발표자 노트(N)로 들어간다. 화·목 90분씩 나누면 11/10에 1교시와 3절 (1)(2)까지, 11/12에 3절 (3)부터 끝까지 다룬다.</p>
+    <div class="tbl-wrap"><table class="tplan">
+      <thead><tr><th>교시</th><th>시간</th><th>교재 범위</th><th>활동</th></tr></thead>
+      <tbody>
+        <tr><th rowspan="5">1교시</th><td class="nw">10분</td><td>먼저 생각해요</td><td>A·B·C 판별 손들기 투표(진짜/AI), D는 챗봇 답의 오류 찾기 — 결과 판서, 정답 공개 금지</td></tr>
+        <tr><td class="nw">3분</td><td>1. 문제의 발견</td><td>10주차가 남긴 두 질문 연결, 세 질문 제시</td></tr>
+        <tr><td class="nw">10분</td><td>2(1) AI의 두 얼굴</td><td>안동시 토픽 표 읽기, “언론의 관심 = 주민의 목소리?” 발문</td></tr>
+        <tr><td class="nw">15분</td><td>2(2) 딥페이크</td><td>해외 3사례, 국내 삭제 요청 추이(388 → 10,510 → 10,319), 안동·울산·청도</td></tr>
+        <tr><td class="nw">12분</td><td>2(3)(4) 챗봇 오류, 왜 더 위험한가</td><td>연구 표, 10주차 세 유형에 대입, 거짓말쟁이의 배당</td></tr>
+        <tr><th>휴식</th><td class="nw">10분</td><td colspan="2"></td></tr>
+        <tr><th rowspan="4">2교시</th><td class="nw">15분</td><td>3(1) 제82조의8</td><td>“기간 안 = 금지 / 기간 밖 = 표시 / 거짓이면 = 가중” 판서</td></tr>
+        <tr><td class="nw">15분</td><td>3(2) 헌법소원 쟁점</td><td>과잉금지 4단계 표, 짝 토의 3분 — 결론 제시 금지</td></tr>
+        <tr><td class="nw">12분</td><td>3(3) 표시 의무 비교</td><td>‘누가 표시하나’ 축으로 한국·EU·미국·영국·프랑스</td></tr>
+        <tr><td class="nw">8분</td><td>3(4) 세 접근</td><td>금지·표시·자율, 검증 5단계 업그레이드 예고</td></tr>
+        <tr><th>휴식</th><td class="nw">10분</td><td colspan="2"></td></tr>
+        <tr><th rowspan="3">3교시</th><td class="nw">15분</td><td>4(1) 네 콘텐츠로 돌아가기</td><td>조별 AI 검증 5단계 → 발표 → 해설</td></tr>
+        <tr><td class="nw">25분</td><td>4(2) 모의 헌법재판</td><td>청구인·국회 측 변론 3분씩, 반박 2분씩, 재판관단 공개 평의 → 선고</td></tr>
+        <tr><td class="nw">10분</td><td>5. 정리와 확인</td><td>구별 표, 출구 티켓, 과제 안내, 12주차 기자 특강 예고</td></tr>
+      </tbody>
+    </table></div>
+    <h4>수업 전 준비</h4>
+    <label class="check"><input type="checkbox" id="tp1"> 슬라이드 확인(PPT 버튼) — 네 콘텐츠·삭제 요청 추이·제82조의8 표·4단계 표·표시 의무 비교 표</label>
+    <label class="check"><input type="checkbox" id="tp2"> A·B 이미지(선관위 AI 보고서 50–51·71–72쪽 그림), C는 보도 화면 캡처 준비</label>
+    <label class="check"><input type="checkbox" id="tp3"> 오픈넷 헌법소원(제82조의8 제1항) 결정 여부·사건번호, 국회 개정안 진행 상황 확인</label>
+    <label class="check"><input type="checkbox" id="tp4"> 모의재판 역할카드(청구인 측·국회 측·재판관단)와 가상 사례 카드 인쇄</label>
+    <label class="check"><input type="checkbox" id="tp5"> 아래 ‘원문 대조’ 항목을 국가법령정보센터·원문과 맞춰 보고 표시 지우기</label>
+    <h4>원문 대조 목록</h4>
+    <ul class="note" style="margin-top:0">
+      <li>공직선거법 제82조의8 제1항·제2항 문언, 벌칙(제255조)·과태료(제261조) 조항과 금액, 제250조의 딥페이크 가중 조항, 제148조(사전투표 기간)</li>
+      <li>인공지능 기본법 제31조(투명성 확보 의무)와 과태료 조항·시행령의 표시 방법</li>
+      <li>EU AI Act 제50조와 부속서 III 제8호 (b)목, 디지털 옴니버스 규정(EU) 2026/1744의 적용일</li>
+      <li>해외 사례(독일 숄츠 영상의 제작 주체와 삭제 조치), 프랑스 형법 제226-8조의 법정형</li>
+    </ul>
+    <p class="note"><b>중립 원칙</b> 도입 사례는 국적과 진영이 다른 세 사례로 골랐다(미국 전 대통령, 독일 총리, 국내 예비후보). 제82조의8 제1항의 위헌 여부에 대해 교수자의 결론은 말하지 않는다. 학생이 특정 정당·후보 이야기로 가면 “같은 기준을 상대 쪽 사례에도 똑같이 적용해 보자”로 돌린다.</p>
+  </div>
+
+  <div class="band">먼저 생각해요</div>
+  <p>지난주에 민지는 검증 5단계를 배웠다. 이번 주 민지의 휴대폰에는 아래 네 가지가 들어왔다. A·B·C는 실제로 퍼진 콘텐츠이고, D는 이 단원의 설명을 위해 만든 가상 사례다.</p>
+  <div class="msgs">
+    <div class="case"><span class="tag">실제 사례 · A · 2023년 3월, 트위터에서 퍼진 사진</span><p style="margin:4px 0">미국 트럼프 전 대통령이 경찰들에게 붙잡혀 끌려가는 장면을 찍은 듯한 사진 여러 장.</p></div>
+    <div class="case"><span class="tag">실제 사례 · B · 2023년 11월, 독일에서 퍼진 영상</span><p style="margin:4px 0">숄츠 독일 총리가 연설하듯 “독일대안당(AfD)에 대한 정당 금지 절차를 신청하겠다”고 말하는 영상.</p></div>
+    <div class="case"><span class="tag">실제 사례 · C · 2026년 2월, 지방선거 예비후보의 SNS</span><p style="margin:4px 0">외국 유명 시사주간지가 이 예비후보를 “지역 발전을 이끌 인물”로 선정했다고 소개하는 영상.</p></div>
+    <div class="case"><span class="tag">가상 사례 · D · 민지가 챗봇에게 물었다</span><p style="margin:4px 0">질문: “사전투표는 언제, 어디서 할 수 있어?”<br>답: “사전투표는 선거일 3일 전부터 이틀 동안, 주민등록 주소지의 사전투표소에서만 할 수 있습니다.”</p></div>
+  </div>
+  <div class="think">
+    <span class="tag">오늘의 질문</span>
+    <p>A·B·C는 진짜일까, AI일까? D의 답은 맞을까? 한국이라면 법은 이들을 어떻게 다룰까? 지금 적은 답은 4절에서 다시 비교한다.</p>
+  </div>
+  <div class="ans-label">내 첫 판단 (진짜·AI / D의 답은 맞는가 / 법적 평가)</div>
+  <textarea class="ans" id="q0" placeholder="A: &#10;B: &#10;C: &#10;D: "></textarea>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 1교시 · 약 10분</h5><dl><dt>진행</dt><dd>A·B·C를 한 장씩 띄우고 “진짜라고 생각하면 손” → “AI라고 생각하면 손”을 묻는다. D는 “이 답에서 틀린 곳이 있을까?”만 묻는다. 손 든 수를 칠판 구석에 적어 두고 4절까지 지우지 않는다.</dd><dt>예상 반응</dt><dd>A는 AI라고 맞히는 학생이 많지만, B와 C는 진짜라고 답하는 비율이 높다. D는 대부분 그럴듯하다고 넘긴다. 세 개 모두 AI이고 D의 답에는 틀린 곳이 두 군데 있다는 점이 4절의 반전이다.</dd><dt>주의</dt><dd>정답은 말하지 않는다. “오늘 끝날 때 직접 확인합니다”로 넘긴다.</dd></dl></div>
+  <div class="card goal">
+    <h3>이 단원의 학습목표</h3>
+    <ul>
+      <li>AI가 선거에서 도구로 쓰이는 면과 위험이 되는 면(딥페이크, 챗봇의 오답)을 실제 사례로 설명할 수 있다.</li>
+      <li>딥페이크와 챗봇의 환각을 10주차에 배운 정보 무질서의 유형으로 구별할 수 있다.</li>
+      <li>공직선거법 제82조의8의 구조(90일 금지, 평시 표시 의무, 허위사실공표의 가중)를 구별할 수 있다.</li>
+      <li>‘금지’와 ‘표시’라는 두 규제 방식을 한국·EU·미국 사례로 비교할 수 있다.</li>
+      <li>제82조의8 제1항의 위헌 여부를 과잉금지원칙에 따라 자기 논거로 주장할 수 있다.</li>
+    </ul>
+  </div>
+
+  <!-- 1 -->
+  <div class="band">1. 문제의 발견: 세 가지 질문</div>
+  <p>10주차에는 의심스러운 정보를 검증 5단계(멈추기·출처·교차 확인·원자료·맥락)로 확인하는 법을 배웠다. 그 방법은 적어도 사진과 영상은 실제 장면을 찍은 것이라는 전제 위에 서 있었다. 생성형 AI는 이 전제를 흔든다. 누구나 몇 분 만에 실제와 구별하기 어려운 사진·영상·음성을 만들 수 있고, 질문하면 그럴듯한 답을 바로 내놓는다.</p>
+  <p>네 콘텐츠를 판단하려고 하면 이 문제는 세 가지 질문으로 나뉜다.</p>
+  <ol class="steps">
+    <li><span class="num">1</span><div class="body"><b>AI는 선거를 어떻게 바꾸고 있는가?</b>AI는 위험이기만 할까? 딥페이크는 얼마나 늘었고 누가 만드는가? 챗봇의 오답은 사람의 거짓과 무엇이 다른가? → 2절</div></li>
+    <li><span class="num">2</span><div class="body"><b>법은 무엇을 막고, 어떻게 막는가?</b>한국은 선거 직전 딥페이크를 진위와 관계없이 금지한다. 다른 나라는 표시하게 한다. 어느 방식이 정당한가? → 3절</div></li>
+    <li><span class="num">3</span><div class="body"><b>시민은 무엇을 해야 하는가?</b>눈으로 확인하기가 어려워졌을 때 검증 5단계는 어떻게 바뀌어야 하는가? → 3절 (4), 4절</div></li>
+  </ol>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 1교시 · 약 3분</h5><dl><dt>연결</dt><dd>10주차 마지막에 남긴 두 질문(“딥페이크에도 5단계가 통할까?”, “진위와 관계없는 90일 금지는 정당한가?”)을 화면에 다시 띄운다. 오늘 3교시에 이 두 질문에 답한다고 예고한다.</dd><dt>판서</dt><dd>① 무엇이 바뀌었나 ② 법은 어떻게 막나 ③ 시민은 무엇을 하나 — 세 줄로 적어 두고 단원 내내 돌아온다.</dd></dl></div>
+
+  <!-- 2 -->
+  <div class="band">2. 개념: AI는 선거를 어떻게 바꾸고 있는가</div>
+
+  <h3>(1) AI의 두 얼굴: 정책선거의 도구</h3>
+  <p>AI가 선거에 위험만 되는 것은 아니다. 중앙선거관리위원회는 언론 기사를 기계로 분석해 지역별 민생 이슈를 뽑고, 이를 후보자가 공약을 만들 때 참고할 자료로 제공했다. 2020년 5월부터 2023년 11월까지 29개 매체의 온라인 뉴스를 모아 <b>토픽모델링</b>으로 주제를 추출한 것이다. 토픽모델링은 많은 문서에서 자주 함께 나오는 단어 묶음을 찾아 문서들이 다루는 ‘주제’를 추정하는 통계 기법이다. <span class="note">(빅데이터 보고서 1–2쪽)</span></p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>토픽</th><th>기사 수</th><th>주요 키워드(등장 횟수)</th></tr></thead>
+      <tbody>
+        <tr><th>문화</th><td>3,566</td><td>하회별신굿탈놀이(294), 국제컨벤션센터(237), 인류무형문화유산(205)</td></tr>
+        <tr><th>사건사고</th><td>2,338</td><td>소방당국(765), 산불발생(627), 과수화상병(574)</td></tr>
+        <tr><th>산업</th><td>1,251</td><td>SK바이오사이언스(555), 스마트팜(225), 사업추진(183)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">안동시 관련 뉴스 18,062건의 상위 토픽 (빅데이터 보고서 279–280쪽)</p>
+  <p>이 표는 데이터가 무엇을 보여 주고 무엇을 보여 주지 못하는지 함께 드러낸다. 표가 보여 주는 것은 언론이 안동에 관해 많이 보도한 주제다. 주민이 가장 절실하게 여기는 문제와 같다는 보장은 없다. 사건사고가 상위에 오른 것도 사고를 크게 보도하는 언론의 관행 때문일 수 있다. 데이터는 언론의 관심을 비추는 거울이지 주민의 목소리 자체는 아니다.</p>
+  <p>선거관리 업무에 AI를 쓰는 문제도 같은 기준으로 볼 수 있다. 선관위 연구는 업무마다 위험도를 다르게 평가했다. 투표소 위치를 정하는 데 쓰는 것은 위험이 낮다. 유권자 명부 관리에는 사람이 결과를 확인하고 최종 결정하는 방식(human-in-the-loop)으로만 쓸 수 있다. 투표소 영상을 AI로 감시하는 것은 비밀투표와 충돌해 위험이 매우 높다. <span class="note">(AI 보고서 193쪽)</span></p>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 1교시 · 약 10분</h5><dl><dt>발문</dt><dd>“이 세 토픽이 안동 시민의 민생 이슈를 대표한다고 볼 수 있을까?” 우리 지역 자료라 반응이 좋다. 학생이 사는 다른 지역을 물어 확장해도 된다.</dd><dt>짚을 점</dt><dd>‘많이 보도된 것’과 ‘주민이 절실한 것’의 차이. 이 구별이 3교시 챗봇 실습(그럴듯함 ≠ 정확함)과 이어진다.</dd><dt>시간 조절</dt><dd>선거관리 AI 위험도는 세 줄만 읽고 넘어가도 된다.</dd></dl></div>
+
+  <h3 data-pptx-image="../assets/pptx/ch10-spread.jpg" data-pptx-side="right">(2) 딥페이크: 얼마나 늘었고 누가 만드는가</h3>
+  <p><b>딥페이크(deepfake)</b>는 딥러닝(deep learning)과 가짜(fake)를 합친 말로, AI로 만든 가짜 이미지·영상·음성을 말한다. 실제 인물의 얼굴이나 목소리를 학습시켜, 그 사람이 하지 않은 말과 행동을 한 것처럼 보이게 만든다. 공직선거법은 이를 “인공지능 기술 등을 이용하여 만든 실제와 구분하기 어려운 가상의 음향, 이미지 또는 영상 등”이라고 정의하고 <b>딥페이크영상등</b>이라고 부른다.<span class="verify">원문 대조</span></p>
+  <div class="rail">해외: 선거마다 등장한 딥페이크</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>시기</th><th>사례</th><th>보여 주는 점</th></tr></thead>
+      <tbody>
+        <tr><th>2023.2</th><td>미국 바이든 대통령의 실제 방송 영상에 AI로 만든 혐오 발언 음성을 입힌 영상. 5일 만에 ‘좋아요’ 1만 2천 개 이상</td><td>진짜 영상과 가짜 음성의 결합</td></tr>
+        <tr><th>2023.3</th><td>트럼프 전 대통령 체포 이미지. 탐사보도 매체 벨링캣의 창립자가 “농담으로” 만들었는데 이틀 만에 약 500만 회 조회. AI 생성 표시는 없었다</td><td>해칠 의도 없이 만들어도 파급력이 크다</td></tr>
+        <tr><th>2023.11</th><td>독일의 한 정치 예술 단체가 숄츠 총리의 AfD 금지 선언 영상을 만들어 배포했고, 당국의 삭제 조치가 뒤따랐다<span class="verify">원문 대조</span></td><td>‘좋은 목적’을 내세운 딥페이크</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">(AI 보고서 49–51·71–72쪽)</p>
+  <div class="rail">국내: 2년 사이 25배</div>
+  <p>한국에서도 딥페이크는 선거마다 크게 늘었다. 아래는 선관위가 플랫폼 사업자에게 삭제를 요청한 딥페이크 게시물 수다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>선거</th><th>삭제 요청</th><th>집계 기간</th></tr></thead>
+      <tbody>
+        <tr><th>2024 제22대 국회의원선거</th><td>388건</td><td>선거 기간</td></tr>
+        <tr><th>2025 제21대 대통령선거</th><td>10,510건</td><td>2025.4.4.~6.3.</td></tr>
+        <tr><th>2026 제9회 전국동시지방선거</th><td>10,319건</td><td>2026.1.1.~5.27.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">(한국경제 2026.5.26., 경향신문 2026.5.28. 지방선거 관련 게시물만 따로 세면 9,956건이다.) 2026년 1~5월 딥페이크·AI 허위정보로 적발된 사람은 921명이었다.</p>
+  <p>누가 만드는가? 외국의 조직적 공작을 먼저 떠올리기 쉽지만, 국내에서 적발된 사례의 상당수는 후보 본인, 공공기관 직원, 장난으로 만든 개인이었다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>사례</th><th>무슨 일이 있었나</th><th>조치</th></tr></thead>
+      <tbody>
+        <tr><th>안동<br>(2025.12)</th><td>안동시설관리공단 간부가 시장을 칭찬하는 AI 노래를 직원 워크숍에서 틀었고, 한 직원이 이를 선거구민이 있는 단체 대화방에 공유했다.</td><td>두 사람에게 각각 과태료 500만 원(간부는 경찰 고발도). 표시 의무 규정에 따른 첫 과태료</td></tr>
+        <tr><th>울산 남구<br>(2026.2)</th><td>구청장 예비후보가 외국 시사주간지가 자신을 선정했다는 AI 영상을 AI 표시 없이 SNS에 올렸다(사례 C).</td><td>딥페이크 허위사실공표로 첫 고발, 표시 의무 위반 과태료 500만 원. 이후 후보 사퇴</td></tr>
+        <tr><th>청도<br>(2026)</th><td>특정 군수 후보 주변에 지지자가 구름처럼 몰린 듯한 AI 이미지가 단체 대화방에 퍼졌다.</td><td>캠프가 선관위에 자진 신고</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>청도 사례는 딥페이크가 꾸며 내는 것이 특정한 ‘사실’만이 아니라는 점을 보여 준다. 군중 이미지는 “이 후보가 대세”라는 분위기를 만든다. 분위기는 거짓인지 증명하기도 어렵다.</p>
+  <p class="see">영상: <a href="https://www.youtube.com/watch?v=H3rxMTLvGNo" target="_blank" rel="noopener">KBS, “딥페이크 영상, 오인 가능성 있다면 선거법 위반”(2025.4.14.)</a> · <a href="https://www.youtube.com/watch?v=ooVXgwohnek" target="_blank" rel="noopener">KBS, 선관위 대선후보 ‘딥페이크 영상 제작자’ 첫 고발(2025.5.30.)</a></p>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 1교시 · 약 15분</h5><dl><dt>진행</dt><dd>해외 세 사례는 ‘보여 주는 점’ 열만 강조하고 빠르게 넘긴다. 국내 추이 표에서 388 → 10,510을 칠판에 크게 쓰고 “2년 사이 무엇이 바뀌었을까?”를 묻는다(도구가 쉬워짐, 숏폼 확산, 단속 강화로 더 많이 잡힘 — 세 가지 모두 가능하다는 점까지).</dd><dt>짚을 점</dt><dd>삭제 요청 건수가 늘어난 이유에는 감시를 강화한 것도 포함된다. 건수 증가 = 딥페이크 증가로 단정하지 않는 것도 리터러시다.</dd><dt>우리 지역</dt><dd>안동 사례는 학생 주목도가 높다. 노래를 ‘만든’ 사람과 ‘공유한’ 사람 모두 과태료를 받았다는 점을 짚는다.</dd><dt>주의</dt><dd>울산 사례는 C의 정답이므로 4절 전에 사례 C라는 점을 밝히지 않으려면 이 줄을 가린 채 진행한다.</dd></dl></div>
+
+  <h3>(3) 챗봇의 오답: 생성형 AI의 선거 정보 오류</h3>
+  <p>딥페이크가 누군가 일부러 만든 거짓이라면, 챗봇의 오답은 아무도 의도하지 않은 거짓이다. 생성형 AI는 학습한 데이터를 바탕으로 다음에 올 가능성이 높은 단어를 이어 붙여 문장을 만든다. 그래서 사실을 확인하지 않은 채 그럴듯한 내용을 지어낼 수 있다. 이를 <input class="blank" id="b1" data-a="환각|hallucination|할루시네이션" aria-label="생성형 AI의 오류"><span class="key">환각(hallucination)</span>이라고 한다. <span class="note">(AI 보고서 138쪽)</span></p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>연구</th><th>대상</th><th>결과</th></tr></thead>
+      <tbody>
+        <tr><th>AlgorithmWatch(2023)</th><td>Bing Chat, 독일·스위스 선거</td><td>답변의 약 3분의 1이 틀리거나 지어낸 내용</td></tr>
+        <tr><th>AI Democracy Projects·Proof News(2024.2)</th><td>챗봇 5종, 미국 선거 절차</td><td>답변의 절반 이상이 부정확. 네바다주는 2019년부터 선거 당일 유권자 등록을 허용했는데 5종 가운데 4종이 불가능하다고 답했다</td></tr>
+        <tr><th>AlgorithmWatch·CASM(2024.8)</th><td>독일 주 선거 관련 답변 10만여 건</td><td>오답 비율 GPT-3.5 약 30%, GPT-4o 약 14%. “작센주 선거일은 9월 22일”이라는 거짓 전제를 넣자 GPT-3.5는 98% 그대로 따랐다</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">(CBS News 2024.2.27., AlgorithmWatch 2024.8.29.)</p>
+  <p>마지막 연구는 챗봇이 질문에 담긴 거짓 전제를 고치지 않고 따라가는 경향을 보여 준다. 투표일, 투표소, 등록 방법 같은 <b>절차 정보</b>가 틀리면 결과는 10주차에서 본 투표 방해 허위정보와 같다. 유권자가 엉뚱한 날 투표소에 가거나 투표를 포기한다.</p>
+  <p>10주차의 정보 무질서 세 유형에 대입하면, 챗봇의 환각은 내용은 거짓이지만 해칠 의도가 없으므로 <input class="blank" id="b2" data-a="오정보|misinformation|잘못된정보" aria-label="환각의 유형"><span class="key">오정보(misinformation)</span>에 가깝다. 그러나 사람의 오정보와 두 가지가 다르다. 수많은 사람이 같은 질문에 같은 오답을 받을 수 있고, 답이 정돈된 문장이어서 권위 있게 보인다.</p>
+  <button type="button" class="blank-check no-print" data-check="b1,b2">빈칸 확인</button>
+
+  <h3>(4) AI는 왜 더 위험한가</h3>
+  <p>거짓말과 조작된 사진은 AI 이전에도 있었다. AI가 바꾼 것은 세 가지다. 첫째, <b>비용</b>이다. 전문 편집 기술 없이 누구나 몇 분 만에 만든다. 둘째, <b>속도와 규모</b>다. 숏폼 영상으로 짧은 시간에 반복 재생되고 재가공된다. 셋째, <b>눈으로 확인하기의 붕괴</b>다. 10주차 검증 5단계의 마지막 단계는 맥락을 확인하는 것이었는데, 영상 자체를 꾸밀 수 있으면 영상을 보는 것만으로는 확인이 되지 않는다.</p>
+  <div class="card sand">
+    <h4>심화 · 거짓말쟁이의 배당(liar’s dividend)</h4>
+    <p>딥페이크가 흔해지면 반대 방향의 문제도 생긴다. 불리한 <b>진짜</b> 영상이나 녹음이 공개되어도 “그건 AI로 만든 가짜”라고 부인할 수 있게 되는 것이다. 미국의 법학자 체스니(Chesney)와 시트론(Citron)은 이를 ‘거짓말쟁이의 배당’이라고 불렀다. 가짜가 진짜처럼 보이는 문제와 진짜가 가짜로 의심받는 문제가 함께 온다는 뜻이다.</p>
+    <p>이 때문에 각국은 무엇이 가짜인지 가려내는 것만큼 무엇이 진짜인지 증명하는 장치에도 관심을 둔다. 사진·영상이 언제 어떤 기기와 프로그램으로 만들어지고 편집되었는지를 파일에 기록하는 ‘콘텐츠 출처 증명’ 기술(C2PA 표준 등)이 그 예다.</p>
+  </div>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 1교시 · 약 12분</h5><dl><dt>발문</dt><dd>“챗봇의 환각은 세 유형 가운데 무엇인가?” → 오정보. 이어서 “그럼 사람의 오정보와 똑같이 다루면 될까?”로 규모와 권위의 차이를 끌어낸다.</dd><dt>예상 질문</dt><dd>“요즘 챗봇은 더 정확하지 않나?” → 2023→2024 연구에서도 오답률이 줄었지만 0은 아니고, 거짓 전제에 따라가는 경향은 남았다고 답한다. 특정 회사 제품의 우열을 가리는 쪽으로 가지 않는다.</dd><dt>판서</dt><dd>비용 ↓ · 속도·규모 ↑ · 눈으로 확인 ✕ — 세 줄. 심화 상자는 ‘거짓말쟁이의 배당’이라는 이름만 소개해도 된다.</dd></dl></div>
+
+  <!-- 3 -->
+  <div class="band" data-pptx-image="../assets/pptx/ch10-law.jpg" data-pptx-side="left">3. 법적 기준: 법은 AI 선거를 어떻게 규율하는가</div>
+  <p>AI 생성물에 대한 규제는 크게 두 방식으로 나뉜다. 일정한 행위를 아예 못 하게 하는 <b>금지</b>, 하되 AI로 만들었다는 사실을 알리게 하는 <b>표시</b>다. 한국의 공직선거법은 두 방식을 기간에 따라 나누어 쓴다.</p>
+
+  <h3>(1) 공직선거법 제82조의8의 구조</h3>
+  <p>2023년 12월 공직선거법에 제82조의8이 새로 들어와 2024년 1월부터 시행되었다. 2024년 4월 국회의원선거가 이 조문이 적용된 첫 선거다.</p>
+  <div class="law"><b>공직선거법 제82조의8(딥페이크영상등을 이용한 선거운동)</b>① 누구든지 선거일 전 90일부터 선거일까지 선거운동을 위하여 인공지능 기술 등을 이용하여 만든 실제와 구분하기 어려운 가상의 음향, 이미지 또는 영상 등(딥페이크영상등)을 제작·편집·유포·상영 또는 게시하는 행위를 하여서는 아니 된다.<br>② 누구든지 제1항의 기간이 아닌 때에 선거운동을 위하여 딥페이크영상등을 제작·편집·유포·상영 또는 게시하는 경우에는 해당 정보가 인공지능 기술 등을 이용하여 만든 가상의 정보라는 사실을 명확하게 인식할 수 있도록 표시하여야 한다. (요지)<span class="verify">원문 대조</span></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>구분</th><th>무엇을 규율하나</th><th>제재</th></tr></thead>
+      <tbody>
+        <tr><th>선거일 전 90일~선거일<br>(제1항)</th><td><input class="blank" id="b3" data-a="금지|전면금지|제작금지" aria-label="제1항의 방식"><span class="key">금지</span> — 선거운동을 위한 딥페이크의 제작·편집·유포·상영·게시. 내용의 진위, 당사자의 동의, AI 표시 여부를 묻지 않는다</td><td>7년 이하 징역 또는 1천만 원 이상 5천만 원 이하 벌금<span class="verify">원문 대조</span></td></tr>
+        <tr><th>그 밖의 기간<br>(제2항)</th><td><input class="blank" id="b4" data-a="표시|표시의무|라벨링" aria-label="제2항의 방식"><span class="key">표시</span> — 가상의 정보라는 사실을 명확하게 알 수 있도록 알려야 한다</td><td>1천만 원 이하 과태료<span class="verify">원문 대조</span></td></tr>
+        <tr><th>기간과 관계없이<br>(제250조)</th><td>딥페이크영상등을 이용해 후보자에 관한 허위사실을 공표한 경우</td><td>일반 허위사실공표보다 가중 처벌<span class="verify">원문 대조</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" class="blank-check no-print" data-check="b3,b4">빈칸 확인</button>
+  <p>세 칸을 구별하는 열쇠는 <b>기간</b>과 <b>허위</b>다. 선거일 전 90일 안이면 금지, 그 밖의 기간이면 표시, 거짓을 퍼뜨렸다면 기간과 상관없이 허위사실공표로 무겁게 처벌한다. 그리고 세 칸 모두 ‘선거운동을 위하여’라는 요건이 깔려 있다. <b>선거운동</b>은 특정 후보자를 당선되게 하거나 되지 못하게 하려는 행위를 말한다(제58조). 선거와 관계없는 패러디나 단순한 정치적 의견 표명은 여기에 들어가지 않는다.<span class="verify">원문 대조</span></p>
+  <p>10주차의 제250조와 비교하면 제1항의 특징이 드러난다. 제250조는 내용이 거짓이고 당선·낙선 목적이 있어야 처벌했다. 제1항은 내용이 사실이어도, 후보 본인이 동의했어도, AI로 만들었다고 표시했어도 금지한다. 내용이 아니라 <b>기술을 사용하는 것 자체</b>를 규제하는 셈이다. 10주차에 배운 국가 주도 내용규제보다도 범위가 넓다. <span class="note">(국회입법조사처 보고서 27쪽, 한국기자협회 2024.2.27.)</span></p>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 2교시 · 약 15분</h5><dl><dt>판서</dt><dd>“기간 안 = 금지 / 기간 밖 = 표시 / 거짓이면 = 가중” 세 줄을 크게 쓰고, 그 위에 ‘선거운동을 위하여’를 지붕처럼 덮어 그린다.</dd><dt>확인 질문</dt><dd>“후보 본인이 자기 목소리를 AI로 복제해 외국어 공약 영상을 만들고 ‘AI로 만든 음성’이라고 붙였다. 선거 60일 전이라면?” → 제1항 위반. 학생들이 놀라는 지점이 다음 절의 헌법 쟁점이다.</dd><dt>오개념</dt><dd>“딥페이크는 다 불법.” → 선거운동 목적이 아니면 제82조의8은 적용되지 않는다(다른 법의 문제는 별개).</dd></dl></div>
+
+  <h3>(2) 헌법소원 쟁점: 진위를 묻지 않는 금지는 과도한가</h3>
+  <p>시민단체 오픈넷은 2025년 10월 제82조의8 제1항이 표현의 자유를 침해한다며 헌법재판소에 헌법소원을 청구했다. <span class="note">(국회입법조사처 보고서 34쪽)</span><span class="verify">원문 대조: 청구일·사건번호·결정 여부</span> <b>헌법소원</b>은 국가 권력 때문에 기본권을 침해받았다고 주장하는 사람이 헌법재판소에 구제를 청구하는 제도다. 쟁점은 “기술만을 이유로 90일 동안 일괄 차단하는 것이 지나친가”다.</p>
+  <p>9주차 특강에서 배운 <b>과잉금지원칙</b>은 기본권을 제한하는 법이 네 단계를 모두 통과해야 한다고 본다. 각 단계에 양쪽 논거를 대입하면 다음과 같다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>단계</th><th>위헌이라는 쪽</th><th>합헌이라는 쪽</th></tr></thead>
+      <tbody>
+        <tr><th>목적의 정당성</th><td colspan="2">선거의 공정과 유권자의 올바른 판단을 보호한다는 목적은 양쪽 모두 인정한다.</td></tr>
+        <tr><th>수단의 적합성</th><td>기술 발전 속도를 법이 따라가지 못한다. 금지 이후에도 삭제 요청은 2년 사이 25배 넘게 늘었다.</td><td>금지 규정이 있어야 선관위가 빠르게 삭제를 요청하고 차단할 근거가 생긴다.</td></tr>
+        <tr><th>침해의 최소성</th><td>AI 표시 의무라는 덜 제한적인 대안이 있다. 미국 캘리포니아주는 후보를 ‘거짓으로 묘사’한 경우만 규제한다. 진위·동의를 묻지 않으니 후보 본인의 홍보나 풍자까지 막힌다.</td><td>숏폼은 짧은 시간에 반복·재생산되고 유권자는 진위를 일일이 확인하지 않는다. 표시는 잘라 내거나 다시 찍으면 사라진다.</td></tr>
+        <tr><th>법익의 균형성</th><td>90일은 정치적 표현이 가장 활발한 기간이다. 선관위 담당자도 적발 사례 대부분이 “개인적인 표현행위 수준”이었다고 밝혔다.</td><td>선거가 끝나면 결과를 되돌릴 수 없다. 금지 기간을 선거 직전 90일로 한정했다.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">(한국기자협회 2024.2.27. — 이인호 교수·선관위 담당자 발언, 더팩트 2026.2.22. — 신율 교수 발언)</p>
+  <p>국회에도 전면 금지를 표시 의무와 유통 관리 중심으로 바꾸고, 플랫폼에 알고리즘 관리 노력을 요구하는 개정안이 발의되어 있다. <span class="note">(더팩트 2026.2.22.)</span><span class="verify">원문 대조: 개정안 진행 상황</span></p>
+  <div class="ans-label">생각해 보기 · 네 단계 가운데 어느 단계가 가장 다툼이 될 것 같은가? 이유는?</div>
+  <textarea class="ans" id="t1" placeholder="단계 / 이유"></textarea>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 2교시 · 약 15분</h5><dl><dt>진행</dt><dd>표를 한 행씩 공개한다. 각 행에서 “어느 쪽이 더 설득력 있나?”를 묻지 말고 “양쪽이 무엇을 다르게 보고 있나?”를 묻는다(예: 최소성 — 표시가 실제로 작동하느냐에 대한 사실 판단의 차이).</dd><dt>짝 토의</dt><dd>3분. ‘생각해 보기’ 칸을 채우게 하고 답은 3교시 모의재판에서 쓰게 한다.</dd><dt>중립</dt><dd>교수자는 어느 쪽 결론도 제시하지 않는다. 결정이 이미 나왔다면 수업 직전 확인해 3교시 선고 뒤에 실제 결정 요지와 비교한다.</dd></dl></div>
+
+  <h3>(3) AI 생성물 표시 의무: 누가 무엇을 표시하는가</h3>
+  <p>표시 의무는 선거법에만 있지 않다. 2026년 1월 22일 시행된 「인공지능 발전과 신뢰 기반 조성 등에 관한 기본법」(AI 기본법)도 AI 생성물을 표시하게 하고, EU와 여러 나라도 같은 방향으로 가고 있다. 비교할 때는 <b>누구에게</b> 의무를 지우는지를 보아야 한다. AI를 만들어 서비스하는 기업에 지우는지, 그 결과물을 써서 선거운동을 하는 사람에게 지우는지가 다르다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>제도</th><th>누구의 의무인가</th><th>무엇을 해야 하나</th><th>시행</th></tr></thead>
+      <tbody>
+        <tr><th>공직선거법 제82조의8 제2항</th><td>선거운동을 하는 사람(누구나)</td><td>90일 밖의 기간에 딥페이크로 선거운동을 하면 가상의 정보임을 표시</td><td>2024.1.</td></tr>
+        <tr><th>AI 기본법 제31조</th><td><input class="blank" id="b5" data-a="AI사업자|인공지능사업자|사업자|기업" aria-label="AI 기본법 의무 주체"><span class="key">AI사업자</span>(개발·제공 기업)</td><td>① AI 기반 서비스라는 사실을 미리 알림 ② 생성물에 AI로 만들었다는 표시(기계가 읽는 방식 가능) ③ 실제와 구별하기 어려운 생성물은 사람이 분명히 알 수 있게 표시. 예술·창작물은 감상을 해치지 않는 방식으로</td><td>2026.1.22. (과태료는 1년 이상 계도 기간 뒤)<span class="verify">원문 대조</span></td></tr>
+        <tr><th>EU AI Act 제50조</th><td>제공자 / 배포자</td><td>제공자: 생성물에 기계가 읽을 수 있는 표시. 배포자: 딥페이크, 공익에 관한 사안을 알리는 AI 텍스트임을 공개. 풍자·예술은 감상을 해치지 않는 방식으로</td><td>2026.8.2. (기존 시스템의 기계 표시 의무는 2026.12.2.)</td></tr>
+        <tr><th>미국 28개 주(2025)</th><td>주마다 다름</td><td>선거 딥페이크에 공개 표시를 요구하는 방식이 많다. 연방 차원의 일반 규제는 없다</td><td>주별</td></tr>
+        <tr><th>영국</th><td>선거 콘텐츠를 내보내는 사람</td><td>딥페이크 금지법 없이 ‘디지털 임프린트’로 누가 만들어 내보냈는지 공개</td><td>2023.11.</td></tr>
+        <tr><th>프랑스</th><td>유포자</td><td>동의 없이 만든 딥페이크, AI로 만들었다는 사실을 밝히지 않은 딥페이크의 유포를 처벌(형법 제226-8조). 온라인 유포는 가중</td><td>2024.5.<span class="verify">원문 대조</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" class="blank-check no-print" data-check="b5">빈칸 확인</button>
+  <p class="note">(국회입법조사처 보고서 9·12·16–17·20·23–24쪽, SK AX 「AI 기본법 해설」, Morgan Lewis 2026.8.)</p>
+  <p>같은 한국 법 안에서도 접근이 다르다는 점이 눈에 띈다. 공직선거법은 선거운동을 하는 <b>개인</b>에게 선거 직전에는 금지를, 평소에는 표시를 요구한다. AI 기본법은 AI를 만드는 <b>기업</b>에 표시 의무를 지운다. 기업이 생성 단계에서 표시를 붙이면 개인이 일일이 표시하지 않아도 어느 정도 걸러지지만, 해외 서비스나 표시를 지우는 프로그램까지 막기는 어렵다.</p>
+
+  <div class="card">
+    <h4>심화 · EU의 또 다른 장치: 선거에 영향을 주는 고위험 AI</h4>
+    <p>EU AI Act는 표시 의무와 별도로, 선거·국민투표의 결과나 유권자의 투표 행태에 영향을 주려는 AI 시스템을 <b>고위험 AI</b>로 분류한다(부속서 III 제8호 (b)목). 고위험 AI를 시장에 내놓으려면 위험 관리, 데이터 품질 관리, 사람의 감독 같은 엄격한 요건을 지켜야 한다. 다만 선거 캠프가 자원봉사자 일정을 정리하는 것처럼 시민에게 직접 닿지 않는 내부 도구는 제외된다.</p>
+    <p>고위험 AI 규정의 적용일은 원래 2026년 8월 2일이었으나, 2026년 7월 27일 발효된 ‘디지털 옴니버스’ 규정(EU 2026/1744)으로 2027년 12월 2일로 미뤄졌다. 규제가 너무 이르다는 산업계의 요구가 받아들여진 것이다.<span class="verify">원문 대조</span> <span class="note">(National Law Review, AI 보고서 196쪽)</span></p>
+  </div>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 2교시 · 약 12분</h5><dl><dt>진행</dt><dd>표의 ‘누구의 의무인가’ 열만 먼저 보여 주고 학생에게 두 묶음(개인 / 기업)으로 나누게 한다. 그다음 ‘무엇을 해야 하나’를 공개한다.</dd><dt>짚을 점</dt><dd>한국 안에서도 선거법(개인·금지+표시)과 AI 기본법(기업·표시)이 다르다. EU도 제공자와 배포자를 나눈다. 의무 주체를 어디에 두느냐가 실효성과 표현의 자유 부담을 함께 바꾼다.</dd><dt>시간 조절</dt><dd>미국·영국·프랑스 행은 한 줄씩만 읽는다. 심화 상자는 ‘고위험 AI’라는 이름과 연기 사실만 소개한다.</dd></dl></div>
+
+  <h3>(4) 세 가지 접근과 시민의 몫</h3>
+  <p>지금까지 본 대응은 세 접근으로 정리할 수 있다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>접근</th><th>예</th><th>장점</th><th>약점</th></tr></thead>
+      <tbody>
+        <tr><th>금지</th><td>한국 제82조의8 제1항</td><td>기준이 분명하고 빠르게 대응한다</td><td>표현의 자유를 크게 좁힌다. 진짜 내용과 풍자까지 막는다</td></tr>
+        <tr><th>표시</th><td>EU AI Act, 미국 주법, AI 기본법, 프랑스</td><td>표현은 허용하고 판단은 유권자에게 맡긴다</td><td>표시를 지우거나 잘라 내면 무력해진다</td></tr>
+        <tr><th>자율·역량</th><td>스위스 주요 5개 정당의 AI 사용 협약(2023), 핀란드·독일의 미디어 리터러시 교육</td><td>국가의 개입이 가장 적다</td><td>시간이 걸리고 강제력이 없다</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>선관위 AI 보고서는 결론에서 세 접근을 함께 써야 한다고 본다. 특히 핀란드와 독일이 허위정보에 강한 이유로 다양한 미디어, 폭넓은 시민교육, 여러 갈래의 소통 채널을 든다. 핀란드는 2023년 유럽 미디어 리터러시 지수에서 41개국 가운데 1위였다. <span class="note">(AI 보고서 197–203쪽)</span></p>
+  <p>어느 접근을 택하든 마지막에는 시민이 판단한다. 10주차의 검증 5단계는 AI 시대에 맞게 다음처럼 보완할 수 있다.</p>
+  <ol class="steps">
+    <li><span class="num">1</span><div class="body"><b>멈추기</b>감정이 먼저 움직였는가? AI 콘텐츠는 분노, 놀라움, ‘대세’ 분위기를 노린다.</div></li>
+    <li><span class="num">2</span><div class="body"><b>출처</b>누가 처음 올렸는가? 후보 본인이나 캠프인가, 익명 계정인가?</div></li>
+    <li><span class="num">3</span><div class="body"><b>표시 확인</b>AI 생성 표시, 워터마크, 콘텐츠 출처 정보가 있는가? 단, 표시가 없다고 진짜라는 뜻은 아니다.</div></li>
+    <li><span class="num">4</span><div class="body"><b>교차 확인과 원자료</b>그 장면이나 발언을 다른 언론이나 공식 발표도 전하는가? 원본(실제 잡지 표지, 선관위 안내)이 존재하는가? 챗봇의 답은 선관위·법령 원문으로 다시 확인한다.</div></li>
+    <li><span class="num">5</span><div class="body"><b>판단과 행동</b>확인되지 않으면 공유하지 않는다. 선거법 위반이 의심되면 선관위에 신고한다(국번 없이 1390).</div></li>
+  </ol>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 2교시 · 약 8분</h5><dl><dt>판서</dt><dd>금지 · 표시 · 자율 세 칸. “우리나라는 선거 직전에는 금지, 평소에는 표시, 그리고 시민교육”이라고 한 줄로 정리한다.</dd><dt>연결</dt><dd>10주차 5단계와 나란히 띄워 무엇이 바뀌었는지(3단계 ‘표시 확인’ 추가, ‘맥락·눈으로 보기’ 약화) 학생이 찾게 한다. 실습은 3교시에 한다.</dd><dt>확인</dt><dd>선관위 신고 번호 1390을 수업 전에 확인한다.<span class="verify">원문 대조</span></dd></dl></div>
+
+  <!-- 4 -->
+  <div class="band page-break">4. 사례에 적용</div>
+
+  <h3>(1) 네 콘텐츠로 돌아가기</h3>
+  <p>처음의 네 콘텐츠를 2·3절의 개념과 AI 시대의 검증 5단계로 다시 판단해 보자. 법적 평가는 그 콘텐츠가 한국에서 퍼졌다고 가정하고 쓴다. 먼저 스스로 적은 뒤 해설을 펼친다.</p>
+
+  <div class="mission">【A】<span>트럼프 체포 사진</span></div>
+  <textarea class="ans" id="a1" placeholder="판정 / 근거(5단계 중 어디서 판가름 났나) / 유형 / 법적 평가"></textarea>
+  <details class="sol"><summary>해설</summary>
+    <p><span class="stamp">AI</span> 탐사보도 매체 벨링캣의 창립자가 이미지 생성 AI로 “농담 삼아” 만든 이미지다. 당시 트럼프 전 대통령은 체포되지 않았다. 5단계 가운데 <b>교차 확인과 원자료</b>에서 판가름이 난다. 전직 대통령 체포라는 큰 사건을 다른 언론이 전혀 보도하지 않았다.</p>
+    <p><b>유형</b> 만든 사람에게는 해칠 의도가 없었다. 그러나 표시 없이 퍼지면서 진짜로 믿은 사람에게는 오정보가 되었다. 10주차에서 본 것처럼 유형의 경계는 유동적이다.</p>
+    <p><b>법적 평가</b> 한국이라도 선거운동 목적이 없는 장난이라면 제82조의8은 적용되지 않는다. 그러나 누군가 이 이미지를 선거 90일 안에 낙선 목적으로 퍼뜨렸다면 제1항 위반이 되고, 체포라는 허위사실을 공표한 것이므로 제250조의 가중 처벌도 문제 된다. 같은 이미지도 누가 무엇을 위해 쓰느냐에 따라 법적 평가가 달라진다.</p>
+  </details>
+
+  <div class="mission">【B】<span>숄츠 총리의 AfD 금지 선언 영상</span></div>
+  <textarea class="ans" id="a2" placeholder="판정 / 근거 / 유형 / 법적 평가"></textarea>
+  <details class="sol"><summary>해설</summary>
+    <p><span class="stamp">AI</span> 독일의 정치 예술 단체가 극우 정당 금지를 촉구하려고 만든 딥페이크다. 숄츠 총리는 그런 발표를 한 적이 없다. 5단계 가운데 <b>출처</b>(누가 처음 올렸나)와 <b>원자료</b>(총리실 공식 발표)에서 판가름이 난다.</p>
+    <p><b>유형</b> 제작자는 이것이 거짓임을 알았고 여론을 움직이려 했다. 목적이 정당 금지 촉구라는 ‘공익’이었다고 해도 내용은 거짓이므로 허위조작정보의 성격을 띤다.</p>
+    <p><b>법적 평가</b> 한국에서 선거 90일 안에 특정 정당 후보의 낙선을 노려 이런 영상을 퍼뜨리면 제82조의8 제1항 위반이다. 제1항은 목적이 좋은지 묻지 않는다. 다만 선거와 관계없는 시기에 정치적 주장을 위해 만든 것이라면 ‘선거운동’에 해당하는지부터 따져야 한다.</p>
+  </details>
+
+  <div class="mission">【C】<span>“외국 시사주간지가 선정한 인물” 영상</span></div>
+  <textarea class="ans" id="a3" placeholder="판정 / 근거 / 유형 / 법적 평가"></textarea>
+  <details class="sol"><summary>해설</summary>
+    <p><span class="stamp">AI</span> 2026년 2월 울산 남구청장 예비후보가 올린 AI 영상이다. 해당 시사주간지가 그를 선정한 사실은 없었다. 5단계 가운데 <b>표시 확인</b>(AI 표시 없음)과 <b>원자료</b>(잡지에 실제 표지나 기사가 있는가)에서 판가름이 난다.</p>
+    <p><b>유형</b> 후보 본인이 자기 경력을 부풀린 허위조작정보다. 딥페이크를 만드는 사람이 외부의 공작 세력만은 아니라는 점을 보여 준다.</p>
+    <p><b>법적 평가</b> 제82조의8의 세 칸이 모두 등장한다. 영상을 올린 2월은 6월 3일 선거일 전 90일보다 앞선 시기였으므로 제1항(금지)이 아니라 제2항(표시 의무)이 적용되고, 표시를 하지 않아 과태료 500만 원이 부과되었다. 동시에 당선 목적으로 자기 경력에 관한 허위사실을 공표했으므로 제250조 위반으로 고발되었다. 딥페이크 허위사실공표로는 첫 고발이었다. <span class="note">(헤럴드경제 2026.2.8.)</span></p>
+  </details>
+
+  <div class="mission">【D】<span>챗봇이 알려 준 사전투표 정보 (가상 사례)</span></div>
+  <textarea class="ans" id="a4" placeholder="판정 / 근거 / 유형 / 법적 평가"></textarea>
+  <details class="sol"><summary>해설</summary>
+    <p><span class="stamp">틀림</span> 틀린 곳이 두 군데다. 사전투표는 선거일 전 5일부터 2일 동안 하고, 주소지와 관계없이 전국 어느 사전투표소에서나 할 수 있다(공직선거법 제148조).<span class="verify">원문 대조</span> 5단계 가운데 <b>원자료</b>(선관위 안내, 법령)에서 판가름이 난다.</p>
+    <p><b>유형</b> 의도 없는 거짓, 곧 환각에 의한 오정보다. 그런데 이 답을 믿은 사람은 투표 기회를 놓칠 수 있다. 결과만 보면 투표 방해 허위정보와 같다.</p>
+    <p><b>법적 평가</b> 챗봇의 오답을 처벌하는 규정은 없다. 제82조의8은 선거운동을 위한 딥페이크를 다루고, AI 기본법의 표시 의무도 AI가 만든 결과물이라는 사실을 알리게 할 뿐 내용의 정확성을 보장하게 하지는 않는다. 법이 비어 있는 이 영역에서는 시민이 원자료를 확인하는 습관, 그리고 AI 기업의 자율적인 안전장치(선거 질문에 공식 안내 페이지를 연결하는 기능 등)가 중요해진다.</p>
+  </details>
+
+  <div class="ans-label">처음 판단과 비교하기 · 달라진 것은 무엇이고 왜 달라졌는가?</div>
+  <textarea class="ans" id="a5" placeholder="처음 판단 / 지금의 판단 / 바뀐 이유"></textarea>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 3교시 · 약 15분</h5><dl><dt>진행</dt><dd>4~5명씩 조를 짜고 A·B·C·D를 한 조에 하나씩 배정한다. 조별 검증 6분 → 조마다 1분 30초 발표 → 해설 3분. 발표 순서는 A → B → D → C로 하면 마지막에 제82조의8의 세 칸이 한 사례에 모두 나와 정리하기 좋다.</dd><dt>예상 오답</dt><dd>A를 “딥페이크니까 무조건 불법” → ‘선거운동을 위하여’ 요건을 짚는다. C를 “90일 안이니 제1항 위반” → 날짜를 계산하게 한다(6.3. 선거일 기준 90일 전은 3월 초).</dd><dt>정리 포인트</dt><dd>세 AI 콘텐츠의 법적 평가가 모두 다르고, D는 법이 다루지 못한다. “AI면 불법”이라는 직관과 “법이 다 막아 준다”는 기대가 모두 맞지 않는다.</dd><dt>마무리</dt><dd>1교시 손들기 결과를 다시 보여 준다.</dd></dl></div>
+
+  <h3>(2) 모의 헌법재판: 제82조의8 제1항은 위헌인가</h3>
+  <p>3절 (2)의 쟁점을 직접 판단해 보자. 청구인 측(오픈넷의 입장), 국회·선관위 측, 재판관단 5명으로 나눈다. 나머지 학생은 방청하며 아래 칸에 자신의 판단을 적는다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>시간</th><th>순서</th></tr></thead>
+      <tbody>
+        <tr><td class="nw">5분</td><td>역할별 준비: 3절 (2)의 4단계 표를 근거로 주장 정리</td></tr>
+        <tr><td class="nw">3분 + 3분</td><td>청구인 측 변론 → 국회·선관위 측 변론</td></tr>
+        <tr><td class="nw">2분 + 2분</td><td>상호 반박</td></tr>
+        <tr><td class="nw">5분</td><td>재판관단 공개 평의: 아래 가상 사례 세 개에 각각 적용</td></tr>
+        <tr><td class="nw">5분</td><td>결정 선고와 반대의견 발표</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="case">
+    <span class="tag">가상 사례 · 재판관단이 판단할 세 장면</span>
+    <ol style="margin:6px 0 0;padding-left:1.3em">
+      <li><b>선거 60일 전</b>, 후보 갑이 자기 목소리를 AI로 복제해 외국어 공약 영상을 만들고 “AI로 만든 음성입니다”라고 표시했다.</li>
+      <li><b>선거 30일 전</b>, 대학생 을이 두 후보가 랩 배틀을 하는 영상을 AI로 만들어, 누가 봐도 풍자인 줄 알게 올렸다.</li>
+      <li><b>선거 10일 전</b>, 익명 계정이 후보 병이 돈 봉투를 받는 장면을 AI로 만들어 퍼뜨렸다.</li>
+    </ol>
+  </div>
+  <div class="ans-label">나의 판단 · 위헌인가 합헌인가? 세 장면은 각각 어떻게 되어야 하는가?</div>
+  <textarea class="ans" id="a6" placeholder="결론(위헌/합헌) / 가장 중요한 근거(4단계 중) / 장면 1·2·3"></textarea>
+  <details class="sol"><summary>해설</summary>
+    <p><b>현행법에서는</b> 세 장면이 모두 제1항 위반이다. 장면 3은 거짓 내용을 공표했으므로 제250조의 가중 처벌도 함께 문제 된다.</p>
+    <p><b>표시 중심 개정안이라면</b> 장면 1은 표시를 했으므로 허용되고, 장면 2는 풍자임이 분명해 표시 요건을 충족하거나 예외로 다루어질 수 있다. 장면 3은 거짓이므로 여전히 처벌 대상이다.</p>
+    <p><b>판단의 핵심</b> 세 장면에 대한 결론이 갈리는 곳은 장면 1·2다. 장면 1·2까지 막는 것이 선거의 공정을 위해 꼭 필요한지(침해의 최소성), 장면 3을 막는 데는 제250조로 충분한지가 쟁점이다. 위헌 쪽은 “장면 3은 이미 제250조로 처벌하므로 제1항이 추가로 막는 것은 장면 1·2뿐”이라고 주장할 수 있고, 합헌 쪽은 “선거 직전에는 진짜와 가짜를 가릴 시간이 없으므로 기술 자체를 막는 것 외에 실효적인 수단이 없다”고 주장할 수 있다. 어느 결론이든 이 두 지점에 대한 근거를 갖추면 좋은 답이다.</p>
+  </details>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 3교시 · 약 25분</h5><dl><dt>구성</dt><dd>학생 수가 적으면 재판관단을 3명으로 줄인다. 재판관단에는 ‘결정문 서식’(주문 / 이유 — 4단계별 판단 / 반대의견)을 준다.</dd><dt>진행 팁</dt><dd>변론이 감정적으로 흐르면 “4단계 중 어느 단계 이야기인가?”를 묻는다. 재판관단 평의는 공개로 진행해 방청 학생이 판단 과정을 보게 한다.</dd><dt>교수자 정리</dt><dd>결론보다 ‘장면 1·2를 막을 필요가 있는가’라는 판단 지점을 학생이 찾았는지를 칭찬한다. 실제 헌재 결정이 나왔다면 선고 뒤 결정 요지와 비교한다. 교수자의 견해는 말하지 않는다.</dd></dl></div>
+
+  <!-- 5 -->
+  <div class="band">5. 정리와 확인</div>
+  <h3>주요 구별 표</h3>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>구별</th><th>기준</th><th>이 단원의 예</th></tr></thead>
+      <tbody>
+        <tr><th>딥페이크 / 챗봇의 환각</th><td><input class="blank" id="b6" data-a="해악의도|의도|해칠의도|의도성|고의" aria-label="구별 기준 1"><span class="key">누군가 일부러 만들었는가(의도)</span></td><td>사례 C / 사례 D</td></tr>
+        <tr><th>제82조의8 제1항 / 제2항</th><td><input class="blank" id="b7" data-a="기간|90일|선거일전90일|시기" aria-label="구별 기준 2"><span class="key">선거일 전 90일 안인가(기간)</span></td><td>선거 60일 전 공약 영상 / 2월의 울산 영상</td></tr>
+        <tr><th>제82조의8 제1항 / 제250조</th><td>내용이 거짓이어야 하는가</td><td>표시한 진짜 공약 영상 / 돈 봉투 딥페이크</td></tr>
+        <tr><th>공직선거법 표시 / AI 기본법 표시</th><td>누구의 의무인가</td><td>선거운동을 하는 개인 / AI사업자</td></tr>
+        <tr><th>금지 / 표시</th><td>판단을 누구에게 맡기는가</td><td>한국 제1항 / EU AI Act 제50조</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" class="blank-check no-print" data-check="b6,b7">빈칸 확인</button>
+
+  <h3>확인 문제</h3>
+  <div class="ans-label">1. [자기 말로 설명하기] 생성형 AI가 선거 허위정보 문제를 이전보다 어렵게 만든 이유를 세 가지 설명하라.</div>
+  <textarea class="ans" id="q1"></textarea>
+  <div class="ans-label">2. [비슷한 개념 구별하기] 딥페이크와 챗봇의 환각을 10주차의 정보 무질서 유형으로 구별하고, 챗봇의 오정보가 사람의 오정보와 다른 점을 쓰라.</div>
+  <textarea class="ans" id="q2"></textarea>
+  <div class="ans-label">3. [비슷한 개념 구별하기] 공직선거법 제82조의8 제2항의 표시 의무와 AI 기본법 제31조의 표시 의무를 ‘누구의 의무인가’라는 기준으로 비교하라.</div>
+  <textarea class="ans" id="q3"></textarea>
+  <div class="think">
+    <span class="tag">4. [간단한 사례에 적용하기] 가상 사례</span>
+    <p>6월 3일 지방선거를 앞둔 4월 20일, 시장 후보 정의 캠프가 정 후보가 실제로 한 연설 원고를 AI 음성으로 읽게 한 영상을 만들어 SNS에 올렸다. 영상에는 “AI 음성”이라는 표시가 붙어 있었다. 이 행위는 공직선거법상 어떻게 평가되는가? 같은 영상을 2월 10일에 올렸다면 어떻게 달라지는가?</p>
+  </div>
+  <textarea class="ans" id="q4"></textarea>
+  <div class="ans-label">5. [자기 말로 설명하기] “AI 생성물에 표시만 붙이게 하면 충분하다”는 주장에 대해 찬성 또는 반대 입장을 정하고, 이 단원의 근거를 두 가지 이상 들어 논하라.</div>
+  <textarea class="ans" id="q5"></textarea>
+
+  <div class="card sand">
+    <h4>핵심 정리 체크리스트</h4>
+    <label class="check"><input type="checkbox" id="c1"> AI가 선거에서 도구가 되는 면과 위험이 되는 면을 사례로 설명할 수 있다.</label>
+    <label class="check"><input type="checkbox" id="c2"> 딥페이크와 챗봇의 환각을 정보 무질서의 유형으로 구별할 수 있다.</label>
+    <label class="check"><input type="checkbox" id="c3"> 제82조의8의 금지·표시·가중을 기간과 허위 여부로 구별할 수 있다.</label>
+    <label class="check"><input type="checkbox" id="c4"> 표시 의무를 ‘누구의 의무인가’로 비교할 수 있다.</label>
+    <label class="check"><input type="checkbox" id="c5"> 제82조의8 제1항의 위헌 여부를 과잉금지원칙으로 논할 수 있다.</label>
+  </div>
+
+  <div class="teacher-only tnote"><h5>교수자 노트 · 3교시 · 약 10분 · 채점 기준</h5><dl><dt>수업 중</dt><dd>확인 문제 4번만 함께 날짜를 계산해 본다(6.3. 기준 90일 전은 3월 초 → 4.20.은 90일 안, 2.10.은 90일 밖). 나머지는 과제로 돌린다.</dd><dt>채점(각 3점)</dt><dd><ul><li>3점: 기준을 먼저 세우고(의도 / 기간·허위 / 의무 주체 / 4단계) 사례에 적용해 결론까지 씀</li><li>2점: 결론은 맞지만 기준 없이 직관으로 씀</li><li>1점: 개념 이름만 나열하거나 결론이 근거와 맞지 않음</li></ul></dd><dt>다음 주 연결</dt><dd>12주차는 현직 기자 특강이다. “기자는 AI 생성물을 어떻게 검증하는가?” 질문을 하나씩 준비해 오게 한다.</dd></dl></div>
+  <details class="sol no-print" id="answers">
+    <summary>확인 문제 해설 보기</summary>
+    <p><b>1.</b> ① 비용: 전문 기술 없이 누구나 몇 분 만에 만든다. ② 속도와 규모: 숏폼으로 반복 재생·재가공되며, 삭제 요청이 2024년 388건에서 2025년 10,510건으로 늘었다. ③ 눈으로 확인하기의 붕괴: 영상 자체를 꾸밀 수 있어 보는 것만으로는 확인되지 않고, 거꾸로 진짜도 가짜라고 부인할 수 있게 된다(거짓말쟁이의 배당). 이유마다 “그래서 무엇이 어려워졌는가”까지 적어야 완결된다.</p>
+    <p><b>2.</b> 두 기준(허위성·해칠 의도)을 차례로 적용한다. 딥페이크는 누군가 일부러 만든 거짓이므로 허위조작정보에 해당하는 경우가 많다(장난으로 만든 A처럼 퍼지는 과정에서 오정보가 되기도 한다). 챗봇의 환각은 의도가 없으므로 오정보다. 사람의 오정보와 다른 점은 많은 사람이 같은 오답을 받을 수 있다는 규모, 그리고 정돈된 문장이어서 권위 있게 보인다는 점이다.</p>
+    <p><b>3.</b> 공직선거법 제82조의8 제2항은 선거운동을 위해 딥페이크를 쓰는 사람, 곧 누구나에게 의무를 지운다. AI 기본법 제31조는 AI를 개발·제공하는 사업자에게 의무를 지운다. 앞의 것은 선거라는 특정 상황에서 사용자 개인을, 뒤의 것은 모든 생성물에 대해 기술 제공자를 겨냥한다. 기업 단계의 표시는 많은 생성물을 한 번에 걸러 낼 수 있지만, 해외 서비스나 표시를 지우는 경우까지 막기는 어렵다.</p>
+    <p><b>4.</b> 6월 3일 선거일 전 90일은 3월 초부터이므로 4월 20일은 금지 기간 안이다. 후보 캠프가 지지를 얻으려고 만든 영상이므로 선거운동을 위한 것이다. 따라서 내용이 실제 연설이고 AI 표시를 했어도 제82조의8 제1항 위반이다. 2월 10일에 올렸다면 90일 밖이므로 제2항이 적용되고, 가상의 정보라는 표시를 했으므로 위반이 아니다. 같은 영상이 날짜만으로 합법과 형사처벌 대상으로 갈리는 점이 3절 (2)의 헌법 쟁점(침해의 최소성)과 연결된다는 데까지 쓰면 더 좋은 답이다.</p>
+    <p><b>5.</b> 찬성 근거: 표현의 자유를 덜 제한하는 대안이다(침해의 최소성), EU·미국 다수 주·AI 기본법이 표시 방식을 택했다, 진짜 내용이나 풍자까지 막을 필요가 없다. 반대 근거: 표시는 잘라 내거나 다시 찍으면 사라진다, 숏폼은 빨리 퍼지고 유권자는 일일이 확인하지 않는다, 선거 결과는 되돌릴 수 없다. 어느 입장이든 반대편의 가장 강한 근거 하나에 답하면 균형 잡힌 답이 된다. 표시와 함께 허위 딥페이크는 제250조로 처벌하고 시민교육을 병행한다는 식의 조합도 가능하다.</p>
+  </details>
+
+  <div class="ans-label">출구 티켓 · 선거 정보를 AI에게 물었을 때, 나는 무엇을 다시 확인할 것인가?</div>
+  <textarea class="ans" id="exit" style="min-height:60px"></textarea>
+
+  <div class="card">
+    <h4>과제 · “챗봇에게 선거를 물어보았다” (A4 1장, 12주차 제출)</h4>
+    <ol>
+      <li>생성형 AI 챗봇 두 개 이상에 같은 선거 질문 3개를 던진다. 예: “사전투표는 언제·어디서 하나?”, “선거일 전 90일부터 금지되는 행위는?”, “투표 인증샷을 올려도 되나?”</li>
+      <li>답변을 중앙선거관리위원회와 국가법령정보센터의 공식 정보와 대조해 정확 / 부정확 / 불완전으로 표시한다.</li>
+      <li>틀린 전제를 넣은 질문 하나를 더 해 본다(예: 존재하지 않는 선거일). AI가 전제를 바로잡는지 확인한다.</li>
+      <li>“선거 정보를 AI에게 물을 때 나의 규칙” 세 가지를 쓴다.</li>
+    </ol>
+    <p class="note">평가: 공식 출처 대조의 정확성 40%, 오류 유형 분석 30%, 규칙의 구체성 30%. 특정 후보 지지나 개인정보를 묻는 질문은 하지 않는다. 답변 화면 캡처를 첨부한다.</p>
+  </div>
+
+  <!-- 더 보기 -->
+  <div class="band">더 보기: 영상·기사·보고서</div>
+  <p class="note">링크는 2026년 11월 5일에 확인했다.</p>
+  <h4>영상</h4>
+  <ul class="media">
+    <li><span class="k v">영상</span><a href="https://www.youtube.com/watch?v=H3rxMTLvGNo" target="_blank" rel="noopener">“딥페이크 영상, 오인 가능성 있다면 선거법 위반”</a><small>KBS · 2025.4.14. · 3절 (1). 제82조의8이 실제 선거에서 어떻게 적용되는지 보여 준다.</small></li>
+    <li><span class="k v">영상</span><a href="https://www.youtube.com/watch?v=ooVXgwohnek" target="_blank" rel="noopener">선관위, 대선후보 ‘딥페이크 영상 제작자’ 첫 고발</a><small>KBS · 2025.5.30. · 2절 (2). 선관위의 감시·고발 사례.</small></li>
+    <li><span class="k v">영상</span><a href="https://www.youtube.com/watch?v=c23po7wSd9Y" target="_blank" rel="noopener">선관위, ‘AI·딥페이크 특별대응팀 가동’…선거법 위반 단속</a><small>YTN 사이언스 · 2절 (2). 국가 주도 대응 체계의 모습.</small></li>
+  </ul>
+  <h4>신문기사</h4>
+  <ul class="media">
+    <li><span class="k n">기사</span><a href="https://www.khan.co.kr/article/202605281700001/" target="_blank" rel="noopener">‘혼탁해진 선거전’ 딥페이크 게시물 삭제 요청 1만건 ↑···지난 대선 때 초과 전망</a><small>경향신문 · 2026.5.28. · 2절 (2). 대선 10,510건, 지방선거 10,319건, 적발 921명의 출처.</small></li>
+    <li><span class="k n">기사</span><a href="https://www.hankyung.com/article/2026052600691" target="_blank" rel="noopener">지방선거 딥페이크 단속 현황(울산 남구청장 예비후보 영상)</a><small>한국경제 · 2026.5.26. · 2절 (2)·사례 C. 총선 388건, 청도 사례.</small></li>
+    <li><span class="k n">기사</span><a href="https://www.heraldk.com/article/2026020818221217762" target="_blank" rel="noopener">선관위, 6·3 지선 앞두고 딥페이크 영상 이용 허위사실공표자 첫 고발</a><small>헤럴드경제 · 2026.2.8. · 4절 사례 C.</small></li>
+    <li><span class="k n">기사</span><a href="https://www.twig24.com/news/2025/12/22/20251222500139" target="_blank" rel="noopener">안동 선관위, 딥페이크 영상으로 선거운동 첫 과태료 부과</a><small>트윅(TWIG24) · 2025.12.22. · 2절 (2). 우리 지역 사례.</small></li>
+    <li><span class="k n">기사</span><a href="https://www.journalist.or.kr/news/article.html?no=55321" target="_blank" rel="noopener">‘딥페이크’ 선거운동, 최대 징역 7년… 과잉 입법 지적도</a><small>한국기자협회 · 2024.2.27. · 3절 (1)(2). 조문 구조와 위헌 논란.</small></li>
+    <li><span class="k n">기사</span><a href="https://news.tf.co.kr/read/ptoday/2294748.htm" target="_blank" rel="noopener">딥페이크 선거 규제의 쟁점과 개정 논의</a><small>더팩트 · 2026.2.22. · 3절 (2). 찬반 논거와 표시 중심 개정안.</small></li>
+    <li><span class="k n">기사</span><a href="https://www.cbsnews.com/news/ai-chatbots-inaccurate-election-information-proof-news" target="_blank" rel="noopener">AI chatbots are serving up wildly inaccurate election information, new study says</a><small>CBS News · 2024.2.27. · 2절 (3). AI Democracy Projects·Proof News 연구.</small></li>
+    <li><span class="k n">기사</span><a href="https://algorithmwatch.org/en/chatbots-are-still-spreading-falsehoods/" target="_blank" rel="noopener">Chatbots are still spreading falsehoods</a><small>AlgorithmWatch · 2024. · 2절 (3). 독일 주 선거 챗봇 연구.</small></li>
+    <li><span class="k n">기사</span><a href="https://www.skax.co.kr/insight/trend/3666" target="_blank" rel="noopener">AI 기본법 해설</a><small>SK AX · 3절 (3). AI 기본법 제31조 투명성 의무.</small></li>
+    <li><span class="k n">기사</span><a href="https://www.morganlewis.com/blogs/sourcingatmorganlewis/2026/08/eu-ai-acts-transparency-rules-what-went-into-effect-on-2-august" target="_blank" rel="noopener">EU AI Act’s Transparency Rules: What Went Into Effect on 2 August</a><small>Morgan Lewis · 2026.8. · 3절 (3). EU AI Act 제50조.</small></li>
+    <li><span class="k n">기사</span><a href="https://natlawreview.com/article/eu-digital-omnibus-ai-enters-force" target="_blank" rel="noopener">EU Digital Omnibus on AI Enters into Force</a><small>National Law Review · 3절 (3) 심화. 고위험 AI 적용일 연기.</small></li>
+  </ul>
+  <h4>보고서 (이 단원의 주요 근거)</h4>
+  <ul class="media">
+    <li><span class="k">보고서</span><b>중앙선거관리위원회, 「생성형 AI 신기술 도입에 따른 선거 규제 연구」</b><small>국립부경대학교 산학협력단, 2023. · 본문의 “AI 보고서”</small></li>
+    <li><span class="k">보고서</span><b>중앙선거관리위원회, 「정책선거 문화 확산을 위한 언론기사 빅데이터 분석」</b><small>핀인사이트, 2023.12. · 본문의 “빅데이터 보고서”</small></li>
+    <li><span class="k">보고서</span><b>김현아, 「디지털 시대, 선거 허위정보에 대한 대응 현황과 과제」</b><small>NARS 현안분석 제375호, 국회입법조사처, 2025.12.17. · 본문의 쪽수는 각 보고서에 인쇄된 쪽수다.</small></li>
+  </ul>
+
+  <p class="note" data-pptx-image="../assets/pptx/ch10-cover.jpg" data-pptx-side="right">다음 단원: <b>12주차 특강 — 선거를 취재하는 기자는 무엇을 확인하는가</b> — 현직 기자는 후보의 발언, 여론조사, AI 생성물을 어떻게 검증할까? 오늘 배운 검증 5단계와 비교할 질문을 하나씩 준비해 오자.</p>
+
+  </main>
+
+  <div class="footer">
+    <a href="../index.html#con-election">← 선거법과 민주적 선거관리</a> · <a href="../index.html">교과서 포털</a> · 기준일 2026. 11. 5. · 빈칸과 체크는 이 브라우저에 자동 저장되며 다른 기기에서는 이어지지 않습니다.
+  </div>
+</div>
+<script src="../assets/textbook.js"></script>
+<script>
+/* 빈칸 저장·확인과 교수자판(#teacher) */
+(function () {
+  var K = "tb-blank:" + location.pathname;
+  var data = {};
+  try { data = JSON.parse(localStorage.getItem(K) || "{}"); } catch (e) {}
+  function norm(s) { return (s || "").toLowerCase().replace(/[\s·()\[\]'"“”‘’\-_,.]/g, ""); }
+  var blanks = Array.prototype.slice.call(document.querySelectorAll("input.blank"));
+  blanks.forEach(function (el) {
+    var first = (el.dataset.a || "").split("|")[0];
+    el.style.width = Math.max(7, first.length * 1.3 + 3) + "em";
+    if (data[el.id] != null) el.value = data[el.id];
+    el.addEventListener("input", function () {
+      el.classList.remove("right", "wrong");
+      data[el.id] = el.value;
+      try { localStorage.setItem(K, JSON.stringify(data)); } catch (e) {}
+    });
+  });
+  document.querySelectorAll("[data-check]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      btn.dataset.check.split(",").forEach(function (id) {
+        var el = document.getElementById(id); if (!el) return;
+        var v = norm(el.value);
+        var ok = !!v && (el.dataset.a || "").split("|").some(function (a) { a = norm(a); return v === a || v.indexOf(a) > -1; });
+        el.classList.toggle("right", ok); el.classList.toggle("wrong", !ok);
+      });
+    });
+  });
+  function mode() {
+    var t = location.hash === "#teacher";
+    document.body.classList.toggle("teacher", t);
+    document.querySelectorAll("details.sol").forEach(function (d) { d.open = t; });
+  }
+  window.addEventListener("hashchange", mode);
+  mode();
+})();
+</script>
+</body>
+</html>

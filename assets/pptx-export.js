@@ -232,7 +232,7 @@
             var xx = x + i * (c + GAP.grid), iw = c - padX * 2, ty = yy + padT;
             s.addShape("roundRect", { x: xx, y: yy, w: c, h: r.h, rectRadius: 0.06, fill: { color: filled ? C.box : C.card }, line: filled ? { color: C.box, width: 0 } : { color: C.line, width: 1.4 } });
             if (it.title) {
-              if (it.url) ty += txtBox(s, it.title, xx + padX, ty, iw, S.body, L.body, { color: C.link, hyperlink: { url: it.url }, underline: { style: "sng", color: C.link } });
+              if (it.url) ty += txtBox(s, [{ text: it.title, options: { hyperlink: { url: it.url } } }], xx + padX, ty, iw, S.body, L.body, { color: C.link, underline: { style: "sng", color: C.link } });   // 링크는 글자(run)에 건다: 도형에 걸면 PowerPoint가 파일을 열지 못한다
               else ty += txtBox(s, it.title, xx + padX, ty, iw, S.card, L.card, { fontFace: F.head, color: C.text });
             }
             if (it.meta) ty += txtBox(s, it.meta, xx + padX, ty + 0.04, iw, S.src, L.src, { color: C.muted }) + 0.04;
@@ -652,7 +652,8 @@
     var keys = Object.keys(want);
     return Promise.all(keys.map(function (k) { return fetchData(want[k]); })).then(function (vals) {
       var images = {}; keys.forEach(function (k, i) { images[k] = vals[i]; });
-      var name = (model.meta.title || "slides").replace(/[\\/:*?"<>|]/g, "") + ".pptx";
+      // 파일 이름은 영문·숫자로: 한글 이름은 일부 브라우저에서 확장자 없는 'download'로 저장된다
+      var name = (location.pathname.split("/").pop() || "slides").replace(/\.html?$/i, "").replace(/[^A-Za-z0-9._-]/g, "") + ".pptx";
       return fixFonts(render(pages, model.meta, images), name).then(function (r) { r.count = pages.length; return r; });
     });
   }

@@ -145,7 +145,7 @@
     b.disabled = true; var label = b.textContent; b.textContent = "만드는 중…";
     load("vendor/pptxgen.bundle.js").then(function () { return load("pptx-export.js"); })
       .then(function () { return window.TBPptx.exportPptx(); })
-      .then(function (r) { say("‘" + r.name + "’ (" + r.count + "장)을 내려받았어요"); })
+      .then(function (r) { say(r.auto ? "‘" + r.name + "’ (" + r.count + "장)을 저장했어요" : "PPT " + r.count + "장이 준비됐어요. ‘저장’을 눌러 주세요"); })
       .catch(function (err) { console.error(err); say("PPT를 만들지 못했어요. 인터넷 연결을 확인하고 다시 눌러 주세요"); })
       .then(function () { b.disabled = false; b.textContent = label; });
   }

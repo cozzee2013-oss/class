@@ -637,12 +637,49 @@
       });
       return Promise.all(jobs).then(function () { return zip.generateAsync({ type: "blob", mimeType: "application/vnd.openxmlformats-officedocument.presentationml.presentation" }); });
     }).then(function (blob) {
-      var a = document.createElement("a");
-      a.href = URL.createObjectURL(blob); a.download = name;
-      document.body.appendChild(a); a.click();
-      setTimeout(function () { a.remove(); URL.revokeObjectURL(a.href); }, 4000);
-      return { name: name };
+      return saveBlob(blob, name);
     });
+  }
+
+  // 저장: 파일을 만드는 데 시간이 걸려 클릭 직후의 '사용자 동작'이 끝난 뒤라, 브라우저에 따라 자동 저장이 막힌다
+  // (iPad·iPhone Safari, 홈 화면에 설치한 앱, 일부 앱 내 브라우저). 그래서 자동 저장을 시도하는 동시에
+  // 직접 누를 수 있는 '저장' 버튼(진짜 링크)과, 지원되면 '공유'(파일 앱·메일·카톡으로 보내기) 버튼을 띄운다.
+  function saveBlob(blob, name) {
+    var url = URL.createObjectURL(blob);
+    var ua = navigator.userAgent;
+    var ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    var standalone = (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
+    var auto = !ios && !standalone;
+    if (auto) {
+      var a = document.createElement("a"); a.href = url; a.download = name;
+      document.body.appendChild(a); a.click(); a.remove();
+    }
+    var old = document.querySelector(".tbp-save"); if (old) old.remove();
+    var box = document.createElement("div"); box.className = "tbp-save"; box.setAttribute("role", "dialog"); box.setAttribute("aria-label", "PPT 파일 저장");
+    box.style.cssText = "position:fixed;left:50%;top:calc(16px + env(safe-area-inset-top,0px));transform:translateX(-50%);z-index:9999;background:#fff;color:#1f2622;border:1px solid #cfd6d1;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:14px 16px;width:min(420px,calc(100vw - 32px));font:14px/1.5 'Noto Sans KR',sans-serif;display:grid;gap:10px";
+    var row = document.createElement("div"); row.style.cssText = "display:flex;flex-wrap:wrap;gap:8px";
+    var btnCss = "font:inherit;font-weight:700;border-radius:99px;padding:7px 16px;cursor:pointer;text-decoration:none;border:1px solid #1f6b42;";
+    var link = document.createElement("a"); link.href = url; link.download = name; link.textContent = "저장 (" + name + ")";
+    link.style.cssText = btnCss + "background:#1f6b42;color:#fff";
+    row.appendChild(link);
+    var file = null;
+    try { file = new File([blob], name, { type: blob.type }); } catch (e) {}
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      var share = document.createElement("button"); share.type = "button"; share.textContent = "공유 · 파일 앱에 저장";
+      share.style.cssText = btnCss + "background:#fff;color:#1f6b42";
+      share.addEventListener("click", function () { navigator.share({ files: [file], title: name }).catch(function () {}); });
+      row.appendChild(share);
+    }
+    var close = document.createElement("button"); close.type = "button"; close.textContent = "닫기";
+    close.style.cssText = btnCss + "background:#fff;color:#5b655f;border-color:#cfd6d1";
+    close.addEventListener("click", function () { box.remove(); setTimeout(function () { URL.revokeObjectURL(url); }, 1000); });
+    row.appendChild(close);
+    var canShare = row.children.length > 2;
+    var msg = document.createElement("div");
+    msg.innerHTML = "<b>PPT 파일이 준비됐어요</b><br>" + (auto ? "저장이 시작되지 않았으면 아래 ‘저장’을 눌러 주세요." : canShare ? "아래 ‘저장’ 또는 ‘공유’를 눌러 파일로 받으세요." : "아래 ‘저장’을 눌러 파일로 받으세요.");
+    box.appendChild(msg); box.appendChild(row);
+    document.body.appendChild(box);
+    return { name: name, auto: auto };
   }
 
   function exportPptx() {

@@ -49,6 +49,11 @@ body.teacher .teacher-only { display: block; }
 details.sol { border: 1px solid var(--line); border-radius: 8px; margin: 8px 0 4px; padding: 0 14px; }
 details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark); padding: 8px 0; font-size: 14px; }
 @media print { .blank-check, .see a::after { display: none; } details.sol { border: 0; padding: 0; } }
+.ytbox { border: 1px solid var(--line); border-radius: 8px; margin: -6px 0 14px; padding: 0 12px; }
+.ytbox summary { cursor: pointer; font-size: 13.5px; font-weight: 700; color: var(--green-dark); padding: 7px 0; }
+.yt { position: relative; aspect-ratio: 16/9; border-radius: 6px; overflow: hidden; background: #000; margin: 0 0 12px; }
+.yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+@media print { .ytbox { display: none; } }
 </style>
 </head>
 <body>
@@ -86,7 +91,8 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
     <h4>수업 전 준비</h4>
     <label class="check"><input type="checkbox" id="tp1"> 학생용 슬라이드 열기, 15번 구글폼 QR이 열리는지 확인(구글폼을 ‘게시’해야 응답 링크가 작동한다)</label>
     <label class="check"><input type="checkbox" id="tp2"> 가상 후보 익명투표 도구 준비(구글폼 질문 하나 또는 손들기). 결과 화면을 띄울 수 있게 해 둔다</label>
-    <label class="check"><input type="checkbox" id="tp3"> 영상 재생 확인 — <a href="13-good-voter-cases.html" target="_blank" rel="noopener">수업 자료 화면</a>에서 선관위 강연(12:48), 2·28 영상(MBC), 필요하면 YTN 호주 영상</label>
+    <label class="check"><input type="checkbox" id="tp3"> 영상 재생 확인 — 각 절의 ‘이 화면에서 영상 보기’로 선관위 강연(12:48부터 재생), 선거톡톡 중 고른 한두 편, 2·28 영상(MBC), 필요하면 YTN 호주 영상</label>
+    <label class="check"><input type="checkbox" id="tp6"> 2·28 현장 사진 기사(매일신문)를 미리 열어 둘 탭 준비 — 4절 교수자 노트의 사진 네 장면 표 참조</label>
     <label class="check"><input type="checkbox" id="tp4"> 칠판 오른쪽에 판서 자리 비워 두기: 다섯 단어(선택·대표·책임·정당성·평화적 교체)는 수업 끝까지 지우지 않는다</label>
     <label class="check"><input type="checkbox" id="tp5"> 아래 ‘원문 대조’ 표시를 원자료와 맞춰 보고 지우기</label>
     <h4>원문 대조 목록</h4>
@@ -112,7 +118,7 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
   <div class="ans-label">내가 가장 먼저 보는 기준과 그 이유</div>
   <textarea class="ans" id="q0" placeholder="기준: &#10;이유: "></textarea>
 
-  <div class="teacher-only tnote"><h5>교수자 노트 · 약 7분</h5><dl><dt>진행</dt><dd>학생용 슬라이드 3번을 띄우고 익명투표로 받는다(2분). 결과가 나오면 가장 많은 기준과 가장 적은 기준을 짚고, 각각 한 명씩 이유를 듣는다(3분). ‘아무도 선택하지 않음’을 고른 학생이 있으면 기억해 두었다가 3절에서 다시 부른다.</dd><dt>왜 익명인가</dt><dd>선거는 개인적이고 민감하다. “지난 지방선거에서 실제로 누구를, 무엇을 보고 찍었는가”는 묻지 않는다. 가상 상황에서 무엇을 기준으로 삼는지만 묻는다.</dd><dt>마무리 멘트</dt><dd>“어느 후보를 고르든 무언가를 포기했습니다. A를 고른 사람은 도덕성을, B를 고른 사람은 당선 가능성을, C를 고른 사람은 정책 정보를요. 선거는 정답을 맞히는 시험이 아니라, 무엇을 더 중요하게 여길지 고르는 일입니다.”</dd></dl></div>
+  <div class="teacher-only tnote"><h5>교수자 노트 · 약 7분</h5><dl><dt>진행</dt><dd>학생용 슬라이드 3번을 띄우고 익명투표로 받는다(2분). 결과가 나오면 가장 많은 기준과 가장 적은 기준을 짚고, 각각 한 명씩 이유를 듣는다(3분). ‘아무도 선택하지 않음’을 고른 학생이 있으면 기억해 두었다가 3절에서 다시 부른다.</dd><dt>설계</dt><dd>세 후보 모두 장점과 약점을 하나 이상 갖게 만들었다(학생용 슬라이드의 붉은 글씨가 약점). 어느 후보를 고르든 무언가를 포기하게 되어 “선거는 우선순위 고르기”라는 결론으로 이어진다. 투표 결과 화면은 2절 (2) 지름길 표와 겹쳐 보면서 다시 쓴다.</dd><dt>왜 익명인가</dt><dd>선거는 개인적이고 민감하다. “지난 지방선거에서 실제로 누구를, 무엇을 보고 찍었는가”는 묻지 않는다. 가상 상황에서 무엇을 기준으로 삼는지만 묻는다.</dd><dt>마무리 멘트</dt><dd>“어느 후보를 고르든 무언가를 포기했습니다. A를 고른 사람은 도덕성을, B를 고른 사람은 당선 가능성을, C를 고른 사람은 정책 정보를요. 선거는 정답을 맞히는 시험이 아니라, 무엇을 더 중요하게 여길지 고르는 일입니다.”</dd></dl></div>
 
   <div class="card goal">
     <h3>이 단원의 학습목표</h3>
@@ -152,7 +158,18 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
       </tbody>
     </table>
   </div>
-  <p>투표의 역설은 현실에서 자주 뒤집힌다. 2026년 6월 3일 제9회 전국동시지방선거의 최종 투표율은 61.0%였다. 유권자 4,464만 9,908명 가운데 약 2,725만 명이 투표했고, 1995년 첫 지방선거(68.4%) 다음으로 높은 투표율이었다. <span class="note">(뉴스1 2026.6.4., 아시아경제 2026.6.4.)</span> 한 표의 계산만으로는 이 장면이 설명되지 않는다. 사람들은 의무감, 자기 의사를 표현하려는 마음, “내가 안 하면 다른 사람이 정한다”는 생각, 가족·이웃과 함께하는 일상의 습관 때문에 투표한다. 투표에는 결과를 바꾸는 효용 말고도 다른 의미가 있다는 것이다.</p>
+  <p>투표의 역설은 현실에서 자주 뒤집힌다. 2026년 6월 3일 제9회 전국동시지방선거의 최종 투표율은 61.0%였다. 유권자 4,464만 9,908명 가운데 약 2,725만 명이 투표했고, 1995년 첫 지방선거(68.4%) 다음으로 높은 투표율이었다. <span class="note">(뉴스1 2026.6.4., 아시아경제 2026.6.4.)</span> 한 표의 계산만으로는 이 장면이 설명되지 않는다.</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>지방선거</th><th>투표율</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><th>1995 제1회</th><td>68.4%</td><td>역대 최고</td></tr>
+        <tr><th>2022 제8회</th><td>50.9%</td><td>직전 선거</td></tr>
+        <tr><th>2026 제9회</th><td>61.0%</td><td>제1회 다음으로 높음, 투표자 수 역대 최다, 사전투표율 23.51%(지방선거 최고)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p> 사람들은 의무감, 자기 의사를 표현하려는 마음, “내가 안 하면 다른 사람이 정한다”는 생각, 가족·이웃과 함께하는 일상의 습관 때문에 투표한다. 투표에는 결과를 바꾸는 효용 말고도 다른 의미가 있다는 것이다.</p>
 
   <div class="teacher-only tnote"><h5>교수자 노트 · 약 4분</h5><dl><dt>발문</dt><dd>“내 한 표로 결과가 바뀔 리 없는데, 2,700만 명은 왜 투표장에 갔을까요?” 학생 답을 칠판 옆에 적어 둔다.</dd><dt>예상 반응</dt><dd>의무감, 자기표현, “안 하면 손해 보는 느낌”, 부모님과 함께 가서. 이 답들은 4절 닫는 말과 3절 기권 논쟁의 재료가 된다.</dd><dt>짚을 점</dt><dd>합리적 무지와 투표의 역설을 섞어 쓰지 않게 한다. 하나는 ‘알아보기’, 하나는 ‘투표하기’에 관한 질문이다.</dd></dl></div>
 
@@ -174,6 +191,7 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
   </div>
   <p>정치학에서 가장 많이 연구된 지름길은 <b>정당일체감</b>(party identification)이다. 특정 정당을 자기와 같은 편으로 느끼는 심리적 소속감을 말한다. 정당은 후보 수백 명의 정책을 한 단어로 요약해 주므로 정보 비용을 크게 줄인다. 그래서 정당이나 이미지를 보고 투표하는 것이 반드시 비합리적인 것은 아니다. 문제는 지름길을 쓰느냐가 아니라, 그 지름길이 정확하고 믿을 만한가이다. 예컨대 ‘자주 보이는 후보’라는 지름길은 광고비나 알고리즘에 따라 달라지므로 후보의 능력을 잘 대표하지 못할 수 있다.</p>
   <p class="see">영상: <a href="https://www.youtube.com/watch?v=Oi1SaCPstIs" target="_blank" rel="noopener">중앙선거관리위원회 「선거, 아는만큼 보인다」 10화 ‘당신의 투표 정말 합리적입니까’</a> — 12:48 휴리스틱스 구간(약 2분)</p>
+  <details class="ytbox no-print"><summary>이 화면에서 영상 보기 — 선관위 「선거, 아는만큼 보인다」 10화 (12:48부터)</summary><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/Oi1SaCPstIs?start=768" title="선관위 「선거, 아는만큼 보인다」 10화 (12:48부터)" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></details>
   <p>정당일체감은 어디서 생길까? 정치적 성향은 유전적 기질, 성장 환경, 결혼과 직장 같은 사회적 요인이 함께 만들며, 어느 하나로 완전히 결정되지 않는다. 그 가운데 큰 몫을 하는 것이 가족·친족처럼 이해관계 없이 서로를 믿는 <b>1차 집단</b>이다. 명절에 가족이 모이면 비슷한 정치 성향을 다시 확인하고 강화하게 된다. 정당일체감은 반복된 투표 경험과 정당 정치에 노출된 기간이 길수록 단단해지므로, 고연령층일수록 강하고 청년층은 상대적으로 약하다. 그러나 약할 뿐 없는 것은 아니며, 한 번 굳으면 변하지 않는 것도 아니다. 그래서 유권자의 태도만큼 정책과 비전을 내놓는 정당의 노력이 중요하다. <span class="note">(선거톡톡 시즌2 6회)</span></p>
   <div class="card sand">
     <h4>심화 · ‘이미지’라는 지름길의 함정: 초두효과</h4>
@@ -182,6 +200,8 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
     <p>첫인상이 뒤집히는 경우도 있다. 첫인상이 시간이 지나 흐려졌거나, 나중에 들어온 정보가 훨씬 강렬하면 새 정보가 판단을 바꾼다(<b>최신효과</b>, recency effect). 반복해서 접촉하며 인상을 바꾸는 것을 <b>빈발효과</b>라고 하는데, 부정적인 모습이 반복되면 오히려 나쁜 첫인상이 굳는다. 결국 감각적인 인상에 휘둘리지 않으려면 토론과 숙고를 거쳐 의식적으로 판단해야 한다. 먼저 생각해요의 C 후보(유명하고 친숙한 인물)를 고른 판단이 바로 이 지름길을 쓴 예다. <span class="note">(선거톡톡 시즌2 1회)</span></p>
   </div>
   <p class="see">영상: <a href="https://www.youtube.com/watch?v=xZNhAHlhCs0" target="_blank" rel="noopener">「선거톡톡 시즌2」 6회 ‘집단정체성과 정당일체감’(6:00)</a> · <a href="https://www.youtube.com/watch?v=9xh2HER9PWQ" target="_blank" rel="noopener">1회 ‘초두효과’(5:39)</a></p>
+  <details class="ytbox no-print"><summary>이 화면에서 영상 보기 — 선거톡톡 1회 ‘초두효과’ (5:39)</summary><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/9xh2HER9PWQ" title="선거톡톡 1회 ‘초두효과’ (5:39)" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></details>
+  <details class="ytbox no-print"><summary>이 화면에서 영상 보기 — 선거톡톡 6회 ‘집단정체성과 정당일체감’ (6:00)</summary><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/xZNhAHlhCs0" title="선거톡톡 6회 ‘집단정체성과 정당일체감’ (6:00)" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></details>
 
   <div class="teacher-only tnote"><h5>교수자 노트 · 약 5분</h5><dl><dt>영상</dt><dd>선관위 강연 영상을 12:48에서 시작해 14:43 직전에 멈춘다. 시간이 남으면 09:40(정당일체감)부터 튼다. 영상 설명은 ‘더 보기’ 참조.</dd><dt>발문</dt><dd>“먼저 생각해요에서 여러분이 고른 기준은 이 표의 어느 칸에 해당합니까?” 익명투표 결과를 표에 겹쳐 본다.</dd><dt>꼭 남길 문장</dt><dd>“정당이나 이미지를 보고 투표한다고 해서 반드시 비합리적인 것은 아니다. 문제는 그 지름길이 정확하고 믿을 만한가이다.”</dd><dt>연결</dt><dd>‘언론·플랫폼’ 칸은 11주차 챗봇 실습(자주 보이는 답 ≠ 정확한 답)과 이어진다.</dd><dt>추가 자료</dt><dd>선거톡톡 6회(정당일체감)와 1회(초두효과)는 1시간 안에 둘 다 틀 수 없다. 영상은 하나만 고르거나 말로 소개한다. 먼저 생각해요의 C 후보와 바로 이어지는 <b>초두효과</b>를 권한다. “여러분이 C를 고른 이유가 ‘친숙해서’라면, 그것이 바로 첫인상이라는 지름길입니다.” 정당일체감은 “명절 밥상머리 대화”로 한 문장만 짚는다.</dd><dt>주의</dt><dd>1회 영상의 뇌과학 설명(편도체가 0.01초 만에 호감을 판단, 전두엽이 편도체를 억제)은 대중 강연용으로 단순화한 것이다. 확정된 사실처럼 판서하지 말고 “영상에서는 이렇게 설명한다” 정도로 다룬다. 70% 일치 연구도 ‘원문 대조’ 항목이다.</dd></dl></div>
 
@@ -231,6 +251,8 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
   </ol>
   <p>다섯 조건을 한 문장으로 줄이면 이렇다. 좋은 유권자는 정답을 알고 있는 사람이 아니라, 자신의 판단을 계속 점검할 수 있는 사람이다. 이 정의는 2절 (3)의 구별과도 맞닿는다. 오른쪽 열의 유권자도 자기 기준을 설명하고 반대 정보를 확인했다면, 결론이 다르더라도 좋은 유권자일 수 있다.</p>
   <p class="see">영상(선택): <a href="https://www.youtube.com/watch?v=Dt83PcybdbI" target="_blank" rel="noopener">한국선거방송 「선거톡톡 시즌2」 5회 ‘확증편향’</a> · <a href="https://www.youtube.com/watch?v=Wgm85HKmwg0" target="_blank" rel="noopener">7회 ‘부정성편향’(6:12)</a></p>
+  <details class="ytbox no-print"><summary>이 화면에서 영상 보기 — 선거톡톡 7회 ‘부정성편향’ (6:12)</summary><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/Wgm85HKmwg0" title="선거톡톡 7회 ‘부정성편향’ (6:12)" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></details>
+  <details class="ytbox no-print"><summary>이 화면에서 영상 보기 — 선거톡톡 5회 ‘확증편향’</summary><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/Dt83PcybdbI" title="선거톡톡 5회 ‘확증편향’" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></details>
 
   <div class="teacher-only tnote"><h5>교수자 노트 · 약 8분</h5><dl><dt>발문</dt><dd>“여러분은 역사상 가장 많은 정보를 가진 유권자입니다. 그러면 역사상 가장 좋은 판단을 하고 있을까요?”</dd><dt>지난 수업 회수</dt><dd>11/19 보충 수업의 세 장면(챗봇 답 비교 실습, 탈라리코·샤피로 딥페이크 광고, 백악관 창문 영상과 거짓말쟁이의 배당)을 한 문장씩 떠올리게 한다(2분).</dd><dt>판서 팁</dt><dd>다섯 조건을 다 적지 말고 두세 개만 제시한 뒤 “여러분이 하나를 더한다면?”이라고 물어 빈칸을 남긴다. 그 빈칸을 마무리의 구글폼이 채운다.</dd><dt>시간 조절</dt><dd>확증편향(5회)과 부정성편향(7회) 영상은 둘 다 틀 시간이 없다. 하나만 고른다면 기자 특강·AI 수업과 바로 이어지는 <b>부정성편향</b>을 권한다. 딸기 실험 한 장면만 말로 소개해도 충분하다.</dd><dt>발문(부정성 편향)</dt><dd>“지난 기자 특강의 비리 보도와, 11월 19일에 본 딥페이크 공격 광고는 둘 다 부정적 정보입니다. 둘은 무엇이 다를까요?” → 사실인가, 공적으로 알아야 할 정보인가, 인상만 깎으려는가.</dd></dl></div>
 
@@ -253,6 +275,7 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
     <p>의무투표제는 기권의 자유와 충돌한다. 다만 호주에서도 투표소에 나와 백지나 무효표를 내는 것까지 막지는 않는다. 그래서 의무투표제가 강제하는 것은 ‘누구를 찍을지’가 아니라 ‘투표소에 나오는 것’이라고 설명하기도 한다. 또 모두가 투표하면 정보가 부족한 유권자의 표가 늘어난다는 우려와, 오히려 특정 계층만 투표하는 왜곡을 줄인다는 반론이 맞선다. 이 쟁점은 다음 주 토론에서 다룬다.</p>
   </div>
   <p class="see">영상(선택): <a href="https://www.youtube.com/watch?v=a9b-KhPKAys" target="_blank" rel="noopener">YTN 「투표 안하면 벌금! 투표율 90% 이끄는 호주 선거 제도」(2025.5.25.)</a></p>
+  <details class="ytbox no-print"><summary>이 화면에서 영상 보기 — YTN 「투표율 90% 이끄는 호주 선거 제도」</summary><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/a9b-KhPKAys" title="YTN 「투표율 90% 이끄는 호주 선거 제도」" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></details>
 
   <div class="teacher-only tnote"><h5>교수자 노트 · 약 7분</h5><dl><dt>진행</dt><dd>먼저 생각해요에서 ‘아무도 선택하지 않음’을 고른 학생이 있었다면 그 선택을 다시 부른다. 양쪽 표를 읽고, 호주 사례는 한두 문장과 YTN 영상(선택)으로만 소개한다.</dd><dt>넘기는 멘트</dt><dd>“어느 쪽이 맞는지는 오늘 정하지 않겠습니다. 다음 주에 여러분이 직접 따져 보세요.”</dd><dt>주의</dt><dd>의무투표제 찬반에 깊이 들어가지 않는다. 구글폼 질문 3(토론 주제 투표)에 영향을 주지 않도록 교수자의 입장을 드러내지 않는다.</dd></dl></div>
 
@@ -263,10 +286,38 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
   <div class="mission">【실제 사례 1】<span>1960년 2월 28일, 대구</span></div>
   <p>1960년 3월 15일 정·부통령 선거를 앞둔 2월 28일은 일요일이었다. 그날 대구에서는 야당 후보의 선거 유세가 예정되어 있었다. 당국은 대구의 공립 고등학교 8곳에 갑자기 일요일 등교를 지시했다. 학생들이 유세장에 가지 못하게 하려는 것이었다. 경북고 학생들은 낮 12시 55분쯤 결의문을 읽고 오후 1시쯤 교문을 나서 반월당을 거쳐 경북도청(현 경상감영공원)까지 행진했고, 경북여고·대구상고 등 다른 학교 학생들이 합류했다.<span class="verify">원문 대조</span> <span class="note">(매일신문 2013.4.11., 2026.3.19.)</span></p>
   <p>이 시위는 3·15 마산 의거와 4·19 혁명으로 이어졌다. 광복 이후 최초의 학생 민주화 운동으로 평가되며, 2018년 국가기념일로 지정되었다. 학생들이 지키려 한 것은 거창한 것이 아니었다. 후보의 말을 직접 들어 볼 권리, 이 단원의 말로 하면 ‘알아볼 권리’였다.</p>
+  <details class="ytbox no-print"><summary>이 화면에서 영상 보기 — MBC 「드라마로 살펴보기」 2.28 민주운동 (재연 드라마)</summary><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/AJg72Nfaows" title="MBC 「드라마로 살펴보기」 2.28 민주운동 (재연 드라마)" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></details>
+  <div class="teacher-only tnote"><h5>교수자 노트 · 2·28 현장 사진 네 장면</h5><p style="margin:0 0 8px">1960년 당시 매일신문 사진기자(배상하·정재소·신현국)가 찍은 필름이 2024년 매일아카이빙센터에서 발굴되어 공개되었다. 신문사 저작물이므로 교재에 옮기지 않고 <a href="https://www.imaeil.com/page/view/2024022201100116446" target="_blank" rel="noopener">원 기사(매일신문 2024.2.22.)</a>를 열어 수업 화면에 띄운다.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th class="nw">장면</th><th>사진에 담긴 것</th><th>수업에서 쓰는 법</th></tr></thead>
+      <tbody>
+        <tr><th>①</th><td>2월 28일 오후 대구 수성교 옆 신천변 야당 선거유세. 당국의 방해에도 학생 등 10만 인파가 모였다. 건너편에 남산여고·신명여중 건물이 보인다.</td><td>“그날 학생들이 막혔던 곳이 바로 이 유세장이다”로 시작한다.</td></tr>
+        <tr><th>②</th><td>일요 등교에 항의하며 교문을 뛰쳐나온 경북고 학생들이 중앙통에서 도청(현 경상감영공원)으로 행진</td><td>닫는 말의 중심 사진. “지금 여러분 또래이거나 조금 어린 학생들”과 함께 보여 준다.</td></tr>
+        <tr><th>③</th><td>도청 광장에서 결의문을 읽고 “학원에 정치세력 배제하라” 등의 구호를 외침</td><td>학생들이 요구한 것이 ‘알아볼 권리’였다는 점을 짚는다.</td></tr>
+        <tr><th>④</th><td>스크럼을 짜고 옛 국립극장 쪽으로 행진하다 정·사복 경찰에 쫓겨 되돌아 도망침</td><td>그 권리가 위험을 무릅쓰고 얻은 것이었음을 보여 준다.</td></tr>
+      </tbody>
+    </table></div>
+    <p class="note" style="margin:6px 0 0">MBC 영상은 기록이 아니라 드라마 「제2공화국」의 재연 장면이다. 드라마와 사진 ② 가운데 하나만 고른다. 둘 다 쓰면 시간이 넘친다.</p></div>
 
   <div class="mission">【실제 사례 2】<span>1987년, 대통령을 내 손으로</span></div>
   <p>1987년 4월 13일 정부는 대통령 직선제 개헌 논의를 금지하는 ‘4·13 호헌 조치’를 발표했다. 6월 10일 시민들은 ‘호헌 철폐, 독재 타도, 직선제 쟁취’를 외치며 거리로 나왔고, 6월 항쟁은 6월 29일 직선제 수용 선언으로 이어졌다. 10월 29일 공포된 개정 헌법은 대통령을 국민의 보통·평등·직접·비밀선거로 뽑도록 했다. <span class="note">(국가기록원, 제9차 개헌)</span></p>
   <p>그해 12월 16일, 16년 만에 치러진 대통령 직선제 선거의 투표율은 89.2%였다. 그 뒤로 이 기록을 넘은 대통령선거는 없다. <span class="note">(중앙선거관리위원회 역대 대선 투표율)</span></p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>대통령선거</th><th>방식·투표율</th></tr></thead>
+      <tbody>
+        <tr><th>제10~12대 (1979~1981)</th><td>간접선거</td></tr>
+        <tr><th>제13대 (1987.12.16.)</th><td><b>89.2%</b> · 16년 만의 직선제</td></tr>
+        <tr><th>제14대 (1992)</th><td>81.9%</td></tr>
+        <tr><th>제15대 (1997)</th><td>80.7%</td></tr>
+        <tr><th>제16대 (2002)</th><td>70.8%</td></tr>
+        <tr><th>제17대 (2007)</th><td>63.0%</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">표의 첫 줄이 1987년의 의미를 보여 준다. 그 직전까지 대통령은 국민이 직접 뽑지 않았다.</p>
+  <p class="see">영상: <a href="https://www.youtube.com/watch?v=Slk06GRKsvE" target="_blank" rel="noopener">대구MBC, “시민들이 끝낸 군부독재” 대구의 6월 항쟁</a> · <a href="https://www.youtube.com/watch?v=IA119wQWX2U" target="_blank" rel="noopener">민주화운동기념사업회, 역사다시보기 – 6월민주항쟁</a></p>
+  <details class="ytbox no-print"><summary>이 화면에서 영상 보기 — 대구MBC 「대구의 6월 항쟁」</summary><div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/Slk06GRKsvE" title="대구MBC 「대구의 6월 항쟁」" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div></details>
 
   <div class="ans-label">적용 · 두 사례의 사람들에게 ‘합리적 무지’의 계산은 왜 달랐을까? 먼저 생각해요의 내 기준과 비교해 보자.</div>
   <textarea class="ans" id="a1" style="min-height:60px"></textarea>
@@ -343,11 +394,8 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
 
   <!-- 더 보기 -->
   <div class="band">더 보기: 영상·사진·기사 자료 설명</div>
-  <p class="note">링크는 2026년 11월 26일에 확인했다. 영상 설명은 각 영상의 공개 소개문과 보도 내용을 바탕으로 정리했으므로, 수업 전에 한 번 재생해 내용과 공개 상태를 확인한다. 사진 자료는 신문사의 저작물이므로 교재나 슬라이드에 복제하지 않고 원래 페이지를 열어 보여 준다.</p>
+  <p class="note">링크는 2026년 11월 26일에 확인했다. 본문의 ‘이 화면에서 영상 보기’를 누르면 그 자리에서 재생된다(인터넷 연결 필요, 인쇄본에는 나오지 않는다). 영상 설명은 각 영상의 공개 소개문과 보도 내용을 바탕으로 정리했으므로, 수업 전에 한 번 재생해 내용과 공개 상태를 확인한다. 사진 자료는 신문사의 저작물이므로 교재나 슬라이드에 복제하지 않고 원래 페이지를 열어 보여 준다.</p>
 
-  <ul class="media">
-    <li><span class="k">자료</span><a href="13-good-voter-cases.html" target="_blank" rel="noopener">13주차 수업 자료 화면 (영상·사진·자료 A~G, 선거톡톡 1·6·7회 포함)</a><small>각 절에서 띄울 영상을 바로 재생하고, 2·28 사진 네 장면과 1987년 투표율 표를 정리한 참고자료 페이지</small></li>
-  </ul>
   <h4>2절에서 쓰는 영상</h4>
   <ul class="media">
     <li><span class="k v">영상</span><a href="https://www.youtube.com/watch?v=Oi1SaCPstIs" target="_blank" rel="noopener">「선거, 아는만큼 보인다」 10화 ‘당신의 투표 정말 합리적입니까’</a><small>중앙선거관리위원회 공식 강연 시리즈 · 2021년 무렵 공개 · 2절 (1)(2)</small><small><b>무엇을 담았나</b> 정치학자가 ‘합리적인 투표’를 주제로 강연한다. 영상 소개문의 구간 표시는 00:48 강연자 소개, 03:59 강연 시작, 07:14 투표와 합리적 판단 그리고 민주주의, 09:40 정당일체감, 12:48 휴리스틱스, 14:43 초두효과 순이다.</small><small><b>어떻게 쓰나</b> 12:48에서 시작해 14:43 직전에 멈추면 약 2분으로 ‘정보의 지름길’ 개념을 보충할 수 있다. 시간이 있으면 09:40(정당일체감)부터 튼다. 선관위 공식 채널 자료라 출처 신뢰도가 높고 정치적 중립성 문제가 적다.</small><small><b>주의</b> 강연자 이름과 정확한 공개 일자는 재생 화면에서 확인해 출처 표기에 반영한다.</small></li>
@@ -360,6 +408,7 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
   <h4>3절에서 쓰는 영상·기사</h4>
   <ul class="media">
     <li><span class="k v">영상</span><a href="https://www.youtube.com/watch?v=a9b-KhPKAys" target="_blank" rel="noopener">「투표 안하면 벌금! 투표율 90% 이끄는 호주 선거 제도」</a><small>YTN 「글로벌Y」 · 2025.5.25. · 멜버른 현지 리포트 · 3절 · 선택</small><small><b>무엇을 담았나</b> 호주가 100년 전 참정권을 의무화한 배경, 정당한 이유 없이 투표하지 않으면 20호주달러(약 1만 8천 원)의 과태료가 부과되고 심하면 형사처벌까지 가능하다는 점, 빅토리아주 선거관리위원회 위원장의 설명(불참 이유가 타당하게 증명되면 절차가 끝난다)을 담았다. 한인 단체 관계자가 “의도적인 무효표 행사도 실제로 발생한다”고 말하는 장면도 있다.</small><small><b>어떻게 쓰나</b> 의무투표제를 한 장면으로 보여 줄 때 쓴다. 의도적 무효표 장면은 심화 상자의 “의무투표제가 강제하는 것은 투표소에 나오는 것”이라는 설명과 연결된다. 같은 내용의 <a href="https://www.ytn.co.kr/_ln/0104_202505250218211257" target="_blank" rel="noopener">YTN 기사 원문</a>도 있다.</small></li>
+    <li><span class="k v">영상</span><a href="https://www.youtube.com/shorts/TMtEVwzBmHk" target="_blank" rel="noopener">In 1962 we asked: Should voting be compulsory?</a><small>호주 ABC · 쇼츠 · 영어 · 3절, 다음 주 토론 도입</small><small><b>무엇을 담았나</b> 1962년 시드니 거리에서 “21세 이상 모두에게 투표를 의무로 해야 하는가”를 물은 인터뷰. 60여 년 전에도 의견이 갈렸다는 점을 보여 준다.</small><small><b>어떻게 쓰나</b> 다음 주 의무투표제 토론을 여는 자료로 쓴다.</small></li>
     <li><span class="k n">기사</span><a href="https://boltsmag.org/compulsory-voting-australia-election" target="_blank" rel="noopener">“An Egalitarian Pressure”: Australia Has Been Requiring People to Vote for 100 Years</a><small>Bolts · 2025.5.2. · 영어 · 3절</small><small><b>무엇을 담았나</b> 라트로브대 명예교수 주디스 브렛(Judith Brett) 인터뷰. 의무투표제가 1925년 처음 시행되었고, 투표율이 1922년 60%에서 1925년 91%로 뛰어 그 수준을 유지해 왔다는 점, 과태료 20호주달러를 설명한다.</small><small><b>어떻게 쓰나</b> 본문의 ‘60% → 91%’ 수치 출처다. 다음 주 토론에서 의무투표제 찬성 측 자료로 나눠 줄 수 있다.</small></li>
   </ul>
 
@@ -369,8 +418,11 @@ details.sol summary { cursor: pointer; font-weight: 700; color: var(--green-dark
     <li><span class="k v">영상</span><a href="https://www.youtube.com/watch?v=U7I1baI2R7M" target="_blank" rel="noopener">2·28민주운동, 대한민국의 자유를 갈망했던 대구시민들의 용기를 기억합니다</a><small>국가보훈처(현 국가보훈부) 「TV나라사랑」 · 2020년 60주년 기획 · 대체 자료</small><small><b>무엇을 담았나</b> 한국사 강사 최태성이 대구 2·28민주중앙공원과 2·28기념탑을 찾아가 2·28이 4·19 혁명의 기폭제가 된 과정을 설명한다.</small><small><b>어떻게 쓰나</b> 드라마 재연 대신 해설형 자료를 원할 때 쓴다. 정부 기관 채널이라 사실 설명 위주이고, 길이가 드라마 장면보다 길 수 있으므로 필요한 구간만 고른다.</small></li>
     <li><span class="k">사진</span><a href="https://www.imaeil.com/page/view/2024022201100116446" target="_blank" rel="noopener">매일신문, 1960년 2·28 현장 필름 발굴 사진</a><small>매일신문 · 2024.2.22. · 매일아카이빙센터 필름 자료실에서 발굴한 당시 사진기자들(배상하·정재소·신현국)의 기록 · 4절 실제 사례 1</small><small><b>무엇을 담았나</b> ① 2월 28일 오후 대구 수성교 옆 신천변 야당 선거유세에 당국의 방해에도 학생 등 10만 인파가 모인 장면 ② 일요 등교에 항의해 교문을 뛰쳐나온 경북고 학생들이 중앙통에서 도청(현 경상감영공원)으로 행진하는 장면 ③ 도청 광장에 모여 결의문을 읽고 “학원에 정치세력 배제하라” 등의 구호를 외치는 장면 ④ 스크럼을 짜고 행진하다 출동한 경찰에 쫓겨 되돌아 도망치는 장면이 차례로 실려 있다.</small><small><b>어떻게 쓰나</b> 영상 대신 이 페이지를 열어 사진을 한 장씩 넘기며 닫는 말을 시작할 수 있다. 특히 ②번(교복 차림으로 교문을 나서는 학생들)이 “지금 여러분 또래이거나 조금 어린 학생들”이라는 말과 잘 맞는다. 신문사 저작물이므로 캡처해 배포하지 않는다.</small></li>
     <li><span class="k n">기사</span><a href="https://www.imaeil.com/page/view/2026031911385983805" target="_blank" rel="noopener">[오동욱의 대구문화 오디세이] 민주주의의 새벽, 2·28민주운동</a><small>매일신문 · 2026.3.19. · 4절 배경 설명</small><small><b>무엇을 담았나</b> 1960년 2월 28일 일요일, 야당 유세장 참석을 막으려고 대구 8개 공립 고교에 휴일 등교가 내려졌고 학생들이 ‘학원을 정치도구화하지 말라’며 일어선 과정, 이 운동이 3·15 마산 의거와 4·19 혁명의 시금석이 되었다는 평가를 정리했다.</small><small><b>어떻게 쓰나</b> 본문 사실관계(8개 고교, 일요 등교의 목적)의 출처다. 당일 시각(12시 55분 결의문, 1시 5분 출발)은 <a href="https://www.imaeil.com/page/view/2013041107234654284" target="_blank" rel="noopener">매일신문 2013.4.11. 기사</a>를 따랐다.</small></li>
+    <li><span class="k v">영상</span><a href="https://www.youtube.com/watch?v=Slk06GRKsvE" target="_blank" rel="noopener">“시민들이 끝낸 군부독재” 대구의 6월 항쟁</a><small>대구MBC 뉴스 · 4절 실제 사례 2</small><small><b>무엇을 담았나</b> 1987년 4월 정부가 기존 헌법대로, 곧 ‘체육관 선거’로 불리던 간접선거로 다음 대통령을 뽑겠다고 발표하자 직선제 개헌을 원하던 시민들의 반발이 터져 나온 과정을 대구 시민들을 중심으로 정리한 지역 보도다.</small><small><b>어떻게 쓰나</b> 2·28과 같은 대구 이야기라 이어서 보여 주기 좋다. 1시간 수업에서는 영상 없이 투표율 표만 써도 된다.</small></li>
+    <li><span class="k v">영상</span><a href="https://www.youtube.com/watch?v=IA119wQWX2U" target="_blank" rel="noopener">역사다시보기 – 6월민주항쟁</a><small>민주화운동기념사업회 · 청소년 대상 교육 영상 · 4절 실제 사례 2 · 대체 자료</small><small><b>어떻게 쓰나</b> 전국 단위의 흐름을 보여 줄 때 쓴다.</small></li>
     <li><span class="k">기록</span><a href="https://theme.archives.go.kr/next/govpo/detail.do?policySeq=106" target="_blank" rel="noopener">국가기록원, 제9차 개헌(대통령 직선제)</a><small>국가기록원 정책 해설 · 4절 실제 사례 2</small><small><b>무엇을 담았나</b> 1987년 4월 13일 호헌 조치, 6월 10일 대회 이후 ‘호헌철폐, 독재타도, 직선제 쟁취’ 요구와 6월 항쟁, 6월 29일 선언, 10월 29일 개정 헌법 공포, 12월 16일 직선제 대통령선거까지의 경과를 정리했다.</small><small><b>어떻게 쓰나</b> 1987년 경과의 공식 출처로 쓴다. 학생들에게는 날짜보다 ‘대통령을 직접 뽑을 권리를 얻으려고 거리에 섰다’는 흐름을 전한다.</small></li>
     <li><span class="k">통계</span><a href="https://nec.go.kr/site/eng/03/10301120000002020070601.jsp" target="_blank" rel="noopener">중앙선거관리위원회, 역대 대통령선거 투표율</a><small>중앙선관위 · 4절 실제 사례 2</small><small><b>무엇을 담았나</b> 1987년 제13대 89.2%, 1992년 제14대 81.9%, 1997년 제15대 80.7%, 2002년 제16대 70.8%, 2007년 제17대 63.0%로 이어지는 직선제 이후 대선 투표율. 그 이전 제10~12대는 간접선거였다는 점도 표에 나온다.</small><small><b>어떻게 쓰나</b> ‘89.2%’의 출처다. 직선제 직전까지 대통령이 간접선거로 뽑혔다는 표의 한 줄이 1987년의 의미를 보여 준다.</small></li>
+    <li><span class="k n">기사</span><a href="https://view.asiae.co.kr/article/2026060400354244091" target="_blank" rel="noopener">직전 선거보다 10.1%포인트 높아</a><small>아시아경제 · 2026.6.4. · 2절 (1) · 투표자 2,724만 9,586명(잠정), 직전 제8회 50.9%의 출처</small></li>
     <li><span class="k n">기사</span><a href="https://v.daum.net/v/20260604004402163" target="_blank" rel="noopener">6·3 지선 최종 투표율 61.0%, 역대 2위…투표자수는 역대 최다</a><small>뉴스1 · 2026.6.4. · 2절 (1)</small><small><b>무엇을 담았나</b> 제9회 지방선거 최종 투표율 61.0%가 1995년 첫 지방선거(68.4%) 이후 31년 만에 가장 높고, 투표 인원도 지방선거 역사상 최다라는 보도.</small><small><b>어떻게 쓰나</b> 투표의 역설 발문(“2,700만 명은 왜 투표장에 갔을까”)의 근거 수치다. 학생들 다수가 직접 참여한 선거라 체감도가 높다.</small></li>
   </ul>
 

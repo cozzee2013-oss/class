@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1f6b42">
+<link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/icon-32.png">
+<style>*,*::before,*::after{box-sizing:border-box}body{margin:0}img{max-width:100%}</style>
+<title>13주차 수업 자료 화면 · 좋은 유권자는 어떤 시민인가</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* 레이아웃: 사례 A~D를 한 줄 기둥으로, 사례마다 '자료 → 설명 → 출처' 순서. 교재(10·11주차)의 초록 띠와 같은 계열 */
+:root{
+  --bg:#f6f7f5; --paper:#ffffff; --ink:#1f2622; --soft:#5b655f; --line:#dde2dd;
+  --green:#1f6b42; --green-tint:#e6f1ea; --alert:#b4432a; --alert-tint:#fbece7; --chat:#eef1f4;
+  --f-head:"Noto Serif KR","Nanum Myeongjo",serif; --f-body:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif; --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#141816;--paper:#1c211e;--ink:#e6ebe7;--soft:#a3ada6;--line:#323a35;--green:#6fc495;--green-tint:#1f2e25;--alert:#f08a6f;--alert-tint:#3a2420;--chat:#262c31;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141816;--paper:#1c211e;--ink:#e6ebe7;--soft:#a3ada6;--line:#323a35;--green:#6fc495;--green-tint:#1f2e25;--alert:#f08a6f;--alert-tint:#3a2420;--chat:#262c31;color-scheme:dark}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.7}
+.wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px;display:grid;gap:28px}
+header{display:grid;gap:6px;border-bottom:2px solid var(--green);padding-bottom:16px}
+.eyebrow{font-size:12.5px;letter-spacing:.06em;color:var(--green);font-weight:700}
+h1{font-family:var(--f-head);font-size:clamp(26px,4.4vw,34px);line-height:1.3;margin:0;text-wrap:balance}
+header p{margin:0;color:var(--soft);max-width:65ch}
+section{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:22px clamp(16px,3vw,28px);display:grid;gap:14px;min-width:0}
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 12px}
+.letter{font-family:var(--f-head);font-size:28px;font-weight:700;color:var(--green);line-height:1}
+h2{font-family:var(--f-head);font-size:20px;margin:0;text-wrap:balance}
+.tag{font-size:12px;font-weight:700;padding:2px 9px;border-radius:99px;background:var(--green-tint);color:var(--green)}
+.tag.fake{background:var(--alert-tint);color:var(--alert)}
+.tag.hypo{background:var(--chat);color:var(--soft)}
+p{margin:0;max-width:68ch}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px}
+figure{margin:0;display:grid;gap:6px;min-width:0}
+figure img{width:100%;height:auto;border-radius:6px;border:1px solid var(--line);display:block}
+figcaption{font-size:13px;color:var(--soft)}
+.stamp{position:relative}
+.stamp::after{content:"AI 생성";position:absolute;top:10px;left:10px;font-size:12px;font-weight:700;letter-spacing:.05em;color:#fff;background:rgba(180,67,42,.92);padding:2px 8px;border-radius:3px}
+dl.facts{display:grid;grid-template-columns:6.5em minmax(0,1fr);gap:4px 14px;margin:0;font-size:14.5px}
+dl.facts dt{color:var(--soft);font-weight:700}
+dl.facts dd{margin:0}
+.src{font-size:13px;color:var(--soft);border-top:1px dashed var(--line);padding-top:10px;display:grid;gap:4px}
+.src a,.links a{color:var(--green);font-weight:500;overflow-wrap:anywhere}
+.links{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.links li{border:1px solid var(--line);border-radius:8px;padding:9px 14px;font-size:14.5px}
+.links small{display:block;color:var(--soft);font-size:12.5px}
+.empty{border:1.5px dashed var(--line);border-radius:8px;padding:16px;font-size:14px;color:var(--soft);display:grid;gap:4px}
+.empty b{color:var(--ink)}
+.phone{max-width:380px;width:100%;justify-self:center;border:1px solid var(--line);border-radius:22px;padding:16px 14px 18px;background:var(--bg);display:grid;gap:10px}
+.phone .bar{font-size:12px;color:var(--soft);text-align:center;font-family:var(--f-mono)}
+.msg{max-width:85%;padding:9px 13px;border-radius:14px;font-size:14px;line-height:1.6}
+.me{justify-self:end;background:var(--green);color:var(--paper);border-bottom-right-radius:4px}
+.bot{justify-self:start;background:var(--chat);border-bottom-left-radius:4px}
+.bot mark{background:var(--alert-tint);color:var(--alert);padding:0 2px;border-radius:2px}
+.cmp{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:420px}
+th,td{border:1px solid var(--line);padding:7px 10px;text-align:left;vertical-align:top}
+thead th{background:var(--green-tint);color:var(--green)}
+.note{font-size:13px;color:var(--soft)}
+footer{font-size:12.5px;color:var(--soft)}
+@media (max-width:520px){dl.facts{grid-template-columns:minmax(0,1fr)}dl.facts dt{margin-top:4px}}
+</style>
+<style>
+/* 13주차 추가: 영상 삽입, 큰 숫자, 가상 후보 카드 */
+.yt{position:relative;aspect-ratio:16/9;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#000}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.bigs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
+.big{border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;gap:2px}
+.big b{font-family:var(--f-head);font-size:28px;line-height:1.2}
+.big span{font-size:13px;color:var(--soft)}
+.big.hi{background:var(--green-tint);border-color:var(--green)}
+.big.hi b{color:var(--green)}
+.cands{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:10px}
+.cand{border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:grid;gap:4px;font-size:14.5px}
+.cand b{font-family:var(--f-head);font-size:17px;color:var(--green)}
+.cand .minus{color:var(--alert)}
+@media print{.yt{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">선거법과 민주적 선거관리 · 13주차 참고자료</div>
+  <h1>좋은 유권자는 어떤 시민인가 · 수업 자료 화면</h1>
+  <p>교재 각 절에서 수업 화면에 띄울 영상·사진·자료를 순서대로 모았다. 영상은 이 화면에서 바로 재생할 수 있게 넣었고, 저작권 때문에 옮길 수 없는 사진은 원 보도를 여는 링크로 대신했다. A는 수업용으로 만든 가상 사례다.</p>
+</header>
+
+<section>
+  <div class="head"><span class="letter">A</span><h2>가상 후보 세 명: 무엇을 먼저 보는가</h2><span class="tag hypo">가상 사례 · 수업용 화면</span></div>
+  <div class="cands">
+    <div class="cand"><b>A 후보</b><span>내가 선호하는 정당 소속</span><span>지역 공약이 구체적</span><span class="minus">도덕성 의혹이 있음</span></div>
+    <div class="cand"><b>B 후보</b><span>도덕성 논란 없음</span><span class="minus">정책이 내 생각과 상당히 다름</span><span class="minus">당선 가능성 낮음</span></div>
+    <div class="cand"><b>C 후보</b><span class="minus">정책을 자세히 알기 어려움</span><span>유명하고 친숙한 인물</span><span>여론조사 1위</span></div>
+  </div>
+  <dl class="facts">
+    <dt>교재 위치</dt><dd>먼저 생각해요 · 약 7분</dd>
+    <dt>설계</dt><dd>세 후보 모두 장점과 약점을 하나 이상 갖게 만들었다. 어느 후보를 고르든 무언가를 포기하게 되어, “선거는 정답 맞히기가 아니라 우선순위 고르기”라는 결론으로 이어진다. 붉은 글씨가 각 후보의 약점이다.</dd>
+    <dt>선택지</dt><dd>정당 · 정책 · 도덕성 · 당선 가능성 · 인물의 이미지 · 지역에 대한 기여 · 아무도 선택하지 않음</dd>
+    <dt>진행</dt><dd>익명투표로 받는다. 손들기는 학생의 정치 성향이 드러날 수 있어 피한다. 결과 화면은 2절 (2) ‘지름길’ 표와 겹쳐 보면서 다시 쓴다.</dd>
+  </dl>
+  <p class="note">정당 이름, 지역, 실존 인물을 떠올리게 하는 단서는 넣지 않는다. ‘아무도 선택하지 않음’을 고른 학생은 3절 기권 논쟁에서 다시 부른다.</p>
+</section>
+
+<section>
+  <div class="head"><span class="letter">B</span><h2>선관위 강연 「선거, 아는만큼 보인다」 10화</h2><span class="tag">영상 · 2절 (1)(2)</span></div>
+  <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/Oi1SaCPstIs?start=768" title="선거, 아는만큼 보인다 10화 당신의 투표 정말 합리적입니까" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  <dl class="facts">
+    <dt>제목</dt><dd>‘당신의 투표 정말 합리적입니까’</dd>
+    <dt>제작</dt><dd>중앙선거관리위원회 공식 강연 시리즈. 2021년 무렵 공개</dd>
+    <dt>구간</dt><dd>00:48 강연자 소개 · 03:59 강연 시작 · 07:14 투표와 합리적 판단 그리고 민주주의 · <b>09:40 정당일체감</b> · <b>12:48 휴리스틱스</b> · 14:43 초두효과 (영상 소개문의 구간 표시)</dd>
+    <dt>쓰는 법</dt><dd>이 화면은 12:48부터 재생되게 맞춰 두었다. 14:43 직전에 멈추면 약 2분이다. 시간이 남으면 09:40부터 틀어 ‘정당일체감’까지 보여 준다.</dd>
+    <dt>왜 이 영상</dt><dd>선관위 공식 채널 자료라 출처를 따로 설명할 필요가 없고, 특정 정당·후보를 다루지 않아 중립성 문제가 적다.</dd>
+  </dl>
+  <ul class="links">
+    <li><a href="https://www.youtube.com/watch?v=Oi1SaCPstIs" target="_blank" rel="noopener">YouTube에서 열기</a><small>화면 안에서 재생되지 않으면 이 링크로 연다</small></li>
+  </ul>
+  <div class="src"><span>강연자 이름과 정확한 공개일은 재생 화면에서 확인해 슬라이드 출처에 적는다.</span></div>
+</section>
+
+<section>
+  <div class="head"><span class="letter">C</span><h2>2026년 6·3 지방선거 투표율</h2><span class="tag">자료 · 2절 (1) 투표의 역설</span></div>
+  <div class="bigs">
+    <div class="big hi"><b>61.0%</b><span>제9회 지방선거 최종 투표율<br>2026.6.3.</span></div>
+    <div class="big"><b>약 2,725만 명</b><span>유권자 4,464만 9,908명 가운데 투표한 사람</span></div>
+    <div class="big"><b>23.51%</b><span>사전투표율<br>지방선거 역대 최고</span></div>
+  </div>
+  <div class="cmp"><table>
+    <thead><tr><th>선거</th><th>투표율</th><th>비고</th></tr></thead>
+    <tbody>
+      <tr><th>1995 제1회 지방선거</th><td>68.4%</td><td>역대 최고</td></tr>
+      <tr><th>2022 제8회 지방선거</th><td>50.9%</td><td>직전 선거</td></tr>
+      <tr><th>2026 제9회 지방선거</th><td>61.0%</td><td>제1회 다음으로 높음, 투표자 수는 역대 최다</td></tr>
+    </tbody>
+  </table></div>
+  <dl class="facts">
+    <dt>발문</dt><dd>“내 한 표로 결과가 바뀔 리 없는데, 2,700만 명은 왜 투표장에 갔을까요?”</dd>
+    <dt>쓰는 법</dt><dd>수강생 다수가 직접 참여했거나 지켜본 선거라 체감도가 높다. 학생 답(의무감, 자기표현, “안 하면 다른 사람이 정한다”, 가족과 함께)은 칠판 옆에 적어 두고 3절과 마무리에서 다시 쓴다.</dd>
+  </dl>
+  <ul class="links">
+    <li><a href="https://v.daum.net/v/20260604004402163" target="_blank" rel="noopener">6·3 지선 최종 투표율 61.0%, 역대 2위…투표자수는 역대 최다</a><small>뉴스1 · 2026.6.4.</small></li>
+    <li><a href="https://view.asiae.co.kr/article/2026060400354244091" target="_blank" rel="noopener">직전 선거보다 10.1%포인트 높아</a><small>아시아경제 · 2026.6.4. · 투표자 2,724만 9,586명(잠정), 직전 50.9%</small></li>
+  </ul>
+  <div class="src"><span>출처: 중앙선거관리위원회 집계(언론 보도 기준). 사전투표율은 아이뉴스24·코리아데일리 2026.5.30. 보도.</span></div>
+</section>
+
+<section>
+  <div class="head"><span class="letter">D</span><h2>한국선거방송 「선거톡톡 시즌2」 5회 ‘확증편향’</h2><span class="tag">영상 · 2절 (4) · 선택</span></div>
+  <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/Dt83PcybdbI" title="선거톡톡 시즌2 5회 확증편향" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  <dl class="facts">
+    <dt>제작</dt><dd>한국선거방송(중앙선관위가 운영하는 선거 전문 채널). 2020년 무렵 공개</dd>
+    <dt>내용</dt><dd>보고 싶은 것만 보고 듣고 싶은 것만 듣는 확증편향이 선거에서 어떻게 작동하는지, 미디어의 확증편향은 무엇인지 심리학의 관점에서 쉽게 풀어 준다.</dd>
+    <dt>쓰는 법</dt><dd>‘좋은 유권자의 최소 조건’ 3번(반대되는 정보도 한 번은 확인하는 사람)을 설명하기 직전에 튼다. 1시간 수업에서 시간이 빠듯하면 생략하고 말로 설명한다.</dd>
+    <dt>함께 쓸 장면</dt><dd>11/19 보충 수업의 ‘거짓말쟁이의 배당’(진짜 영상을 “AI일 것”이라고 부인한 사례). 정보가 많아질수록 믿을 것을 고르기가 어려워진다는 점을 잇는다.</dd>
+  </dl>
+  <ul class="links">
+    <li><a href="https://www.youtube.com/watch?v=Dt83PcybdbI" target="_blank" rel="noopener">YouTube에서 열기</a></li>
+  </ul>
+</section>
+
+<section>
+  <div class="head"><span class="letter">E</span><h2>투표를 의무로 정한 나라, 호주</h2><span class="tag">영상 · 3절 쟁점</span></div>
+  <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/a9b-KhPKAys" title="투표 안하면 벌금! 투표율 90% 이끄는 호주 선거 제도 YTN" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  <dl class="facts">
+    <dt>제목</dt><dd>「투표 안하면 벌금! 투표율 90% 이끄는 호주 선거 제도」</dd>
+    <dt>제작</dt><dd>YTN 「글로벌Y」 · 2025.5.25. · 멜버른 현지 리포트(윤영철 리포터)</dd>
+    <dt>내용</dt><dd>호주가 100년 전 참정권을 의무화한 배경. 정당한 이유 없이 투표하지 않으면 20호주달러(약 1만 8천 원)의 과태료를 물고, 심하면 형사처벌까지 가능하다. 빅토리아주 선거관리위원회 위원장은 불참 이유가 타당하게 증명되면 절차가 끝난다고 설명한다. 한인 단체 관계자가 “의도적인 무효표 행사도 실제로 발생한다”고 말하는 장면이 있다.</dd>
+    <dt>숫자</dt><dd>1924년 법 제정 · 1925년 첫 적용 · 투표율 1922년 60% → 1925년 91% · 지금도 90% 안팎</dd>
+    <dt>쓰는 법</dt><dd>한두 문장 소개와 함께 짧게 보여 주고 결론은 내지 않는다. ‘의도적 무효표’ 장면은 “의무투표제가 강제하는 것은 누구를 찍을지가 아니라 투표소에 나오는 것”이라는 설명과 연결된다. 투표소 앞에서 소시지를 구워 파는 ‘민주주의 소시지’는 강제와 함께 투표를 즐거운 일로 만드는 장치의 예로 덧붙인다.</dd>
+  </dl>
+  <ul class="links">
+    <li><a href="https://www.ytn.co.kr/_ln/0104_202505250218211257" target="_blank" rel="noopener">YTN 기사 원문</a><small>YTN · 2025.5.25. · 영상과 같은 내용의 텍스트</small></li>
+    <li><a href="https://boltsmag.org/compulsory-voting-australia-election" target="_blank" rel="noopener">“An Egalitarian Pressure”: Australia Has Been Requiring People to Vote for 100 Years</a><small>Bolts · 2025.5.2. · 영어 · 주디스 브렛 교수 인터뷰, 60% → 91% 수치의 출처</small></li>
+    <li><a href="https://www.youtube.com/shorts/TMtEVwzBmHk" target="_blank" rel="noopener">In 1962 we asked: Should voting be compulsory?</a><small>호주 ABC · 쇼츠 · 1962년 시드니 거리 인터뷰. 다음 주 토론의 도입 자료로도 쓸 수 있다</small></li>
+  </ul>
+  <p class="note">교수자는 의무투표제 찬반 입장을 드러내지 않는다. 구글폼의 토론 주제 투표에 영향을 주지 않기 위해서다.</p>
+</section>
+
+<section>
+  <div class="head"><span class="letter">F</span><h2>1960년 2월 28일, 대구</h2><span class="tag">실제 사례 · 4절 한 표의 무게</span></div>
+  <div class="empty"><b>현장 사진은 이 자료에 옮기지 않았다.</b>1960년 당시 매일신문 사진기자들이 찍은 필름이 2024년 매일아카이빙센터에서 발굴되어 공개되었다. 신문사 저작물이므로 아래 링크로 원 기사를 열어 수업 화면에 띄운다.</div>
+  <ul class="links">
+    <li><a href="https://www.imaeil.com/page/view/2024022201100116446" target="_blank" rel="noopener">매일신문, 1960년 2·28 현장 필름 발굴 사진</a><small>매일신문 · 2024.2.22. · 사진: 배상하·정재소·신현국(당시 매일신문 사진기자)</small></li>
+  </ul>
+  <div class="cmp"><table>
+    <thead><tr><th style="white-space:nowrap">순서</th><th>사진에 담긴 장면</th><th>수업에서 쓰는 법</th></tr></thead>
+    <tbody>
+      <tr><th>①</th><td>2월 28일 오후 대구 수성교 옆 신천변의 야당 선거유세. 당국의 갖가지 방해에도 학생 등 10만 인파가 모였다. 신천 건너편에 남산여고와 신명여중 건물이 보인다.</td><td>“그날 학생들이 막혔던 곳이 바로 이 유세장이다”로 시작한다.</td></tr>
+      <tr><th>②</th><td>일요 등교에 항의하며 교문을 뛰쳐나온 경북고 학생들이 중앙통에서 도청(현 경상감영공원)으로 행진하는 장면</td><td>닫는 말의 중심 사진. “지금 여러분 또래이거나 조금 어린 학생들”이라는 말과 함께 보여 준다.</td></tr>
+      <tr><th>③</th><td>도청 광장에 모여 결의문을 읽고 “학원에 정치세력 배제하라” 등의 구호를 외치는 장면</td><td>학생들이 요구한 것이 ‘알아볼 권리’였다는 점을 짚는다.</td></tr>
+      <tr><th>④</th><td>스크럼을 짜고 옛 국립극장 쪽으로 행진하다 출동한 정·사복 경찰에 쫓겨 되돌아 도망치는 장면</td><td>그 권리가 위험을 무릅쓰고 얻은 것이었음을 보여 준다.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/AJg72Nfaows" title="드라마로 살펴보기 1960년 2월 28일 대구에서 열린 2.28 민주운동" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  <dl class="facts">
+    <dt>영상</dt><dd>[드라마로 살펴보기] 1960년 2월 28일, 대구에서 열린 2.28 민주운동 · MBC 공식 채널(MBC 아카이브)</dd>
+    <dt>성격</dt><dd><b>기록 영상이 아니라 재연 드라마</b>다. MBC 드라마 「제2공화국」의 장면으로, 1960년 정권이 4선 연임을 위해 부정선거를 계획하던 시기와 경북고 학생들의 시위를 재연했다. 학생들에게 먼저 이 점을 밝힌다.</dd>
+    <dt>사실관계</dt><dd>3·15 정·부통령 선거를 앞둔 일요일, 대구 8개 공립 고교에 휴일 등교가 내려졌다. 야당 유세장에 학생들이 가지 못하게 하려는 것이었다. 경북고 학생들은 낮 12시 55분쯤 결의문을 읽고 오후 1시 5분쯤 교문을 나서 반월당을 거쳐 경북도청으로 행진했고, 경북여고·대구상고·대구농고 등 다른 학교 학생들이 합류했다. 이 시위는 3·15 마산 의거와 4·19 혁명으로 이어졌고, 2018년 국가기념일로 지정되었다.</dd>
+    <dt>쓰는 법</dt><dd>닫는 말 직전에 드라마 장면이나 사진 ② 가운데 하나를 고른다. 둘 다 쓰면 시간이 넘친다. 경북 지역 학생들에게 가까운 이야기라는 점을 살린다.</dd>
+  </dl>
+  <ul class="links">
+    <li><a href="https://www.youtube.com/watch?v=U7I1baI2R7M" target="_blank" rel="noopener">2·28민주운동, 대한민국의 자유를 갈망했던 대구시민들의 용기를 기억합니다</a><small>국가보훈처 「TV나라사랑」 · 60주년 기획 · 한국사 강사 최태성이 2·28민주중앙공원과 기념탑을 찾아 설명. 재연 드라마 대신 해설형 자료가 필요할 때</small></li>
+    <li><a href="https://www.imaeil.com/page/view/2026031911385983805" target="_blank" rel="noopener">[오동욱의 대구문화 오디세이] 민주주의의 새벽, 2·28민주운동</a><small>매일신문 · 2026.3.19. · 8개 고교, 일요 등교의 목적, 4·19와의 관계</small></li>
+    <li><a href="https://www.imaeil.com/page/view/2013041107234654284" target="_blank" rel="noopener">2·28 당일의 시각별 기록</a><small>매일신문 · 2013.4.11. · 12시 55분 결의문 낭독, 1시 5분 교문 출발</small></li>
+  </ul>
+  <div class="src"><span>당일 시각과 참여 학교 수는 매일신문 보도를 따랐다. 교재의 ‘원문 대조’ 항목이다.</span></div>
+</section>
+
+<section>
+  <div class="head"><span class="letter">G</span><h2>1987년, 대통령을 내 손으로</h2><span class="tag">실제 사례 · 4절 한 표의 무게</span></div>
+  <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/Slk06GRKsvE" title="시민들이 끝낸 군부독재 대구의 6월 항쟁 대구MBC" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  <dl class="facts">
+    <dt>영상</dt><dd>“시민들이 끝낸 군부독재” 대구의 6월 항쟁 · 대구MBC 뉴스</dd>
+    <dt>내용</dt><dd>1987년 4월 정부가 기존 헌법대로, 곧 ‘체육관 선거’로 불리던 간접선거로 다음 대통령을 뽑겠다고 발표하자 직선제 개헌을 원하던 시민들의 반발이 터져 나온 과정을 대구 시민들을 중심으로 정리한 지역 보도다.</dd>
+    <dt>경과</dt><dd>4·13 호헌 조치 → 6·10 국민대회(‘호헌 철폐, 독재 타도, 직선제 쟁취’) → 6·29 직선제 수용 선언 → 10·29 개정 헌법 공포 → 12·16 대통령선거</dd>
+    <dt>쓰는 법</dt><dd>2·28과 같은 지역(대구)의 이야기라 이어서 보여 주기 좋다. 1시간 수업에서는 영상 없이 아래 투표율 표만 써도 된다.</dd>
+  </dl>
+  <div class="cmp"><table>
+    <thead><tr><th>대통령선거</th><th>방식·투표율</th></tr></thead>
+    <tbody>
+      <tr><th>제10~12대 (1979~1981)</th><td>간접선거</td></tr>
+      <tr><th>제13대 (1987.12.16.)</th><td><b>89.2%</b> · 16년 만의 직선제, 이후 이 기록을 넘은 대선은 없다</td></tr>
+      <tr><th>제14대 (1992)</th><td>81.9%</td></tr>
+      <tr><th>제15대 (1997)</th><td>80.7%</td></tr>
+      <tr><th>제16대 (2002)</th><td>70.8%</td></tr>
+      <tr><th>제17대 (2007)</th><td>63.0%</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">표의 첫 줄이 1987년의 의미를 보여 준다. 그 직전까지 대통령은 국민이 직접 뽑지 않았다.</p>
+  <ul class="links">
+    <li><a href="https://www.youtube.com/watch?v=IA119wQWX2U" target="_blank" rel="noopener">역사다시보기 – 6월민주항쟁</a><small>민주화운동기념사업회 · 청소년 대상 교육 영상 · 전국 단위의 흐름을 보여 줄 때</small></li>
+    <li><a href="https://theme.archives.go.kr/next/govpo/detail.do?policySeq=106" target="_blank" rel="noopener">국가기록원, 제9차 개헌(대통령 직선제)</a><small>국가기록원 · 4·13부터 12·16까지 경과의 공식 출처</small></li>
+    <li><a href="https://nec.go.kr/site/eng/03/10301120000002020070601.jsp" target="_blank" rel="noopener">중앙선거관리위원회, 역대 대통령선거 투표율</a><small>중앙선관위 · 89.2%의 출처</small></li>
+  </ul>
+  <p class="note">두 사건은 국가기념일로 지정된 역사적 사건으로만 다루고, 오늘날의 특정 정당·인물에 빗대지 않는다.</p>
+</section>
+
+<section>
+  <div class="head"><span class="letter">+</span><h2>다음 주 닫는 말: 1994년 남아공, 첫 투표의 줄</h2><span class="tag">영상 · 14주차 토론 수업용</span></div>
+  <div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/6m2EiOsOhE0" title="The Mandela Diaries 27 April 1994 SABC" loading="lazy" allow="encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+  <dl class="facts">
+    <dt>영상</dt><dd>The Mandela Diaries: 27 April 1994 · 남아공 공영방송 SABC · 영어</dd>
+    <dt>내용</dt><dd>남아공 첫 민주 선거에서 넬슨 만델라가 생애 처음으로 투표하는 장면. 아파르트헤이트 아래에서 흑인은 투표할 수 없었기 때문에 만델라는 75세에 첫 투표를 했다. 노벨상위원회는 당시 유권자 약 2,270만 명 가운데 약 2,000만 명이 투표했다고 소개한다. 투표는 나흘에 걸쳐 진행되었고 사람들은 긴 줄을 섰다.</dd>
+    <dt>쓰는 법</dt><dd>다음 주 마지막 발문 “다음 선거에서 여러분의 한 표는 몇 시간 줄을 설 만한 가치가 있습니까? 있다면, 그 가치는 어디에서 나옵니까?” 앞에 보여 준다. 13주차의 2·28·1987과 짝을 이룬다.</dd>
+  </dl>
+  <ul class="links">
+    <li><a href="https://www.youtube.com/watch?v=GJ32PFVawX0" target="_blank" rel="noopener">FREEDOM DAY</a><small>1994년 4월 27일 투표 행렬을 담은 짧은 영상 · 긴 줄 장면만 30초가량 보여 줄 때</small></li>
+    <li><a href="https://www.youtube.com/post/UgkxRTP-BJ14lpNBSbsn6ms3W0BMX2JTxyUf" target="_blank" rel="noopener">Nobel Prize 공식 게시물</a><small>만델라의 첫 투표와 유권자·투표자 수의 출처</small></li>
+  </ul>
+</section>
+
+<footer><a href="13-good-voter.html" style="color:var(--green)">← 13주차 교재로</a> · <a href="13-good-voter.html#teacher" style="color:var(--green)">교수자판</a> · 영상 설명은 각 영상의 공개 소개문과 보도를 바탕으로 정리했으므로 수업 전에 재생해 확인한다. 사진은 원 보도에서 열어 보여 주고, 복제해 배포하지 않는다. 링크는 2026년 11월 26일에 확인했다.</footer>
+</div>
+
+</body>
+</html>

@@ -8,6 +8,8 @@
 - `election/10-disinformation.html` — 선거법과 민주적 선거관리 10주차 「허위정보·가짜뉴스와 미디어 리터러시」 (주소 끝에 `#teacher`를 붙이면 교수자판: 빈칸 정답·해설·원문 대조 표시)
 - `election/11-ai-election.html` — 선거법과 민주적 선거관리 11주차 「AI 시대의 선거와 민주주의」 (`#teacher` 교수자판 동일)
 - `election/11-ai-election-cases.html` — 11주차 참고자료: 출발 사례 A·B·C·D 사진과 화면
+- `election/13-good-voter.html` — 선거법과 민주적 선거관리 13주차 「민주적 시민과 선거문화: 좋은 유권자는 어떤 시민인가」(1시간 수업, `#teacher` 교수자판 동일)
+- `election/13-good-voter-cases.html` — 13주차 참고자료: 수업 화면용 영상·사진·자료(A 가상 후보 ~ G 1987)
 - `slides/*.html` — 단원별 슬라이드 보기(16:9, 「기본권의 개념과 연혁」 강의 슬라이드 형식). 내용은 `tools/decks_a.py`·`tools/decks_b.py`에서 고치고 `python3 tools/build_slides.py`로 다시 만듭니다.
 - `assets/textbook.css`, `assets/textbook.js` — 공통 디자인과 도구 막대(편집·인쇄)
 
